@@ -1,0 +1,25 @@
+.grid {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    justify-content: center;
+}
+.container {
+    padding: 48px 40px 0 40px;
+}
+.address {
+    font-size: 16px;
+    & a {
+        color: #00a5cf;
+        &:hover {
+            color: var(--primary-color);
+        }
+    }
+}
+.img {
+    margin: 0 8px;
+    & img {
+        width: 14px;
+        max-height: 14px;
+    }
+}
