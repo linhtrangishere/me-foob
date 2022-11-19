@@ -15,6 +15,7 @@ const images = {
     right: require('~/assets/images/right.svg').default,
     tag: require('~/assets/images/icon-promo-tag.svg').default,
     close: require('~/assets/images/close.svg').default,
+    trash: require('~/assets/images/trash.svg').default,
     sub: require('~/assets/images/icon-minus-bordered.svg').default,
     plus: require('~/assets/images/icon-plus-bordered.svg').default,
     background: require('~/assets/images/VN-new-1.jpg'),

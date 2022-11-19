@@ -9,6 +9,8 @@
 }
 .address {
     font-size: 16px;
+    display: flex;
+    justify-content: flex-start;
     & a {
         color: #00a5cf;
         &:hover {

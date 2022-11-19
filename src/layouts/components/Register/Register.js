@@ -8,7 +8,6 @@ import { banks } from '~/assets/Banks';
 const cx = classNames.bind(styles);
 
 function Register() {
-    window.scrollTo(0, 0);
     const [customer, setCustomer] = useState(true);
     const [driver, setDriver] = useState(false);
     const [coop, setCoop] = useState(false);
@@ -92,7 +91,7 @@ function Register() {
             setCoop(true);
         }
         // eslint-disable-next-line array-callback-return
-        refLink.current.map((value, indexSub) => {
+        refLink&&refLink.current.map((value, indexSub) => {
             if (indexSub === index) refLink.current[indexSub].classList.add(cx('active'));
             else refLink.current[indexSub].classList.remove(cx('active'));
         });
@@ -141,7 +140,7 @@ function Register() {
                                     </option>
                                     {
                                         // eslint-disable-next-line array-callback-return
-                                        nameBank.map((index) => {
+                                        nameBank&&nameBank.map((index) => {
                                             return (
                                                 <option value={Number(index.MaNganHang)} key={Number(index.MaNganHang)}>
                                                     {index.TenNH}
@@ -158,7 +157,7 @@ function Register() {
                                         {
                                             // eslint-disable-next-line array-callback-return
                                             provincesBank &&
-                                                provincesBank.map((index) => {
+                                                provincesBank&&provincesBank.map((index) => {
                                                     return (
                                                         <option value={index.TenTinhThanh} key={index.Code}>
                                                             {index.TenTinhThanh}
@@ -176,7 +175,7 @@ function Register() {
                                         {
                                             // eslint-disable-next-line array-callback-return
                                             branch &&
-                                                branch.map((index) => {
+                                                branch&&branch.map((index) => {
                                                     return (
                                                         <option value={index.TenChiNhanh} key={index.MaChiNhanh}>
                                                             {index.TenChiNhanh}
@@ -196,7 +195,7 @@ function Register() {
                                     </option>
                                     {
                                         // eslint-disable-next-line array-callback-return
-                                        provinces.map((index) => {
+                                        provinces&&provinces.map((index) => {
                                             return (
                                                 <option value={index.code} key={index.code}>
                                                     {index.name}
@@ -213,7 +212,7 @@ function Register() {
                                         {
                                             // eslint-disable-next-line array-callback-return
                                             districts &&
-                                                districts.map((index) => {
+                                                districts&&districts.map((index) => {
                                                     return (
                                                         <option value={index.code} key={index.code}>
                                                             {index.name}
@@ -232,7 +231,7 @@ function Register() {
                                         {
                                             // eslint-disable-next-line array-callback-return
                                             wards &&
-                                                wards.map((index) => {
+                                                wards&&wards.map((index) => {
                                                     return (
                                                         <option value={index.code} key={index.code}>
                                                             {index.name}
@@ -281,7 +280,7 @@ function Register() {
                                     </option>
                                     {
                                         // eslint-disable-next-line array-callback-return
-                                        provinces.map((index) => {
+                                        provinces&&provinces.map((index) => {
                                             return (
                                                 <option value={index.code} key={index.code}>
                                                     {index.name}
@@ -298,7 +297,7 @@ function Register() {
                                         {
                                             // eslint-disable-next-line array-callback-return
                                             districts &&
-                                                districts.map((index) => {
+                                                districts&&districts.map((index) => {
                                                     return (
                                                         <option value={index.code} key={index.code}>
                                                             {index.name}
@@ -317,7 +316,7 @@ function Register() {
                                         {
                                             // eslint-disable-next-line array-callback-return
                                             wards &&
-                                                wards.map((index) => {
+                                                wards&&wards.map((index) => {
                                                     return (
                                                         <option value={index.code} key={index.code}>
                                                             {index.name}
@@ -342,7 +341,7 @@ function Register() {
                                     </option>
                                     {
                                         // eslint-disable-next-line array-callback-return
-                                        provinces.map((index) => {
+                                        provinces&&provinces.map((index) => {
                                             return (
                                                 <option value={index.code} key={index.code}>
                                                     {index.name}
@@ -359,7 +358,7 @@ function Register() {
                                         {
                                             // eslint-disable-next-line array-callback-return
                                             districts &&
-                                                districts.map((index) => {
+                                                districts&&districts.map((index) => {
                                                     return (
                                                         <option value={index.code} key={index.code}>
                                                             {index.name}
@@ -378,7 +377,7 @@ function Register() {
                                         {
                                             // eslint-disable-next-line array-callback-return
                                             wards &&
-                                                wards.map((index) => {
+                                                wards&&wards.map((index) => {
                                                     return (
                                                         <option value={index.code} key={index.code}>
                                                             {index.name}
@@ -399,7 +398,7 @@ function Register() {
                                     </option>
                                     {
                                         // eslint-disable-next-line array-callback-return
-                                        nameBank.map((index) => {
+                                        nameBank&&nameBank.map((index) => {
                                             return (
                                                 <option value={Number(index.MaNganHang)} key={Number(index.MaNganHang)}>
                                                     {index.TenNH}
@@ -416,7 +415,7 @@ function Register() {
                                         {
                                             // eslint-disable-next-line array-callback-return
                                             provincesBank &&
-                                                provincesBank.map((index) => {
+                                                provincesBank&&provincesBank.map((index) => {
                                                     return (
                                                         <option value={index.TenTinhThanh} key={index.Code}>
                                                             {index.TenTinhThanh}
@@ -434,7 +433,7 @@ function Register() {
                                         {
                                             // eslint-disable-next-line array-callback-return
                                             branch &&
-                                                branch.map((index) => {
+                                                branch&&branch.map((index) => {
                                                     return (
                                                         <option value={index.TenChiNhanh} key={index.MaChiNhanh}>
                                                             {index.TenChiNhanh}
@@ -486,7 +485,7 @@ function Register() {
                                     </option>
                                     {
                                         // eslint-disable-next-line array-callback-return
-                                        provinces.map((index) => {
+                                        provinces&&provinces.map((index) => {
                                             return (
                                                 <option value={index.code} key={index.code}>
                                                     {index.name}
@@ -503,7 +502,7 @@ function Register() {
                                         {
                                             // eslint-disable-next-line array-callback-return
                                             districts &&
-                                                districts.map((index) => {
+                                                districts&&districts.map((index) => {
                                                     return (
                                                         <option value={index.code} key={index.code}>
                                                             {index.name}
@@ -522,7 +521,7 @@ function Register() {
                                         {
                                             // eslint-disable-next-line array-callback-return
                                             wards &&
-                                                wards.map((index) => {
+                                                wards&&wards.map((index) => {
                                                     return (
                                                         <option value={index.code} key={index.code}>
                                                             {index.name}
@@ -546,7 +545,9 @@ function Register() {
                                 <input type="text" />
                             </div>
                             <div className={cx('text-input')}>
-                                <Text className={cx('text')}>Loại ẩm thực (cơm, mì/bún/phở, bánh mì, đồ ăn nhanh, trà sữa...)</Text>
+                                <Text className={cx('text')}>
+                                    Loại ẩm thực (cơm, mì/bún/phở, bánh mì, đồ ăn nhanh, trà sữa...)
+                                </Text>
                                 <input type="text" />
                             </div>
                             <div className={cx('text-input')}>

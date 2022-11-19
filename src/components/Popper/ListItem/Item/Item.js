@@ -11,7 +11,7 @@ const cx = classNames.bind(styles);
 function Item({ children, hint = false }) {
     return (
         <div className={cx('item')}>
-            <Button to="/" className={cx('link')}>
+            <Button to="/restaurant" className={cx('link')}>
                 <div className={cx('img')}>
                     <img src={images.product} alt="" />
                 </div>

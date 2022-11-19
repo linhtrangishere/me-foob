@@ -47,7 +47,7 @@ function Header({ white = false, register = false }) {
                     </div>
                     {register && (
                         <div className={cx('btn-group')}>
-                            <Button headerGroup to="/">
+                            <Button headerGroup to="/cart">
                                 <div
                                     className={cx('cart-icon')}
                                     style={{ backgroundImage: `url("${images.cart}")` }}
@@ -149,8 +149,8 @@ function Header({ white = false, register = false }) {
                                 {/* <!-- Register buttons --> */}
                                 <div className="text-center">
                                     <p>
-                                        Not a member?{' '}
-                                        <a href="#!" style={{ color: 'var(--primary-color)' }}>
+                                        Not a member?
+                                        <a href="/register" style={{ color: 'var(--primary-color)' }}>
                                             Register
                                         </a>
                                     </p>
