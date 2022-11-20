@@ -8,7 +8,9 @@
     padding: 48px 40px 0 40px;
 }
 .address {
+    display: flex;
     font-size: 16px;
+    justify-content: flex-start;
     & a {
         color: #00a5cf;
         &:hover {

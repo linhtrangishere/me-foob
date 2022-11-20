@@ -1,0 +1,38 @@
+.title {
+    font-size: 36px;
+    line-height: 1.33333333;
+    font-weight: 500;
+    margin-bottom: 12px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: rgb(28, 28, 28);
+}
+.type {
+    font-weight: 400;
+    font-size: 16px;
+}
+.list-item {
+    display: flex;
+    flex-wrap: wrap;
+    transition: 0.3s all ease-in-out;
+    margin-top: 60px;
+}
+.list {
+    position: relative;
+    overflow: hidden;
+    & span {
+        display: flex;
+    }
+}
+.time-open {
+    font-weight: 500;
+    margin-right: 24px;
+}
+.open {
+    max-height: 99999px;
+    transition: 0.3s max-height ease-in-out;
+}
+.menu{
+    margin-top: 32px;
+}

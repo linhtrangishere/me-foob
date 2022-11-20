@@ -6,6 +6,9 @@ const routes = {
     cart:'/cart',
     checkout:'/checkout',
     contract:'/contract',
+    branch:'/branch',
+    manageCart:'manage-cart',
+    followOrder:'follow-order',
 };
 
 export default routes;

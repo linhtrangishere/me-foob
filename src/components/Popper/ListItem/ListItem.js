@@ -52,7 +52,7 @@ function ListItem({ children, hint = false, title, addr }) {
                     <Item hint={hint} />
                 </div>
                 {!hint && (
-                    <Button seeMore to="/">
+                    <Button seeMore to="/restaurants">
                         See More
                     </Button>
                 )}
