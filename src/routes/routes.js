@@ -12,6 +12,8 @@ import ContractPage from '~/pages/Contract';
 import BranchPage from '~/pages/Branch';
 import ManageCartPage from '~/pages/ManageCart';
 import FollowOrderPage from '~/pages/FollowOrder';
+import ManageDriverPage from '~/pages/ManageDriver';
+import EarningTrackingPage from '~/pages/EarningTracking';
 
 const publicRoutes = [
     { path: config.routes.home, components: Home },
@@ -23,7 +25,9 @@ const publicRoutes = [
     { path: config.routes.contract, components: ContractPage },
     { path: config.routes.branch, components: BranchPage },
     { path: config.routes.manageCart, components: ManageCartPage },
+    { path: config.routes.manageDriver, components: ManageDriverPage },
     { path: config.routes.followOrder, components: FollowOrderPage },
+    { path: config.routes.earningTracking, components: EarningTrackingPage },
 ];
 const privateRoutes = [];
 

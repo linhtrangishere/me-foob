@@ -1,6 +1,6 @@
 const images = {
-    logo: require('~/assets/images/logo-grabfood2.svg').default,
-    logo1: require('~/assets/images/logo-grabfood-white2.svg').default,
+    logo: require('~/assets/images/logo.png'),
+    logo1: require('~/assets/images/logo.png'),
     cart: require('~/assets/images/icon-cart-default-black.svg').default,
     star: require('~/assets/images/icon-star.svg').default,
     facebook: require('~/assets/images/facebook.svg').default,

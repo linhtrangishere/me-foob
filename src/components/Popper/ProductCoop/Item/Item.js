@@ -180,15 +180,15 @@ function Item({ children }) {
                                     <div className={cx('group')}>
                                         <div className={cx('text-input')}>
                                             <Text className={cx('text')}>Tên món ăn</Text>
-                                            <input type="text" />
+                                            <input type="text" placeholder='Để trống nếu không sửa'/>
                                         </div>
                                         <div className={cx('text-input')}>
                                             <Text className={cx('text')}>Giá</Text>
-                                            <input type="text" />
+                                            <input type="text" placeholder='Để trống nếu không sửa'/>
                                         </div>
                                         <div className={cx('text-input')}>
                                             <Text className={cx('text')}>Mô tả</Text>
-                                            <input type="text" />
+                                            <input type="text" placeholder='Để trống nếu không sửa'/>
                                         </div>
                                         <div className={cx('text-input')}>
                                             <Text className={cx('text')}>Hình ảnh</Text>
