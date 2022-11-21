@@ -11,6 +11,7 @@ const routes = {
     manageDriver: 'manage-driver',
     followOrder: 'follow-order',
     earningTracking: 'earning-tracking',
+    manageCoop: 'manage-coop',
 };
 
 export default routes;

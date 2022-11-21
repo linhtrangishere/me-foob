@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import styles from './EarningTracking.module.scss';
+import styles from './ManageCoop.module.scss';
 
 import classNames from 'classnames/bind';
 import images from '~/assets/images';
@@ -7,7 +7,7 @@ import Text from '~/components/Text';
 
 const cx = classNames.bind(styles);
 
-function EarningTracking() {
+function ManageCoop() {
     const refFollow = useRef();
     const refStatistical = useRef();
 
@@ -185,4 +185,4 @@ function EarningTracking() {
     );
 }
 
-export default EarningTracking;
+export default ManageCoop;

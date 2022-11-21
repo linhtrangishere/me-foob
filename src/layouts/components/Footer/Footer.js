@@ -1,4 +1,3 @@
-import React, { useRef } from 'react';
 import styles from './Footer.module.scss';
 
 import classNames from 'classnames/bind';
@@ -18,12 +17,12 @@ function Footer() {
                 <div className={cx('separate')}></div>
                 <div className={cx('about')}>
                     <div className={cx('group')}>
-                        <Button to="/">Về GrabFood</Button>
+                        <Button to="/">Về Yumi Yumi</Button>
                         <Button to="/">Về Grab</Button>
                         <Button to="/">Blog</Button>
                     </div>
                     <div className={cx('group')}>
-                        <Button to="/">Mở quán trên GrabFood</Button>
+                        <Button to="/">Mở quán trên Yumi Yumi</Button>
                         <Button to="/">Trở thành tài xế Grab</Button>
                     </div>
                     <div className={cx('group')}>

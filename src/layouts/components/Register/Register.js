@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './Register.module.scss';
 
 import classNames from 'classnames/bind';
-import Text from '~/components/Text';
 import { banks } from '~/assets/Banks';
+import Text from '~/components/Text';
 
 const cx = classNames.bind(styles);
 

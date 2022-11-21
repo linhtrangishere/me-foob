@@ -1,9 +1,9 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import styles from './Header.module.scss';
 
 import classNames from 'classnames/bind';
-import Button from '~/components/Button';
 import images from '~/assets/images';
+import Button from '~/components/Button';
 
 const cx = classNames.bind(styles);
 

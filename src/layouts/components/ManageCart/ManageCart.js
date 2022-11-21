@@ -1,12 +1,9 @@
-import React from 'react';
 import styles from './ManageCart.module.scss';
 
 import classNames from 'classnames/bind';
-import ListProduct from '~/components/Popper/ListProduct';
-import Text from '~/components/Text';
-import Button from '~/components/Button';
-import ProductCoop from '~/components/Popper/ProductCoop';
 import images from '~/assets/images';
+import Button from '~/components/Button';
+import Text from '~/components/Text';
 
 const cx = classNames.bind(styles);
 

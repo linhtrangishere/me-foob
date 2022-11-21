@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './Home.module.scss';
 
 import classNames from 'classnames/bind';
@@ -21,7 +20,7 @@ function Home({ children }) {
 
             <div className={cx('container', 'grid')}>
                 <ListItem
-                    title="Mã khuyến  mãi GrabFood ở "
+                    title="Mã khuyến  mãi Yumi Yumi ở "
                     addr="CT56, Tam Đảo, P.15, Q.10, Hồ Chí Minh, HoCT56, Tam Đảo, P.15, Q.10, Hồ Chí Minh, Ho"
                 />
             </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './CheckOut.module.scss';
 
 import classNames from 'classnames/bind';
@@ -10,10 +10,6 @@ import Text from '~/components/Text';
 const cx = classNames.bind(styles);
 
 function CheckOut() {
-    const [customer, setCustomer] = useState(true);
-    const [driver, setDriver] = useState(false);
-    const [coop, setCoop] = useState(false);
-
     const [provinces, setProvinces] = useState();
     const [districts, setDistricts] = useState();
     const [wards, setWards] = useState();

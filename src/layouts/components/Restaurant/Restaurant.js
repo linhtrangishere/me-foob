@@ -1,12 +1,10 @@
-import React, { useRef } from 'react';
 import styles from './Restaurant.module.scss';
 
 import classNames from 'classnames/bind';
-import Button from '~/components/Button';
 import images from '~/assets/images';
-import { ListItem } from '~/components/Popper';
-import Text from '~/components/Text';
+import Button from '~/components/Button';
 import Product from '~/components/Popper/Product';
+import Text from '~/components/Text';
 
 const cx = classNames.bind(styles);
 

@@ -57,6 +57,7 @@
 .stores-terms {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     &>.download img{
         margin-right: 16px;
     }
@@ -69,4 +70,7 @@
         color: #fff;
         margin-right: 12px;
     }
+}
+.copyright{
+    display: flex;
 }

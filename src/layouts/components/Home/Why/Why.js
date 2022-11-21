@@ -1,10 +1,9 @@
-import React from 'react';
 import styles from './Why.module.scss';
 
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import Text from '~/components/Text';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
 
@@ -12,10 +11,10 @@ function Why({ children }) {
     return (
         <>
             <div className={cx('why')}>
-                <h1 className={cx('title')}>Tại sao nên lựa chọn GrabFood?</h1>
+                <h1 className={cx('title')}>Tại sao nên lựa chọn Yumi Yumi?</h1>
                 <div className={cx('description')}>
                     <Text className={cx('par')}>
-                        <FontAwesomeIcon className={cx('icon')} icon={faCheck} /><strong>Nhanh nhất</strong> - GrabFood cung cấp dịch vụ giao
+                        <FontAwesomeIcon className={cx('icon')} icon={faCheck} /><strong>Nhanh nhất</strong> - Yumi Yumi cung cấp dịch vụ giao
                         đồ ăn nhanh nhất thị trường.
                     </Text>
                     <Text className={cx('par')}>
