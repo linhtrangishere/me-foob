@@ -8,37 +8,110 @@ import Text from '~/components/Text';
 const cx = classNames.bind(styles);
 
 function ManageCoop() {
-    const refFollow = useRef();
-    const refStatistical = useRef();
+    const refLink = useRef([]);
+
+    const handleOnClickLink = (index) => {
+        var linkBlock = document.querySelectorAll('.' + cx('link-block') + '>div');
+        for (let indexSub = 0; indexSub < linkBlock.length; indexSub++) {
+            const element = linkBlock[indexSub];
+            if (indexSub === index) element.classList.add(cx('link'));
+            else element.classList.remove(cx('link'));
+        }
+        // eslint-disable-next-line array-callback-return
+        refLink.current.map((value, indexSub) => {
+            if (indexSub === index) refLink.current[indexSub].style.display = 'block';
+            else refLink.current[indexSub].style.display = 'none';
+        });
+    };
+    // eslint-disable-next-line no-const-assign
+    refLink.current = [];
+    const pushRefLink = (el) => {
+        if (el && !refLink.current.includes(el)) {
+            refLink.current.push(el);
+        }
+    };
 
     return (
         <>
             <div className={cx('container', 'grid', 'link-block')}>
-                <div
-                    className={cx('link')}
-                    onClick={() => {
-                        var linkBlock = document.querySelectorAll('.' + cx('link-block') + '>div');
-                        linkBlock[0].classList.add(cx('link'));
-                        linkBlock[1].classList.remove(cx('link'));
-                        refFollow.current.style.display = 'block';
-                        refStatistical.current.style.display = 'none';
-                    }}
-                >
-                    Theo dõi thu nhập
+                <div className={cx('link')} onClick={() => handleOnClickLink(0)}>
+                    Danh sách hợp đồng của đối tác
                 </div>
-                <div
-                    onClick={() => {
-                        var linkBlock = document.querySelectorAll('.' + cx('link-block') + '>div');
-                        linkBlock[0].classList.remove(cx('link'));
-                        linkBlock[1].classList.add(cx('link'));
-                        refFollow.current.style.display = 'none';
-                        refStatistical.current.style.display = 'block';
-                    }}
-                >
-                    Thống kê thu nhập
+                <div onClick={() => handleOnClickLink(1)}>Thống kê lượng khách hàng</div>
+                <div onClick={() => handleOnClickLink(2)}>Thống kê số lượng đơn hàng, doanh thu</div>
+                <div onClick={() => handleOnClickLink(3)}>Thống kê số lượng đơn hàng, hoa hồng</div>
+                <div onClick={() => handleOnClickLink(4)}>Thống kê tổng hoa hồng</div>
+                <div onClick={() => handleOnClickLink(5)}>Danh sách đại lý bị report không tốt</div>
+            </div>
+            <div className={cx('container', 'grid')} ref={pushRefLink}>
+                <div className={cx('title')}>
+                    <h1>Danh sách hợp đồng</h1>
+                </div>
+                <div className={cx('content')}>
+                    <div className={cx('content-wrapper')}>
+                        <table>
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên đối tác</th>
+                                <th>Lượng khách hàng</th>
+                                <th>Số lượng đơn hàng</th>
+                                <th>Doanh thu</th>
+                                <th>Hoa hồng</th>
+                                <th>Tổng hoa hồng</th>
+                                <th>Report</th>
+                                <th>Thời hạn</th>
+                                <th>Chi tiết</th>
+                                <th>Gia Hạn</th>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>227 Nguyễn Văn Cừ, P4, Quận 5, Tp HCM</td>
+                                <td>12312312</td>
+                                <td>42342342</td>
+                                <td>1000000</td>
+                                <td>1000000</td>
+                                <td>1000000</td>
+                                <td>1000000</td>
+                                <td>20/10/2023</td>
+                                <td className={cx('more')} data-toggle="modal" data-target="#more">
+                                    Chi tiết
+                                </td>
+                                <td className={cx('submit')}>Gửi thông báo</td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
-            <div className={cx('container', 'grid')} ref={refFollow}>
+            <div className={cx('container', 'grid')} style={{ display: 'none' }} ref={pushRefLink}>
+                <div className={cx('title')}>
+                    <h1>Thống kê thu nhập</h1>
+                </div>
+                <div className={cx('content')}>
+                    <div className={cx('content-wrapper')}>
+                        <table>
+                            <tr>
+                                <th>STT</th>
+                                <th>Ngày</th>
+                                <th>Số lượng đơn hàng</th>
+                                <th>Thu nhập</th>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>20/10/2022</td>
+                                <td>200</td>
+                                <td>1000000</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>20/10/2022</td>
+                                <td>200</td>
+                                <td>1000000</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div className={cx('container', 'grid')} style={{ display: 'none' }} ref={pushRefLink}>
                 <div className={cx('title')}>
                     <h1>Theo dõi thu nhập</h1>
                 </div>
@@ -80,7 +153,78 @@ function ManageCoop() {
                     </div>
                 </div>
             </div>
-            <div className={cx('container', 'grid')} style={{ display: 'none' }} ref={refStatistical}>
+            <div className={cx('container', 'grid')} style={{ display: 'none' }} ref={pushRefLink}>
+                <div className={cx('title')}>
+                    <h1>Thống kê thu nhập</h1>
+                </div>
+                <div className={cx('content')}>
+                    <div className={cx('content-wrapper')}>
+                        <table>
+                            <tr>
+                                <th>STT</th>
+                                <th>Ngày</th>
+                                <th>Số lượng đơn hàng</th>
+                                <th>Thu nhập</th>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>20/10/2022</td>
+                                <td>200</td>
+                                <td>1000000</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>20/10/2022</td>
+                                <td>200</td>
+                                <td>1000000</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div className={cx('container', 'grid')} style={{ display: 'none' }} ref={pushRefLink}>
+                <div className={cx('title')}>
+                    <h1>Theo dõi thu nhập</h1>
+                </div>
+                <div className={cx('content')}>
+                    <div className={cx('content-wrapper')}>
+                        <table>
+                            <tr>
+                                <th>STT</th>
+                                <th>Mã đơn hàng</th>
+                                <th>Địa chỉ nhận</th>
+                                <th>Địa chỉ giao</th>
+                                <th>Phí vận chuyển</th>
+                                <th>Chi tiết</th>
+                                <th>Xác nhận</th>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>DH121212121</td>
+                                <td>227 Nguyễn Văn Cừ, P4, Quận 5, Tp HCM</td>
+                                <td>227 Nguyễn Văn Cừ, P4, Quận 5, Tp HCM</td>
+                                <td>1000000</td>
+                                <td className={cx('more')} data-toggle="modal" data-target="#more">
+                                    Chi tiết
+                                </td>
+                                <td className={cx('submit')}>Xác nhận</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>DH121212121</td>
+                                <td>227 Nguyễn Văn Cừ, P4, Quận 5, Tp HCM</td>
+                                <td>227 Nguyễn Văn Cừ, P4, Quận 5, Tp HCM</td>
+                                <td>1000000</td>
+                                <td className={cx('more')} data-toggle="modal" data-target="#more">
+                                    Chi tiết
+                                </td>
+                                <td className={cx('submit')}>Xác nhận</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div className={cx('container', 'grid')} style={{ display: 'none' }} ref={pushRefLink}>
                 <div className={cx('title')}>
                     <h1>Thống kê thu nhập</h1>
                 </div>
