@@ -4,10 +4,25 @@ import classNames from 'classnames/bind';
 import images from '~/assets/images';
 import { ListItem } from '~/components/Popper';
 import Why from './Why';
+import Button from '~/components/Button';
 
 const cx = classNames.bind(styles);
 
 function Home({ children }) {
+    const fetchData = async () => {
+        const newData = await fetch('http://localhost:5000/home', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+        }).then((res) => {
+            console.log('thanh cong')
+            return res.json()
+        });
+        console.log(newData);
+    };
+
     return (
         <>
             <div className={cx('background')}>
@@ -30,6 +45,7 @@ function Home({ children }) {
             <div className={cx('container', 'grid')}>
                 <Why />
             </div>
+            <Button onClick={fetchData}>hihi</Button>
         </>
     );
 }
