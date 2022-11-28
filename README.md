@@ -1,22 +1,24 @@
-## `npm start`
+### `npm start`
+
+## `Trong frontend`
 
 Chạy chương trình với chế độ development
 Mở [http://localhost:3000](http://localhost:3000) để kiểm tra.
 
-## `npm run db`
+## `Trong backend`
 
 Khởi động AIP để fetch
 Mở [http://localhost:5000](http://localhost:5000) để kiểm tra.
 
-## `Ghi chú`
+### `Ghi chú`
 
--Vào src\layouts\components\Home\Home.js để xem cách fetch API
+-Vào frontend\src\layouts\components\Home\Home.js để xem cách fetch API
 
-#### `Trong DbFiles`
+#### `Trong backend/src`
 
--sever.js không cần đụng tới
+-index.js không cần đụng tới
 
--Folder routes là đường dẫn chính để client request
+-Folder routes là đường dẫn chính để client request:
 
     +index.js là file nguồn
 
