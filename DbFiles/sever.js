@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
-const dbOperation = require('./DbOperation');
+const route = require('./routes');
 
 var app = express();
 
@@ -14,11 +14,7 @@ app.use(cors());
 //     console.log(res.recordset);
 // });
 
-app.get('/home', function (req, res) {
-    dbOperation.getProducts().then((ress) => {
-        res.json(ress.recordset)
-    });
-});
+route(app);
 
 var port = process.env.PORT || 5000;
 app.listen(port, () => {

@@ -14,13 +14,11 @@ function Home({ children }) {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Accept': 'application/json',
+                Accept: 'application/json',
             },
         }).then((res) => {
-            console.log('thanh cong')
-            return res.json()
+            return res.json();
         });
-        console.log(newData);
     };
 
     return (
@@ -45,7 +43,6 @@ function Home({ children }) {
             <div className={cx('container', 'grid')}>
                 <Why />
             </div>
-            <Button onClick={fetchData}>hihi</Button>
         </>
     );
 }
