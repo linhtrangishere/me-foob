@@ -30,12 +30,12 @@ function Why({ children }) {
                     </Text>
                     <Text className={cx('par')}>
                         <FontAwesomeIcon className={cx('icon')} icon={faCheck} />
-                        <strong>Thanh toán dễ dàng</strong> - Giao và nhận đồ ăn thật dễ dàng. Thanh toán bằng GrabPay
+                        <strong>Thanh toán dễ dàng</strong> - Giao và nhận đồ ăn thật dễ dàng. Thanh toán bằng YumiPay
                         thậm chí còn dễ dàng hơn nữa.
                     </Text>
                     <Text className={cx('par')}>
                         <FontAwesomeIcon className={cx('icon')} icon={faCheck} />
-                        <strong>Nhiều quà tặng hơn</strong> - Tích điểm GrabRewards cho mỗi đơn hàng của bạn và sử dụng
+                        <strong>Nhiều quà tặng hơn</strong> - Tích điểm YumiRewards cho mỗi đơn hàng của bạn và sử dụng
                         điểm thưởng để đổi lấy nhiều ưu đãi hơn.
                     </Text>
                 </div>
