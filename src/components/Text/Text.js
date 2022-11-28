@@ -2,7 +2,6 @@ import React from 'react';
 import styles from './Text.module.scss';
 
 import classNames from 'classnames/bind';
-import images from '~/assets/images';
 
 const cx = classNames.bind(styles);
 

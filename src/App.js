@@ -18,7 +18,7 @@ function App() {
                                 key={index}
                                 path={route.path}
                                 element={
-                                    <Layout white={route.path !=='/'} register={route.path !=='/register'}>
+                                    <Layout white={route.path !== '/'} register={route.path !== '/register'}>
                                         <Page />
                                     </Layout>
                                 }

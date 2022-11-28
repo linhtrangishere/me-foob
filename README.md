@@ -28,8 +28,8 @@ Mở [http://localhost:5000](http://localhost:5000) để kiểm tra.
 
 -Với nội dung:
 
-    SERVER_NAME=`Server name trong SQL Server`
+    REACT_APP_SERVER_NAME=`Server name trong SQL Server`
 
-    USERNAME=`Tên user sử dụng trong SQL Server`
+    REACT_APP_USERNAME_SERVER=`Tên user sử dụng trong SQL Server`
 
-    PASSWORD=`Password sử dụng trong SQL Server`
+    REACT_APP_PASSWORD_SERVER=`Password sử dụng trong SQL Server`

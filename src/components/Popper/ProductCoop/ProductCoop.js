@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React  from 'react';
 import styles from './ProductCoop.module.scss';
 
 import classNames from 'classnames/bind';

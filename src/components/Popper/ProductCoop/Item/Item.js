@@ -12,7 +12,7 @@ const cx = classNames.bind(styles);
 function Item({ children }) {
 
 
-    const [amount, setAmount] = useState(1);
+    // const [amount, setAmount] = useState(1);
 
     function format(n) {
         return n.toFixed(0).replace(/./g, function (c, i, a) {

@@ -4,7 +4,6 @@ import classNames from 'classnames/bind';
 import images from '~/assets/images';
 import { ListItem } from '~/components/Popper';
 import Why from './Why';
-import Button from '~/components/Button';
 
 const cx = classNames.bind(styles);
 
