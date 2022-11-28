@@ -15,7 +15,11 @@ Mở [http://localhost:5000](http://localhost:5000) để kiểm tra.
 ## `Trong DbFiles`
 
 -sever.js không cần đụng tới
+
 -Folder routes là đường dẫn chính để client request
+
     +index.js là file nguồn
+
     +site.js là file con (dựa đó để tạo các đường dẫn khác)
+
 -Folder controller (như tên gọi): Chứa components để truyền vào routes
