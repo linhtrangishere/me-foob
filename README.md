@@ -9,4 +9,4 @@ Khởi động AIP để fetch
 Mở [http://localhost:5000](http://localhost:5000) để kiểm tra.
 
 ### `Ghi chú`
-Vào src\layouts\components\Home\Home.js để xem cascg fetch API
+Vào src\layouts\components\Home\Home.js để xem cách fetch API
