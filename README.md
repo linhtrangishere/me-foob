@@ -24,7 +24,7 @@ Mở [http://localhost:5000](http://localhost:5000) để kiểm tra.
 
 -Folder controller (như tên gọi): Chứa components để truyền vào routes
 
-#### `Tạo file '.env.development'`
+#### `Tạo file '.env.development' trong thư mục gốc`
 
 -Với nội dung:
 
