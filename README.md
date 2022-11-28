@@ -24,12 +24,12 @@ Mở [http://localhost:5000](http://localhost:5000) để kiểm tra.
 
 -Folder controller (như tên gọi): Chứa components để truyền vào routes
 
-#### `Tạo file '.env.development' trong thư mục gốc`
+#### `Tạo file '.env' trong thư mục 'backend'`
 
 -Với nội dung:
 
-    REACT_APP_SERVER_NAME=`Server name trong SQL Server`
+    DB_SERVER_NAME=`Server name trong SQL Server`
 
-    REACT_APP_USERNAME_SERVER=`Tên user sử dụng trong SQL Server`
+    DB_USERNAME=`Tên user sử dụng trong SQL Server`
 
-    REACT_APP_PASSWORD_SERVER=`Password sử dụng trong SQL Server`
+    DB_PASSWORD=`Password sử dụng trong SQL Server`
