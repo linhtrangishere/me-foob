@@ -1,8 +1,8 @@
 var config = {
-    user: 'root',
-    password: 'root',
+    user: `${process.env.USERNAME}`,
+    password: `${process.env.PASSWORD}`,
     database: 'QuanLyDatVaGiaoHang',
-    server: 'DESKTOP-P9JK85L',
+    server: `${process.env.SERVER_NAME}`,
     driver: 'mssql',
     options: {
         trustedConnection: true,

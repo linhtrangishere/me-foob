@@ -12,6 +12,7 @@
         "@testing-library/user-event": "^13.5.0",
         "@tippyjs/react": "^4.2.6",
         "assert": "^2.0.0",
+        "axios": "^1.2.0",
         "classnames": "^2.3.2",
         "css-loader": "^6.7.1",
         "customize-cra": "^1.0.0",
@@ -35,7 +36,7 @@
         "build": "react-app-rewired build",
         "test": "react-app-rewired test",
         "eject": "react-app-rewired eject",
-        "db": "node ./DbFiles/sever.js"
+        "db": "node ./DbFiles/server.js"
     },
     "eslintConfig": {
         "extends": [
