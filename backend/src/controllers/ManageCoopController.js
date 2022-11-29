@@ -1,9 +1,9 @@
 const config = require('../DbConfig');
 const sql = require('mssql');
-class SiteControler {
+class ManageCoopController {
     async index(req, res) {}
     // [GET] /home/getBranch1
-    async getBranch1(req, res) {
+    getBranch1(req, res) {
         const func = async () => {
             try {
                 let pool = await sql.connect(config);
@@ -18,7 +18,7 @@ class SiteControler {
         });
     }
     // [GET] /home/getBranch2
-    async getBranch2(req, res) {
+    getBranch2(req, res) {
         const func = async () => {
             try {
                 let pool = await sql.connect(config);
@@ -34,4 +34,4 @@ class SiteControler {
     }
 }
 
-module.exports = new SiteControler();
+module.exports = new ManageCoopController();

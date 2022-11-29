@@ -10,10 +10,6 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(cors());
 
-// dbOperation.getProducts().then((res) => {
-//     console.log(res.recordset);
-// });
-
 route(app);
 
 var port = process.env.PORT || 5000;

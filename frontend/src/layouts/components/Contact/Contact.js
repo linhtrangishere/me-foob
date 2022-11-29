@@ -1,4 +1,4 @@
-import styles from './Contract.module.scss';
+import styles from './Contact.module.scss';
 
 import classNames from 'classnames/bind';
 import Button from '~/components/Button';
@@ -6,7 +6,7 @@ import Text from '~/components/Text';
 
 const cx = classNames.bind(styles);
 
-function Contract() {
+function Contact() {
     return (
         <>
             <div className={cx('container', 'grid')}>
@@ -37,4 +37,4 @@ function Contract() {
     );
 }
 
-export default Contract;
+export default Contact;

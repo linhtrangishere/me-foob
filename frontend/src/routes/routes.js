@@ -8,7 +8,7 @@ import RegisterPage from '~/pages/Register';
 import RestaurantPage from '~/pages/Restaurant';
 import RestaurantsPage from '~/pages/Restaurants';
 import CheckOutPage from '~/pages/CheckOut';
-import ContractPage from '~/pages/Contract';
+import ContactPage from '~/pages/Contact';
 import BranchPage from '~/pages/Branch';
 import ManageCartPage from '~/pages/ManageCart';
 import FollowOrderPage from '~/pages/FollowOrder';
@@ -23,7 +23,7 @@ const publicRoutes = [
     { path: config.routes.register, components: RegisterPage },
     { path: config.routes.cart, components: CartPage },
     { path: config.routes.checkout, components: CheckOutPage },
-    { path: config.routes.contract, components: ContractPage },
+    { path: config.routes.contact, components: ContactPage },
     { path: config.routes.branch, components: BranchPage },
     { path: config.routes.manageCart, components: ManageCartPage },
     { path: config.routes.manageDriver, components: ManageDriverPage },
