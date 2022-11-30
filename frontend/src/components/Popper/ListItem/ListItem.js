@@ -53,7 +53,6 @@ function ListItem({ children, hint = false, title, addr, data = {} }) {
                 )}
             </div>
             {!hint && (
-                // <div className={cx('btn')}>
                 <>
                     {positionIndex !== 0 && (
                         <div className={cx('btn-prev')} ref={refBtnLeft}>
@@ -69,7 +68,7 @@ function ListItem({ children, hint = false, title, addr, data = {} }) {
                             </Button>
                         </div>
                     )}
-                {/* </div> */}</>
+                </>
             )}
         </div>
     );

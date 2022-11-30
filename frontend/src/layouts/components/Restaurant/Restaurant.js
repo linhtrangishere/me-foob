@@ -5,10 +5,29 @@ import images from '~/assets/images';
 import Button from '~/components/Button';
 import Product from '~/components/Popper/Product';
 import Text from '~/components/Text';
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 const cx = classNames.bind(styles);
 
 function Restaurant() {
+    const { id } = useParams();
+    const [name, setName] = useState();
+
+    useEffect(() => {
+        setTimeout(() => {
+            fetch(`http://localhost:5000/branch/getName/${id}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then((res) => {
+                    return res.json();
+                })
+                .then((data) => setName(data));
+        }, 1000);
+    }, []);
     return (
         <>
             <div className={cx('address', 'container', 'grid')}>
@@ -20,7 +39,7 @@ function Restaurant() {
                 <Text className={cx('img')}>
                     <img src={images.right} alt="" />
                 </Text>
-                <Text>Món ăn</Text>
+                {name !== undefined && <Text>{'Tên chi nhánh' && name[0].TenChiNhanh}</Text>}
             </div>
             <div className={cx('container', 'grid')}>
                 <Product />

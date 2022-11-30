@@ -3,8 +3,9 @@ const router = express.Router();
 
 const BranchController = require('../controllers/BranchController');
 
-router.get('/getBranch1', BranchController.getBranch1);
-router.get('/getBranch2', BranchController.getBranch2);
+router.get('/getBranch/:slug', BranchController.getBranch);
+router.get('/getMenu/:slug', BranchController.getMenu);
+router.get('/getName/:slug', BranchController.getName);
 router.get('/', BranchController.index)
 
 module.exports = router;

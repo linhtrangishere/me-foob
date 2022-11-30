@@ -10,7 +10,7 @@ class HomeControler {
 				let products = pool
 					.request()
 					.query(
-						"SELECT TOP 8 CN.TenChiNhanh, DT.LoaiAmThuc,TD.Rating FROM dbo.CHINHANH CN,dbo.DOITAC DT, dbo.THUCDON TD where CN.MaDoiTac = DT.MaDoiTac and TD.MaDoiTac=CN.MaDoiTac ORDER BY NEWID()"
+						"SELECT TOP 8 CN.MaChiNhanh,CN.TenChiNhanh, DT.LoaiAmThuc,TD.Rating FROM dbo.CHINHANH CN,dbo.DOITAC DT, dbo.THUCDON TD where CN.MaDoiTac = DT.MaDoiTac and TD.MaDoiTac=CN.MaDoiTac ORDER BY NEWID()"
 					);
 				return products;
 			} catch (error) {
@@ -29,7 +29,7 @@ class HomeControler {
 				let products = pool
 					.request()
 					.query(
-						"SELECT TOP 8 CN.TenChiNhanh FROM dbo.CHINHANH CN ORDER BY NEWID()"
+						"SELECT TOP 8 CN.TenChiNhanh, CN.MaChiNhanh FROM dbo.CHINHANH CN ORDER BY NEWID()"
 					);
 				return products;
 			} catch (error) {

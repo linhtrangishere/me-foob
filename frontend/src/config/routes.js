@@ -1,7 +1,7 @@
 const routes = {
     home: '/',
     restaurants: '/restaurants',
-    restaurant: '/restaurant',
+    restaurant: '/restaurant/:id',
     register: '/register',
     cart: '/cart',
     checkout: '/checkout',

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './Item.module.scss';
 
 import classNames from 'classnames/bind';
@@ -8,7 +8,7 @@ import Text from '~/components/Text';
 
 const cx = classNames.bind(styles);
 
-function Item({ children }) {
+function Item({ children, key, value = null }) {
     const [amount, setAmount] = useState(1);
 
     function format(n) {
@@ -16,21 +16,23 @@ function Item({ children }) {
             return i > 0 && c !== '.' && (a.length - i) % 3 === 0 ? '.' + c : c;
         });
     }
-
+    useEffect(() => {
+        console.log(value);
+    });
     return (
         <>
-            <div className={cx('item')} data-toggle="modal" data-target="#exampleModalLong">
+            <div className={cx('item')} data-toggle="modal" data-target="#exampleModalLong" key={key}>
                 <div className={cx('link')}>
                     <div className={cx('img')}>
                         <img src={images.product} alt="" />
                     </div>
                     <div className={cx('group')}>
                         <h6 className={cx('name')}>
-                            <Text>Cơm Tấm Thăng Trầm - Tân Trang</Text>
-                            <Text className={cx('type')}>Cơm</Text>
+                            {console.log(value.TenMonAn)}
+                            <Text>{value !== undefined && value.TenMonAn}</Text>
                         </h6>
                         <div className={cx('group-row')}>
-                            <Text>{format(70000)}</Text>
+                            <Text>{format(value !== undefined && value.Gia)}</Text>
                             <div className={cx('btn')}>
                                 <Button>asd</Button>
                             </div>
@@ -62,15 +64,23 @@ function Item({ children }) {
                                     </div>
                                     <div className={cx('group')}>
                                         <h6 className={cx('name')}>
-                                            <Text>Cơm Tấm Thăng Trầm - Tân Trang</Text>
-                                            <Text className={cx('type')}>Cơm</Text>
+                                            <Text>{value !== undefined && value.TenMonAn}</Text>
                                         </h6>
                                         <div className={cx('group-row')}>
-                                            <Text>{format(70000)}</Text>
+                                            <Text>{format(value !== undefined && value.Gia)}</Text>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            {value !== undefined && value.length > 0 && (
+                                <>
+                                    <div className={cx('separate')}></div>
+                                    <div className={cx('note')}>
+                                        <h6>Mô tả món ăn</h6>
+                                        <Text>{value.MieuTaMon} </Text>
+                                    </div>
+                                </>
+                            )}
                             <div className={cx('separate-big')}></div>
                             <div className={cx('note')}>
                                 <h6>Ghi chú người bán hoặc người giao hàng</h6>
