@@ -4,21 +4,37 @@ import classNames from 'classnames/bind';
 import images from '~/assets/images';
 import { ListItem } from '~/components/Popper';
 import Why from './Why';
+import { useEffect, useState } from 'react';
 
 const cx = classNames.bind(styles);
 
 function Home({ children }) {
-    const fetchData = async () => {
-        const newData = await fetch('http://localhost:5000/home', {
+    const [dataHor, setDataHor] = useState({});
+    const [dataVer, setDataVer] = useState({});
+    useEffect(() => {
+        fetch('http://localhost:5000/home/getBranch1', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 Accept: 'application/json',
             },
-        }).then((res) => {
-            return res.json();
-        });
-    };
+        })
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => setDataHor(data));
+        fetch('http://localhost:5000/home/getBranch2', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
+        })
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => setDataVer(data));
+    }, []);
 
     return (
         <>
@@ -31,13 +47,10 @@ function Home({ children }) {
             </div>
 
             <div className={cx('container', 'grid')}>
-                <ListItem
-                    title="Mã khuyến  mãi Yumi Yumi ở "
-                    addr="CT56, Tam Đảo, P.15, Q.10, Hồ Chí Minh, HoCT56, Tam Đảo, P.15, Q.10, Hồ Chí Minh, Ho"
-                />
+                <ListItem title="Mã khuyến  mãi Yumi Yumi" data={dataHor} />
             </div>
             <div className={cx('container', 'grid')}>
-                <ListItem title="There's something for everyone!" hint />
+                <ListItem title="There's something for everyone!" hint data={dataVer}/>
             </div>
             <div className={cx('container', 'grid')}>
                 <Why />

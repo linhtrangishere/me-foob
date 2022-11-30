@@ -5,10 +5,37 @@ import images from '~/assets/images';
 import Button from '~/components/Button';
 import { ListItem } from '~/components/Popper';
 import Text from '~/components/Text';
+import { useEffect, useState } from 'react';
 
 const cx = classNames.bind(styles);
 
 function Restaurants() {
+    const [dataHor1, setDataHor1] = useState({});
+    const [dataHor2, setDataHor2] = useState({});
+    useEffect(() => {
+        fetch('http://localhost:5000/branch/getBranch1', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
+        })
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => setDataHor1(data));
+        fetch('http://localhost:5000/branch/getBranch2', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
+        })
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => setDataHor2(data));
+    }, []);
     return (
         <>
             <div className={cx('address','container', 'grid')}>
@@ -21,13 +48,13 @@ function Restaurants() {
             <div className={cx('container', 'grid')}>
                 <ListItem
                     title="Mã khuyến  mãi Yumi Yumi ở "
-                    addr="CT56, Tam Đảo, P.15, Q.10, Hồ Chí Minh, HoCT56, Tam Đảo, P.15, Q.10, Hồ Chí Minh, Ho"
+                    data={dataHor1}
                 />
             </div>
             <div className={cx('container', 'grid')}>
                 <ListItem
                     title="Mã khuyến  mãi Yumi Yumi ở "
-                    addr="CT56, Tam Đảo, P.15, Q.10, Hồ Chí Minh, HoCT56, Tam Đảo, P.15, Q.10, Hồ Chí Minh, Ho"
+                    data={dataHor2}
                 />
             </div>
         </>

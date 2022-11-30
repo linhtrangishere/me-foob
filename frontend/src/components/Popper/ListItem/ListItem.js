@@ -9,7 +9,7 @@ import images from '~/assets/images';
 
 const cx = classNames.bind(styles);
 
-function ListItem({ children, hint = false, title, addr }) {
+function ListItem({ children, hint = false, title, addr, data = {} }) {
     const classesListItem = cx('list-item', {
         hint,
     });
@@ -42,14 +42,9 @@ function ListItem({ children, hint = false, title, addr }) {
                     {!hint && <Text green>{addr}</Text>}
                 </h1>
                 <div className={classesListItem} ref={refTransform}>
-                    <Item hint={hint} />
-                    <Item hint={hint} />
-                    <Item hint={hint} />
-                    <Item hint={hint} />
-                    <Item hint={hint} />
-                    <Item hint={hint} />
-                    <Item hint={hint} />
-                    <Item hint={hint} />
+                    {Object.keys(data).map(function (key) {
+                        return <Item hint={hint} key={key} value={data[key]} />;
+                    })}
                 </div>
                 {!hint && (
                     <Button seeMore to="/restaurants">
@@ -58,7 +53,8 @@ function ListItem({ children, hint = false, title, addr }) {
                 )}
             </div>
             {!hint && (
-                <div className={cx('btn')}>
+                // <div className={cx('btn')}>
+                <>
                     {positionIndex !== 0 && (
                         <div className={cx('btn-prev')} ref={refBtnLeft}>
                             <Button onClick={handleOnClickLeft}>
@@ -73,7 +69,7 @@ function ListItem({ children, hint = false, title, addr }) {
                             </Button>
                         </div>
                     )}
-                </div>
+                {/* </div> */}</>
             )}
         </div>
     );
