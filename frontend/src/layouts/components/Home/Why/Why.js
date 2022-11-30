@@ -20,7 +20,7 @@ function Why({ children }) {
                     <Text className={cx('par')}>
                         <FontAwesomeIcon className={cx('icon')} icon={faCheck} />
                         <strong>Dễ dàng nhất</strong> - Giờ đây, bạn chỉ cần thực hiện vài cú nhấp chuột hoặc chạm nhẹ
-                        là đã có thể đặt đồ ăn. Hãy đặt đồ ăn trực tuyến hoặc tải xuống siêu ứng dụng Grab của chúng tôi
+                        là đã có thể đặt đồ ăn. Hãy đặt đồ ăn trực tuyến hoặc tải xuống siêu ứng dụng Yumi Yumi của chúng tôi
                         để có trải nghiệm nhanh hơn và thú vị hơn.
                     </Text>
                     <Text className={cx('par')}>
