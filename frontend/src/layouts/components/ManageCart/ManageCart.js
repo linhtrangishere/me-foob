@@ -4,10 +4,59 @@ import classNames from 'classnames/bind';
 import images from '~/assets/images';
 import Button from '~/components/Button';
 import Text from '~/components/Text';
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 const cx = classNames.bind(styles);
 
 function ManageCart() {
+    const { id } = useParams();
+    const [data, setData] = useState();
+    const [dataCustomer, setDataCustomer] = useState();
+    const [dataCart, setDataCart] = useState();
+
+    useEffect(() => {
+        setTimeout(() => {
+            fetch(`http://localhost:5000/manage-cart/getCarts/${id}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then((res) => {
+                    return res.json();
+                })
+                .then((data) => setData(data));
+        }, 100);
+    }, []);
+
+    const handleOnClick = (slug) => {
+        setTimeout(() => {
+            fetch(`http://localhost:5000/manage-cart/getDetailCart/${slug}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then((res) => {
+                    return res.json();
+                })
+                .then((data) => setDataCustomer(data));
+        }, 100);
+        setTimeout(() => {
+            fetch(`http://localhost:5000/manage-cart/products/${slug}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then((res) => {
+                    return res.json();
+                })
+                .then((data) => setDataCart(data));
+        }, 100);
+    };
+
     return (
         <>
             <div className={cx('container', 'grid')}>
@@ -26,28 +75,27 @@ function ManageCart() {
                                 <th>Chi tiết</th>
                                 <th>Xác nhận</th>
                             </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>DH121212121</td>
-                                <td>227 Nguyễn Văn Cừ, P4, Quận 5, Tp HCM</td>
-                                <td>1000000</td>
-                                <td>Đang giao hàng</td>
-                                <td className={cx('more')} data-toggle="modal" data-target="#more">
-                                    Chi tiết
-                                </td>
-                                <td className={cx('submit')}>Xác nhận</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>DH121212121</td>
-                                <td>227 Nguyễn Văn Cừ, P4, Quận 5, Tp HCM</td>
-                                <td>1000000</td>
-                                <td>Đang giao hàng</td>
-                                <td className={cx('more')} data-toggle="modal" data-target="#more">
-                                    Chi tiết
-                                </td>
-                                <td className={cx('submit')}>Xác nhận</td>
-                            </tr>
+                            {data !== undefined &&
+                                Object.keys(data).map(function (key) {
+                                    return (
+                                        <tr key={key} value={data[key]}>
+                                            <td>{key + 1}</td>
+                                            <td>{data[key].MaPhieuDatHang}</td>
+                                            <td>{`${data[key].Xa}, ${data[key].Huyen}, ${data[key].ThanhPho}`}</td>
+                                            <td>{data[key].TongHoaDon}</td>
+                                            <td>{data[key].TinhTrangDonHang}</td>
+                                            <td
+                                                className={cx('more')}
+                                                data-toggle="modal"
+                                                data-target="#more"
+                                                onClick={() => handleOnClick(data[key].MaPhieuDatHang)}
+                                            >
+                                                Chi tiết
+                                            </td>
+                                            <td className={cx('submit')}>Xác nhận</td>
+                                        </tr>
+                                    );
+                                })}
                         </table>
                     </div>
                 </div>
@@ -76,19 +124,26 @@ function ManageCart() {
                             <div className={cx('separate')}></div>
                             <div className={cx('item-modal')}>
                                 <Text>
-                                    <strong>Mã đơn hàng: </strong>Anh Ngọc Trần
+                                    <strong>Mã đơn hàng: </strong>
+                                    {dataCustomer !== undefined && dataCustomer[0].MaPhieuDatHang}
                                 </Text>
                                 <Text>
-                                    <strong>Chi nhánh: </strong>Anh Ngọc Trần
+                                    <strong>Chi nhánh: </strong>
+                                    {dataCustomer !== undefined && dataCustomer[0].TenChiNhanh}
                                 </Text>
                                 <Text>
-                                    <strong>Địa chỉ chi nhánh: </strong>Anh Ngọc Trần
+                                    <strong>Địa chỉ chi nhánh: </strong>
+                                    {dataCustomer !== undefined &&
+                                        `${dataCustomer[0].XaChiNhanh}, ${dataCustomer[0].HuyenChiNhanh}, ${dataCustomer[0].ThanhPhoChiNhanh}`}
                                 </Text>
                                 <Text>
-                                    <strong>Tên khách hàng: </strong>Anh Ngọc Trần
+                                    <strong>Tên khách hàng: </strong>
+                                    {dataCustomer !== undefined && dataCustomer[0].TenKhachHang}
                                 </Text>
                                 <Text>
-                                    <strong>Địa chỉ: </strong>Anh Ngọc Trần
+                                    <strong>Địa chỉ: </strong>
+                                    {dataCustomer !== undefined &&
+                                        `${dataCustomer[0].XaDatHang}, ${dataCustomer[0].HuyenDatHang}, ${dataCustomer[0].ThanhPhoDatHang}`}
                                 </Text>
                             </div>
                             <div className={cx('separate')}></div>
@@ -96,27 +151,25 @@ function ManageCart() {
                                 <Text>
                                     <strong>Món được đặt:</strong>
                                 </Text>
-                                <div className={cx('dish')}>
-                                    <Text className={cx('name-dish')}>Cơm Tấm Thăng Trầm - Tân Trang</Text>
-                                    <Text className={cx('price-dish')}>70000</Text>
-                                </div>
-                                <div className={cx('dish')}>
-                                    <Text className={cx('name-dish')}>Cơm Tấm Thăng Trầm - Tân Trang</Text>
-                                    <Text className={cx('price-dish')}>70000</Text>
-                                </div>
-                                <div className={cx('dish')}>
-                                    <Text className={cx('name-dish')}>Cơm Tấm Thăng Trầm - Tân Trang</Text>
-                                    <Text className={cx('price-dish')}>70000</Text>
-                                </div>
-                                <div className={cx('dish')}>
-                                    <Text className={cx('name-dish')}>Cơm Tấm Thăng Trầm - Tân Trang</Text>
-                                    <Text className={cx('price-dish')}>70000</Text>
-                                </div>
+                                {dataCart !== undefined &&
+                                    Object.keys(dataCart).map(function (key) {
+                                        return (
+                                            <div className={cx('dish')} key={key} value={dataCart[key]}>
+                                                <Text className={cx('name-dish')}>{dataCart[key].TenMonAn}</Text>
+                                                <Text className={cx('price-dish')}>{dataCart[key].SoLuongMonAn}</Text>
+                                                <Text className={cx('price-dish')}>x</Text>
+                                                <Text className={cx('price-dish')}>{dataCart[key].Gia}</Text>
+                                            </div>
+                                        );
+                                    })}
+
                                 <div className={cx('dish')}>
                                     <Text className={cx('name-dish')}>
                                         <strong>Tổng tiền</strong>
                                     </Text>
-                                    <Text className={cx('price-dish')}>70000</Text>
+                                    <Text className={cx('price-dish')}>
+                                        {dataCustomer !== undefined && dataCustomer[0].TongHoaDon}
+                                    </Text>
                                 </div>
                             </div>
                             <div className={cx('separate-big')}></div>

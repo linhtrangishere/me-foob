@@ -3,8 +3,9 @@ const router = express.Router();
 
 const ManageCartController = require('../controllers/ManageCartController');
 
-router.get('/getBranch1', ManageCartController.getBranch1);
-router.get('/getBranch2', ManageCartController.getBranch2);
+router.get('/getCarts/:slug', ManageCartController.getCarts);
+router.get('/getDetailCart/:slug', ManageCartController.getDetailCart);
+router.get('/products/:slug', ManageCartController.getProducts);
 router.get('/', ManageCartController.index)
 
 module.exports = router;

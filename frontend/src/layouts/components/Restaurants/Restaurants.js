@@ -13,7 +13,7 @@ function Restaurants() {
     const [dataHor1, setDataHor1] = useState({});
     const [dataHor2, setDataHor2] = useState({});
     useEffect(() => {
-        fetch('http://localhost:5000/branch/getBranch1', {
+        fetch('http://localhost:5000/home/getBranch1', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -24,7 +24,7 @@ function Restaurants() {
                 return res.json();
             })
             .then((data) => setDataHor1(data));
-        fetch('http://localhost:5000/branch/getBranch2', {
+        fetch('http://localhost:5000/home/getBranch2', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

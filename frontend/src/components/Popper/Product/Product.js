@@ -29,7 +29,7 @@ function Product({ children }) {
                     return res.json();
                 })
                 .then((data) => setDataBranch(data));
-        }, 1000);
+        }, 100);
         setTimeout(() => {
             fetch(`http://localhost:5000/branch/getMenu/${id}`, {
                 method: 'GET',
@@ -41,7 +41,7 @@ function Product({ children }) {
                     return res.json();
                 })
                 .then((data) => setDataMenu(data));
-        }, 1000);
+        }, 100);
     }, []);
     return (
         <>
@@ -56,8 +56,10 @@ function Product({ children }) {
                 <Text className={cx('time')}>
                     <Text className={cx('time-open')}>Giờ mở cửa</Text>
                     <Text>
-                        {dataBranch !== undefined && dataBranch[0].ThoiGianMoCua} -{' '}
-                        {dataBranch !== undefined && dataBranch[0].ThoiGianDongCua}
+                        {dataBranch !== undefined && dataBranch[0].GioMoCua}:
+                        {dataBranch !== undefined && dataBranch[0].PhutMoCua}-
+                        {dataBranch !== undefined && dataBranch[0].GioDongCua}:
+                        {dataBranch !== undefined && dataBranch[0].PhutDongCua}
                     </Text>
                 </Text>
             </div>

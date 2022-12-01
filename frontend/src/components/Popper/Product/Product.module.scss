@@ -11,6 +11,7 @@
 .type {
     font-weight: 400;
     font-size: 16px;
+    margin-bottom: 12px;
     opacity: 0.8;
 }
 .list-item {
@@ -22,6 +23,11 @@
 .list {
     position: relative;
     overflow: hidden;
+}
+.time{
+    display: flex;
+    margin-top: 12px;
+    margin-bottom: 32px;
 }
 .time-open {
     font-weight: 500;

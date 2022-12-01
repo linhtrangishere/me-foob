@@ -18,11 +18,11 @@ function route(app) {
 	app.use("/checkout", checkoutRouter);
 	app.use("/contact", contactRouter);
 	app.use("/branch", branchRouter);
-	app.use("/manageCart", manageCartRouter);
-	app.use("/manageDriver", manageDriverRouter);
-	app.use("/followOrder", followOrderRouter);
-	app.use("/earningTracking", earningTrackingRouter);
-	app.use("/manageCoop", manageCoopRouter);
+	app.use("/manage-cart", manageCartRouter);
+	app.use("/manage-driver", manageDriverRouter);
+	app.use("/follow-order", followOrderRouter);
+	app.use("/earning-tracking", earningTrackingRouter);
+	app.use("/manage-coop", manageCoopRouter);
 	app.use("/restaurant", restaurantRouter);
 	app.use("/restaurants", restaurantsRouter);
 	app.use("/home", homeRouter);

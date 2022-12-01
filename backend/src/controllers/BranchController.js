@@ -7,11 +7,10 @@ class BranchController {
 		const func = async () => {
 			try {
 				let pool = await sql.connect(config);
-				let products = pool
-					.request()
-					.query(
-						`select CN.TenChiNhanh,CN.ThoiGianMoCua,CN.ThoiGianDongCua, DT.LoaiAmThuc, TD.Rating from CHINHANH CN, DOITAC DT, THUCDON TD where MaChiNhanh='${req.params.slug}' and DT.MaDoiTac=CN.MaDoiTac and DT.MaDoiTac=TD.MaDoiTac`
-					);
+				let products = pool.request().query(
+					`select CN.TenChiNhanh,datepart(HOUR,CN.ThoiGianDongCua) as GioDongCua, datepart(MINUTE,CN.ThoiGianDongCua) as PhutDongCua,
+						datepart(HOUR,CN.ThoiGianMoCua) as GioMoCua, datepart(MINUTE,CN.ThoiGianMoCua)as PhutMoCua, DT.LoaiAmThuc, TD.Rating from CHINHANH CN, DOITAC DT, THUCDON TD where MaChiNhanh='${req.params.slug}' and DT.MaDoiTac=CN.MaDoiTac and DT.MaDoiTac=TD.MaDoiTac`
+				);
 				return products;
 			} catch (error) {
 				console.log(`Error: ${error}`);

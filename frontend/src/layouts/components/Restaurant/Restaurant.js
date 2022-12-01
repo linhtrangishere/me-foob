@@ -26,7 +26,7 @@ function Restaurant() {
                     return res.json();
                 })
                 .then((data) => setName(data));
-        }, 1000);
+        }, 100);
     }, []);
     return (
         <>
