@@ -45,6 +45,12 @@ function Header({ white = false, register = false }) {
                             <img src={images.logo1} className={classesImage} alt="qqq" ref={refImg2} />
                         </Button>
                     </div>
+                    <div className = {cx('search')}>
+                        <form class="form-inline my-2 my-lg-0">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"></input>
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        </form>
+                    </div>  
                     {register && (
                         <div className={cx('btn-group')}>
                             <Button headerGroup to="/cart">
@@ -52,7 +58,7 @@ function Header({ white = false, register = false }) {
                                     className={cx('cart-icon')}
                                     style={{ backgroundImage: `url("${images.cart}")` }}
                                 ></div>
-                            </Button>
+                            </Button>  
                             <Button headerGroup>
                                 <div className={cx('login')} data-toggle="modal" data-target="#login">
                                     Đăng nhập

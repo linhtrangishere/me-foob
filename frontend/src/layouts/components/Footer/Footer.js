@@ -18,12 +18,11 @@ function Footer() {
                 <div className={cx('about')}>
                     <div className={cx('group')}>
                         <Button to="/">Về Yumi Yumi</Button>
-                        <Button to="/">Về Grab</Button>
                         <Button to="/">Blog</Button>
                     </div>
                     <div className={cx('group')}>
                         <Button to="/">Mở quán trên Yumi Yumi</Button>
-                        <Button to="/">Trở thành tài xế Grab</Button>
+                        <Button to="/">Đăng ký tài xế cho Yumi Yumi</Button>
                     </div>
                     <div className={cx('group')}>
                         <Button to="/">Trung tâm hỗ trợ</Button>
@@ -48,10 +47,7 @@ function Footer() {
                         <img src={images.appstore} alt="" />
                     </div>
                     <div className={cx('copyright')}>
-                        <Text>© 2022 Grab</Text>
-                        <Button to="/">Câu hỏi thường gặp</Button>
-                        <Text>•</Text>
-                        <Button to="/">Chính sách bảo mật</Button>
+                        <Text>© 2022 Yumi Yumi</Text>
                     </div>
                 </div>
             </div>
