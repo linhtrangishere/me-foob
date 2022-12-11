@@ -17,6 +17,11 @@
     align-items: center;
     -webkit-box-pack: center;
     justify-content: center;
+    &:hover {
+        color: #fff;
+        background-color: #ffc100;
+        border-color: #fff;
+    }
 }
 
 .wrapper {
@@ -55,15 +60,15 @@
     background-color: #fff;
     border: 1px solid #676767;
     &:hover {
-        color: #1ebd60;
-        background-color: #fff;
-        border-color: #1ebd60;
+        color: #fff;
+        background-color: #ffc100;
+        border-color: #fff;
     }
 }
 .goToTop{
     width: 42px;
     height: 42px;
-    background-color: #61d154;
+    background-color: #ffc100;
     border-radius: 50%;
     border: none;
     display: flex;
