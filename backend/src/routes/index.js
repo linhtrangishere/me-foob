@@ -11,9 +11,11 @@ const manageDriverRouter = require("./ManageDriver");
 const followOrderRouter = require("./FollowOrder");
 const earningTrackingRouter = require("./EarningTracking");
 const manageCoopRouter = require("./ManageCoop");
+const loginRouter = require("./Login");
 
 function route(app) {
 	app.use("/register", registerRouter);
+	app.use("/login", loginRouter);
 	app.use("/cart", cartRouter);
 	app.use("/checkout", checkoutRouter);
 	app.use("/contact", contactRouter);

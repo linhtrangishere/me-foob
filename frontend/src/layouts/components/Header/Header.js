@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './Header.module.scss';
 
 import classNames from 'classnames/bind';
@@ -35,6 +35,34 @@ function Header({ white = false, register = false }) {
         white,
     });
 
+    const [name, setName] = useState('');
+
+    const [login, setLogin] = useState(false);
+
+    const refUser = useRef();
+    const refPassword = useRef();
+
+    const handleSubmit = async (e) => {
+        fetch('http://localhost:5000/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
+            body: JSON.stringify({
+                user: refUser.current.value,
+                password: refPassword.current.value,
+            }),
+        })
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                setName(data.name)
+                setLogin(true);
+            });
+    };
+
     return (
         <>
             <header className={cx('section-container')} ref={refChangeBackgroundColor}>
@@ -53,14 +81,23 @@ function Header({ white = false, register = false }) {
                                     style={{ backgroundImage: `url("${images.cart}")` }}
                                 ></div>
                             </Button>
-                            <Button headerGroup>
-                                <div className={cx('login')} data-toggle="modal" data-target="#login">
-                                    Đăng nhập
-                                </div>
-                            </Button>
-                            <Button headerGroup href="/register">
-                                <div className={cx('login')}>Đăng ký</div>
-                            </Button>
+                            {!login && (
+                                <>
+                                    <Button headerGroup>
+                                        <div className={cx('login')} data-toggle="modal" data-target="#login">
+                                            Đăng nhập
+                                        </div>
+                                    </Button>
+                                    <Button headerGroup href="/register">
+                                        <div className={cx('login')}>Đăng ký</div>
+                                    </Button>
+                                </>
+                            )}
+                            {login && (
+                                <>
+                                    <Button className={cx('name-user')}>{name}</Button>
+                                </>
+                            )}
                         </div>
                     )}
                 </div>
@@ -97,18 +134,30 @@ function Header({ white = false, register = false }) {
                             <form>
                                 {/* <!-- Email input --> */}
                                 <div className="form-outline mb-4">
-                                    <input type="email" id="form2Example1" className="form-control" />
                                     <label className="form-label" htmlFor="form2Example1">
-                                        Email address
+                                        Phone Number
                                     </label>
+                                    <input
+                                        type="email"
+                                        id="form2Example1"
+                                        className="form-control"
+                                        required
+                                        ref={refUser}
+                                    />
                                 </div>
 
                                 {/* <!-- Password input --> */}
                                 <div className="form-outline mb-4">
-                                    <input type="password" id="form2Example2" className="form-control" />
                                     <label className="form-label" htmlFor="form2Example2">
                                         Password
                                     </label>
+                                    <input
+                                        type="password"
+                                        id="form2Example2"
+                                        className="form-control"
+                                        required
+                                        ref={refPassword}
+                                    />
                                 </div>
 
                                 {/* <!-- 2 column grid layout for inline styling --> */}
@@ -121,7 +170,6 @@ function Header({ white = false, register = false }) {
                                                 type="checkbox"
                                                 value=""
                                                 id="form2Example31"
-                                                checked
                                             />
                                             <label className="form-check-label" htmlFor="form2Example31">
                                                 Remember me
@@ -142,6 +190,7 @@ function Header({ white = false, register = false }) {
                                     type="button"
                                     className="btn btn-primary btn-block mb-4"
                                     style={{ backgroundColor: 'var(--primary-color)' }}
+                                    onClick={handleSubmit}data-dismiss="modal" aria-label="Close"
                                 >
                                     Sign in
                                 </button>
