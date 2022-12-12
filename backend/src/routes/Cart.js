@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-const CartControler = require('../controllers/CartController');
+const CartController = require('../controllers/CartController');
 
-router.get('/getBranch1', CartControler.getBranch1);
-router.get('/getBranch2', CartControler.getBranch2);
-router.get('/', CartControler.index)
+router.get('/getBranch1', CartController.getBranch1);
+router.get('/getBranch2', CartController.getBranch2);
+router.get('/', CartController.index)
 
 module.exports = router;

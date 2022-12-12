@@ -21,7 +21,7 @@ class ContactController {
 			res.json(ress.recordset);
 		});
 	}
-	// [GET] /contact/updateDateline/:slug
+	// [POST] /contact/updateDateline/:slug
 	updateDateline(req, res) {
 		const func = async () => {
 			try {
@@ -29,7 +29,7 @@ class ContactController {
 				let result = pool
 					.request()
 					.input("MAHD", sql.VarChar(10), req.params.slug)
-					.input("NGAYHETHAN", sql.Date, "2023-6-13")
+					.input("NGAYHETHAN", sql.Date, req.body.date)
 					.execute("dbo.SP_UPDATE_HOPDONG");
 				return result;
 			} catch (error) {

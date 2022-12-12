@@ -1,6 +1,6 @@
 const config = require("../DbConfig");
 const sql = require("mssql");
-class HomeControler {
+class HomeController {
 	async index(req, res) {}
 	// [GET] /home/getBranch1
 	getBranch1(req, res) {
@@ -42,4 +42,4 @@ class HomeControler {
 	}
 }
 
-module.exports = new HomeControler();
+module.exports = new HomeController();

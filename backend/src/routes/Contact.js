@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-const ContactControler = require('../controllers/ContactController');
+const ContactController = require('../controllers/ContactController');
 
-router.get('/getDatelineFix/:slug', ContactControler.getDatelineFix);
-router.get('/updateDateline/:slug', ContactControler.updateDateline);
-router.get('/getDateline/:slug', ContactControler.getDateline);
-router.get('/getBranch/:slug', ContactControler.getBranch);
-router.get('/', ContactControler.index)
+router.get('/getDatelineFix/:slug', ContactController.getDatelineFix);
+router.post('/updateDateline/:slug', ContactController.updateDateline);
+router.get('/getDateline/:slug', ContactController.getDateline);
+router.get('/getBranch/:slug', ContactController.getBranch);
+router.get('/', ContactController.index)
 
 module.exports = router;

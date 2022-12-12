@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-const RegisterControler = require('../controllers/RegisterController');
+const RegisterController = require('../controllers/RegisterController');
 
-router.get('/getBranch1', RegisterControler.getBranch1);
-router.get('/getBranch2', RegisterControler.getBranch2);
-router.get('/', RegisterControler.index)
+router.get('/getBranch1', RegisterController.getBranch1);
+router.get('/getBranch2', RegisterController.getBranch2);
+router.get('/', RegisterController.index)
 
 module.exports = router;

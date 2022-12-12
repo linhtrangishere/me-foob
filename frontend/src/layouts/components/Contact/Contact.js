@@ -4,7 +4,7 @@ import classNames from 'classnames/bind';
 import Button from '~/components/Button';
 import Text from '~/components/Text';
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const cx = classNames.bind(styles);
 
@@ -13,8 +13,9 @@ function Contact() {
     const [data, setData] = useState();
     const [dayStart, setDayStart] = useState();
     const [dayEnd, setDayEnd] = useState();
-
     const [testTransaction, setTestTransaction] = useState(true);
+
+    const refInput = useRef();
 
     function convertDate(day) {
         var date = day.slice(0, 10);
@@ -58,7 +59,7 @@ function Contact() {
                 })
                 .then((data) => {
                     setDayEnd(convertDate(data.output.NGAYHETHAN));
-                    alert('Successful')
+                    alert('Successful');
                 });
         else
             fetch(`http://localhost:5000/contact/getDatelineFix/${data[0].MaHopDong}`, {
@@ -72,7 +73,7 @@ function Contact() {
                 })
                 .then((data) => {
                     setDayEnd(convertDate(data.output.NGAYHETHAN));
-                    alert('Successful')
+                    alert('Successful');
                 });
     };
     const [deadline, setDeadline] = useState();
@@ -84,10 +85,11 @@ function Contact() {
     }, [dayEnd]);
     const handleOnClickUpdate = () => {
         fetch(`http://localhost:5000/contact/updateDateline/${data[0].MaHopDong}`, {
-            method: 'GET',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
+            body: JSON.stringify({ date: refInput.current.value }),
         })
             .then((res) => {
                 return res.json();
@@ -187,7 +189,12 @@ function Contact() {
                         <div className={cx('box')}>
                             <div className={cx('box-cover')}>
                                 <Text className={cx('text')}>Ngày hết hợp đồng</Text>
-                                <input type="date" value={deadline !== undefined && deadline} />
+                                <input type="date" value={deadline !== undefined && deadline} onChange={
+                                    (e)=>{
+                                        console.log(e.target.value)
+                                        setDeadline(e.target.value)
+                                    }
+                                } ref={refInput} />
                             </div>
                         </div>
                     </div>
