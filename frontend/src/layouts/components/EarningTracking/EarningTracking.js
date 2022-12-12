@@ -52,7 +52,6 @@ function EarningTracking() {
                                 <th>Địa chỉ giao</th>
                                 <th>Phí vận chuyển</th>
                                 <th>Chi tiết</th>
-                                <th>Xác nhận</th>
                             </tr>
                             <tr>
                                 <td>1</td>
@@ -63,7 +62,6 @@ function EarningTracking() {
                                 <td className={cx('more')} data-toggle="modal" data-target="#more">
                                     Chi tiết
                                 </td>
-                                <td className={cx('submit')}>Xác nhận</td>
                             </tr>
                             <tr>
                                 <td>1</td>
@@ -74,7 +72,6 @@ function EarningTracking() {
                                 <td className={cx('more')} data-toggle="modal" data-target="#more">
                                     Chi tiết
                                 </td>
-                                <td className={cx('submit')}>Xác nhận</td>
                             </tr>
                         </table>
                     </div>
