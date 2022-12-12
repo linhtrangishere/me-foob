@@ -1,11 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './Product.module.scss';
 
 import classNames from 'classnames/bind';
 import Text from '~/components/Text';
 import Star from '~/components/Star';
-import images from '~/assets/images';
-import Button from '~/components/Button';
 import Item from './Item';
 import { useParams } from 'react-router-dom';
 
