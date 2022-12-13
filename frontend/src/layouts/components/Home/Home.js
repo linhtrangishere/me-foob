@@ -38,7 +38,7 @@ function Home({ children }) {
 
     return (
         <>
-            <div className={cx('background')}>
+            <div className={cx('background')} onClick={()=>{console.log(localStorage.getItem('userName'));}}>
                 <div
                     className={cx('background-image')}
                     style={{ backgroundImage: `url("${images.background}")` }}

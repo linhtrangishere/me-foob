@@ -6,10 +6,18 @@ class BranchController {
 	getBranch(req, res) {
 		const func = async () => {
 			try {
-				let pool = await sql.connect(config);
-				let products = pool.request().query(
-					`select CN.TenChiNhanh,datepart(HOUR,CN.ThoiGianDongCua) as GioDongCua, datepart(MINUTE,CN.ThoiGianDongCua) as PhutDongCua,
+				let products;
+				await sql.connect(config.config).then((conn) =>
+					conn
+						.request()
+						.query(
+							`select CN.TenChiNhanh,datepart(HOUR,CN.ThoiGianDongCua) as GioDongCua, datepart(MINUTE,CN.ThoiGianDongCua) as PhutDongCua,
 						datepart(HOUR,CN.ThoiGianMoCua) as GioMoCua, datepart(MINUTE,CN.ThoiGianMoCua)as PhutMoCua, DT.LoaiAmThuc, TD.Rating from CHINHANH CN, DOITAC DT, THUCDON TD where MaChiNhanh='${req.params.slug}' and DT.MaDoiTac=CN.MaDoiTac and DT.MaDoiTac=TD.MaDoiTac`
+						)
+						.then((v) => {
+							products = v;
+						})
+						.then(() => conn.close())
 				);
 				return products;
 			} catch (error) {
@@ -24,12 +32,18 @@ class BranchController {
 	getMenu(req, res) {
 		const func = async () => {
 			try {
-				let pool = await sql.connect(config);
-				let products = pool
-					.request()
-					.query(
-						`select MA.TenMonAn, MA.Gia, MA.MieuTaMon from CHINHANH CN, DOITAC DT, THUCDON TD, MONAN MA where MaChiNhanh='${req.params.slug}' and DT.MaDoiTac=CN.MaDoiTac and DT.MaDoiTac=TD.MaDoiTac and MA.MaThucDon=TD.MaThucDon`
-					);
+				let products;
+				await sql.connect(config.config).then((conn) =>
+					conn
+						.request()
+						.query(
+							`select MA.TenMonAn, MA.Gia, MA.MieuTaMon from CHINHANH CN, DOITAC DT, THUCDON TD, MONAN MA where MaChiNhanh='${req.params.slug}' and DT.MaDoiTac=CN.MaDoiTac and DT.MaDoiTac=TD.MaDoiTac and MA.MaThucDon=TD.MaThucDon`
+						)
+						.then((v) => {
+							products = v;
+						})
+						.then(() => conn.close())
+				);
 				return products;
 			} catch (error) {
 				console.log(`Error: ${error}`);
@@ -42,12 +56,18 @@ class BranchController {
 	getName(req, res) {
 		const func = async () => {
 			try {
-				let pool = await sql.connect(config);
-				let products = pool
-					.request()
-					.query(
-						`select TenChiNhanh from CHINHANH where MaChiNhanh='${req.params.slug}'`
-					);
+				let products;
+				await sql.connect(config.config).then((conn) =>
+					conn
+						.request()
+						.query(
+							`select TenChiNhanh from CHINHANH where MaChiNhanh='${req.params.slug}'`
+						)
+						.then((v) => {
+							products = v;
+						})
+						.then(() => conn.close())
+				);
 				return products;
 			} catch (error) {
 				console.log(`Error: ${error}`);

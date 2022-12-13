@@ -6,12 +6,18 @@ class ManageCartController {
 	getCarts(req, res) {
 		const func = async () => {
 			try {
-				let pool = await sql.connect(config);
-				let products = pool
-					.request()
-					.query(
-						`select PDH.MaPhieuDatHang, PDH.TongHoaDon, PDH.TinhTrangDonHang, DC.ThanhPho, DC.Huyen, DC.Xa from PHIEUDATHANG PDH, DOITAC DT, CHINHANH CN, DIACHI DC where DT.MaDoiTac='${req.params.slug}' AND CN.MaChiNhanh=PDH.MaChiNhanh AND CN.MaDoiTac=DT.MaDoiTac and DC.MaDiaChi = PDH.DiaChiGH`
-					);
+				let products;
+				await sql.connect(config.config).then((conn) =>
+					conn
+						.request()
+						.query(
+							`select PDH.MaPhieuDatHang, PDH.TongHoaDon, PDH.TinhTrangDonHang, DC.ThanhPho, DC.Huyen, DC.Xa from PHIEUDATHANG PDH, DOITAC DT, CHINHANH CN, DIACHI DC where DT.MaDoiTac='${req.params.slug}' AND CN.MaChiNhanh=PDH.MaChiNhanh AND CN.MaDoiTac=DT.MaDoiTac and DC.MaDiaChi = PDH.DiaChiGH`
+						)
+						.then((v) => {
+							products = v;
+						})
+						.then(() => conn.close())
+				);
 				return products;
 			} catch (error) {
 				console.log(`Error: ${error}`);
@@ -25,12 +31,18 @@ class ManageCartController {
 	getDetailCart(req, res) {
 		const func = async () => {
 			try {
-				let pool = await sql.connect(config);
-				let products = pool
-					.request()
-					.query(
-						`select PDH.MaPhieuDatHang, PDH.TongHoaDon,CN.TenChiNhanh, DC1.ThanhPho as ThanhPhoDatHang, DC1.Huyen HuyenDatHang, DC1.Xa XaDatHang, DC2.ThanhPho as ThanhPhoChiNhanh, DC2.Huyen as HuyenChiNhanh, DC2.Xa XaChiNhanh, KH.TenKhachHang from dbo.PHIEUDATHANG PDH, dbo.CHINHANH CN, dbo.DIACHI DC1, dbo.DIACHI DC2, dbo.KHACHHANG KH where PDH.MaPhieuDatHang='${req.params.slug}' AND CN.MaChiNhanh=PDH.MaChiNhanh and DC1.MaDiaChi = PDH.DiaChiGH and DC2.MaDiaChi = CN.MaDiaChi and KH.MaKhachHang=PDH.MaKhachHang`
-					);
+				let products;
+				await sql.connect(config.config).then((conn) =>
+					conn
+						.request()
+						.query(
+							`select PDH.MaPhieuDatHang, PDH.TongHoaDon,CN.TenChiNhanh, DC1.ThanhPho as ThanhPhoDatHang, DC1.Huyen HuyenDatHang, DC1.Xa XaDatHang, DC2.ThanhPho as ThanhPhoChiNhanh, DC2.Huyen as HuyenChiNhanh, DC2.Xa XaChiNhanh, KH.TenKhachHang from dbo.PHIEUDATHANG PDH, dbo.CHINHANH CN, dbo.DIACHI DC1, dbo.DIACHI DC2, dbo.KHACHHANG KH where PDH.MaPhieuDatHang='${req.params.slug}' AND CN.MaChiNhanh=PDH.MaChiNhanh and DC1.MaDiaChi = PDH.DiaChiGH and DC2.MaDiaChi = CN.MaDiaChi and KH.MaKhachHang=PDH.MaKhachHang`
+						)
+						.then((v) => {
+							products = v;
+						})
+						.then(() => conn.close())
+				);
 				return products;
 			} catch (error) {
 				console.log(`Error: ${error}`);
@@ -44,12 +56,18 @@ class ManageCartController {
 	getProducts(req, res) {
 		const func = async () => {
 			try {
-				let pool = await sql.connect(config);
-				let products = pool
-					.request()
-					.query(
-						`select MA.TenMonAn, CTPDH.SoLuongMonAn, MA.Gia from dbo.CHITIETPHIEUDATHANG CTPDH, dbo.MONAN MA where CTPDH.MaPhieuDatHang='${req.params.slug}' and CTPDH.MaMonAn = MA.MaMonAn`
-					);
+				let products;
+				await sql.connect(config.config).then((conn) =>
+					conn
+						.request()
+						.query(
+							`select MA.TenMonAn, CTPDH.SoLuongMonAn, MA.Gia from dbo.CHITIETPHIEUDATHANG CTPDH, dbo.MONAN MA where CTPDH.MaPhieuDatHang='${req.params.slug}' and CTPDH.MaMonAn = MA.MaMonAn`
+						)
+						.then((v) => {
+							products = v;
+						})
+						.then(() => conn.close())
+				);
 				return products;
 			} catch (error) {
 				console.log(`Error: ${error}`);

@@ -4,6 +4,8 @@ import styles from './Header.module.scss';
 import classNames from 'classnames/bind';
 import images from '~/assets/images';
 import Button from '~/components/Button';
+import Text from '~/components/Text';
+import Login from '~/components/Login';
 
 const cx = classNames.bind(styles);
 
@@ -35,34 +37,6 @@ function Header({ white = false, register = false }) {
         white,
     });
 
-    const [name, setName] = useState('');
-
-    const [login, setLogin] = useState(false);
-
-    const refUser = useRef();
-    const refPassword = useRef();
-
-    const handleSubmit = async (e) => {
-        fetch('http://localhost:5000/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
-            body: JSON.stringify({
-                user: refUser.current.value,
-                password: refPassword.current.value,
-            }),
-        })
-            .then((res) => {
-                return res.json();
-            })
-            .then((data) => {
-                setName(data.name)
-                setLogin(true);
-            });
-    };
-
     return (
         <>
             <header className={cx('section-container')} ref={refChangeBackgroundColor}>
@@ -81,23 +55,8 @@ function Header({ white = false, register = false }) {
                                     style={{ backgroundImage: `url("${images.cart}")` }}
                                 ></div>
                             </Button>
-                            {!login && (
-                                <>
-                                    <Button headerGroup>
-                                        <div className={cx('login')} data-toggle="modal" data-target="#login">
-                                            Đăng nhập
-                                        </div>
-                                    </Button>
-                                    <Button headerGroup href="/register">
-                                        <div className={cx('login')}>Đăng ký</div>
-                                    </Button>
-                                </>
-                            )}
-                            {login && (
-                                <>
-                                    <Button className={cx('name-user')}>{name}</Button>
-                                </>
-                            )}
+
+                            <Login/>
                         </div>
                     )}
                 </div>
@@ -111,103 +70,6 @@ function Header({ white = false, register = false }) {
                 >
                     <img src={images.up} alt="" />
                 </Button>
-            </div>
-            <div
-                className="modal fade"
-                id="login"
-                tabIndex="-1"
-                role="dialog"
-                aria-labelledby="exampleModalLongTitle"
-                aria-hidden="true"
-            >
-                <div className="modal-dialog" role="document">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalScrollableTitle">
-                                Đăng nhập
-                            </h5>
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div className="modal-body">
-                            <form>
-                                {/* <!-- Email input --> */}
-                                <div className="form-outline mb-4">
-                                    <label className="form-label" htmlFor="form2Example1">
-                                        Phone Number
-                                    </label>
-                                    <input
-                                        type="email"
-                                        id="form2Example1"
-                                        className="form-control"
-                                        required
-                                        ref={refUser}
-                                    />
-                                </div>
-
-                                {/* <!-- Password input --> */}
-                                <div className="form-outline mb-4">
-                                    <label className="form-label" htmlFor="form2Example2">
-                                        Password
-                                    </label>
-                                    <input
-                                        type="password"
-                                        id="form2Example2"
-                                        className="form-control"
-                                        required
-                                        ref={refPassword}
-                                    />
-                                </div>
-
-                                {/* <!-- 2 column grid layout for inline styling --> */}
-                                <div className="row mb-4">
-                                    <div className="col d-flex justify-content-center">
-                                        {/* <!-- Checkbox --> */}
-                                        <div className="form-check">
-                                            <input
-                                                className="form-check-input"
-                                                type="checkbox"
-                                                value=""
-                                                id="form2Example31"
-                                            />
-                                            <label className="form-check-label" htmlFor="form2Example31">
-                                                Remember me
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <div className="col">
-                                        {/* <!-- Simple link --> */}
-                                        <a href="#!" style={{ color: 'var(--primary-color)' }}>
-                                            Forgot password?
-                                        </a>
-                                    </div>
-                                </div>
-
-                                {/* <!-- Submit button --> */}
-                                <button
-                                    type="button"
-                                    className="btn btn-primary btn-block mb-4"
-                                    style={{ backgroundColor: 'var(--primary-color)' }}
-                                    onClick={handleSubmit}data-dismiss="modal" aria-label="Close"
-                                >
-                                    Sign in
-                                </button>
-
-                                {/* <!-- Register buttons --> */}
-                                <div className="text-center">
-                                    <p>
-                                        Not a member?
-                                        <a href="/register" style={{ color: 'var(--primary-color)' }}>
-                                            Register
-                                        </a>
-                                    </p>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
             </div>
         </>
     );

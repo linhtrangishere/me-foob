@@ -6,12 +6,18 @@ class ContactController {
 	getBranch(req, res) {
 		const func = async () => {
 			try {
-				let pool = await sql.connect(config);
-				let products = pool
-					.request()
-					.query(
-						`SELECT HP.MaHopDong, HP.NgayKichHoat, HP.NgayHetHan, DT.MaSoThue, DT.NguoiDaiDien, DT.SoLuongChiNhanh, DT.Diachikinhdoanh, DT.STKNganHang, DT.NganHang FROM dbo.DOITAC DT, dbo.HOPDONG HP where DT.MaDoiTac=HP.MaDoiTac and DT.MaDoiTac='${req.params.slug}'`
-					);
+				let products;
+				await sql.connect(config.config).then((conn) =>
+					conn
+						.request()
+						.query(
+							`SELECT HP.MaHopDong, HP.NgayKichHoat, HP.NgayHetHan, DT.MaSoThue, DT.NguoiDaiDien, DT.SoLuongChiNhanh, DT.Diachikinhdoanh, DT.STKNganHang, DT.NganHang FROM dbo.DOITAC DT, dbo.HOPDONG HP where DT.MaDoiTac=HP.MaDoiTac and DT.MaDoiTac='${req.params.slug}'`
+						)
+						.then((v) => {
+							products = v;
+						})
+						.then(() => conn.close())
+				);
 				return products;
 			} catch (error) {
 				console.log(`Error: ${error}`);
@@ -25,12 +31,18 @@ class ContactController {
 	updateDateline(req, res) {
 		const func = async () => {
 			try {
-				let pool = await sql.connect(config);
-				let result = pool
-					.request()
-					.input("MAHD", sql.VarChar(10), req.params.slug)
-					.input("NGAYHETHAN", sql.Date, req.body.date)
-					.execute("dbo.SP_UPDATE_HOPDONG");
+				let result;
+				await sql.connect(config.config).then((conn) =>
+					conn
+						.request()
+						.input("MAHD", sql.VarChar(10), req.params.slug)
+						.input("NGAYHETHAN", sql.Date, req.body.date)
+						.execute("dbo.SP_UPDATE_HOPDONG")
+						.then((v) => {
+							products = v;
+						})
+						.then(() => conn.close())
+				);
 				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
@@ -44,13 +56,18 @@ class ContactController {
 	getDateline(req, res) {
 		const func = async () => {
 			try {
-				var date = new Date();
-				let pool = await sql.connect(config);
-				let result = pool
-					.request()
-					.input("MAHD", sql.VarChar(10), req.params.slug)
-					.output("NGAYHETHAN", sql.Date)
-					.execute("dbo.SP_SELECT_HOPDONG");
+				let result;
+				await sql.connect(config.config).then((conn) =>
+					conn
+						.request()
+						.input("MAHD", sql.VarChar(10), req.params.slug)
+						.output("NGAYHETHAN", sql.Date)
+						.execute("dbo.SP_SELECT_HOPDONG")
+						.then((v) => {
+							products = v;
+						})
+						.then(() => conn.close())
+				);
 				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
@@ -64,13 +81,18 @@ class ContactController {
 	getDatelineFix(req, res) {
 		const func = async () => {
 			try {
-				var date = new Date();
-				let pool = await sql.connect(config);
-				let result = pool
-					.request()
-					.input("MAHD", sql.VarChar(10), req.params.slug)
-					.output("NGAYHETHAN", sql.Date)
-					.execute("dbo.SP_SELECT_HOPDONG_FIX");
+				let result;
+				await sql.connect(config.config).then((conn) =>
+					conn
+						.request()
+						.input("MAHD", sql.VarChar(10), req.params.slug)
+						.output("NGAYHETHAN", sql.Date)
+						.execute("dbo.SP_SELECT_HOPDONG_FIX")
+						.then((v) => {
+							products = v;
+						})
+						.then(() => conn.close())
+				);
 				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);

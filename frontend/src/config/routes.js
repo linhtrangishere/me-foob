@@ -12,6 +12,7 @@ const routes = {
     followOrder: '/follow-order',
     earningTracking: '/earning-tracking',
     manageCoop: '/manage-coop',
+    login: '/login',
 };
 
 export default routes;
