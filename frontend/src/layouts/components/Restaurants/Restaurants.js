@@ -6,6 +6,8 @@ import Button from '~/components/Button';
 import { ListItem } from '~/components/Popper';
 import Text from '~/components/Text';
 import { useEffect, useState } from 'react';
+import ProductCoop from '~/components/Popper/ProductCoop';
+
 
 const cx = classNames.bind(styles);
 
@@ -38,7 +40,7 @@ function Restaurants() {
     }, []);
     return (
         <>
-            <div className={cx('address','container', 'grid')}>
+            <div className={cx('address', 'container', 'grid')}>
                 <Button to="/">Trang chủ</Button>
                 <Text className={cx('img')}>
                     <img src={images.right} alt="" />
@@ -46,16 +48,26 @@ function Restaurants() {
                 <Text>Nhà hàng</Text>
             </div>
             <div className={cx('container', 'grid')}>
-                <ListItem
-                    title="Mã khuyến  mãi Yumi Yumi ở "
-                    data={dataHor1}
-                />
-            </div>
-            <div className={cx('container', 'grid')}>
-                <ListItem
-                    title="Mã khuyến  mãi Yumi Yumi ở "
-                    data={dataHor2}
-                />
+                <div className={cx('title')}>
+                    <h1>Nhà hàng</h1>
+                </div>
+                <div className={cx('content')}>
+                    <Text>
+                        Tên nhà hàng: <Button className={cx('btn-change')}>Đổi</Button>
+                    </Text>
+                    <Text>
+                        Thể loại ẩm thực: <Button className={cx('btn-change')}>Đổi</Button>
+                    </Text>
+                    <Text>
+                        Liên hệ: <Button className={cx('btn-change')}>Đổi</Button>
+                    </Text>
+                </div>
+                <ProductCoop />
+                <div className={cx('btn-submit')}>
+                    <Button className={cx('btn')} to="/checkout">
+                        Xác nhận
+                    </Button>
+                </div>
             </div>
         </>
     );
