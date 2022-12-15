@@ -11,7 +11,6 @@ function Register() {
     const [customer, setCustomer] = useState(true);
     const [driver, setDriver] = useState(false);
     const [coop, setCoop] = useState(false);
-
     const [errPassword1, setErrPassword1] = useState(true);
     const [errPassword2, setErrPassword2] = useState(true);
     const [errPassword3, setErrPassword3] = useState(true);
@@ -227,11 +226,14 @@ function Register() {
             });
     };
 
+
     const [provinces, setProvinces] = useState();
     const [districts, setDistricts] = useState();
     const [wards, setWards] = useState();
 
     const [nameBank, setNameBank] = useState();
+    const [provincesBank, setProvincesBank] = useState();
+    const [branch, setBranch] = useState();
 
     useEffect(() => {
         const fetchApi = async () => {
@@ -245,10 +247,10 @@ function Register() {
     }, []);
 
     const handleSelectProvinces = () => {
-        var value = document.getElementById('provinces').value;
-        var results = provinces.find((x) => x.name === value);
         const fetchApi = async () => {
-            const result = await fetch(`https://provinces.open-api.vn/api/p/${results.code}?depth=2`)
+            const result = await fetch(
+                `https://provinces.open-api.vn/api/p/${document.getElementById('provinces').value}?depth=2`,
+            )
                 .then((response) => response.json())
                 .then((data) => data);
             setDistricts(result.districts);
@@ -257,13 +259,32 @@ function Register() {
     };
 
     const handleSelectDistricts = () => {
-        var value = document.getElementById('districts').value;
-        var results = districts.find((x) => x.name === value);
         const fetchApi = async () => {
-            const result = await fetch(`https://provinces.open-api.vn/api/d/${results.code}?depth=2`)
+            const result = await fetch(
+                `https://provinces.open-api.vn/api/d/${document.getElementById('districts').value}?depth=2`,
+            )
                 .then((response) => response.json())
                 .then((data) => data);
             setWards(result.wards);
+        };
+        fetchApi();
+    };
+
+    const handleSelectNameBank = () => {
+        const fetchApi = async () => {
+            var result = document.getElementById('name-bank').value;
+            result = nameBank.find(({ MaNganHang }) => MaNganHang === `${result}`);
+            setProvincesBank(result.province);
+        };
+        fetchApi();
+    };
+    const handleSelectProvincesBank = () => {
+        const fetchApi = async () => {
+            var result1 = document.getElementById('name-bank').value;
+            var result2 = document.getElementById('provinces-bank').value;
+            var result = nameBank.find(({ MaNganHang }) => MaNganHang === `${result1}`);
+            result = result.province.find(({ TenTinhThanh }) => TenTinhThanh === result2);
+            setBranch(result.branch);
         };
         fetchApi();
     };
@@ -284,12 +305,11 @@ function Register() {
             setDriver(false);
             setCoop(true);
         }
-        refLink &&
-            // eslint-disable-next-line array-callback-return
-            refLink.current.map((value, indexSub) => {
-                if (indexSub === index) refLink.current[indexSub].classList.add(cx('active'));
-                else refLink.current[indexSub].classList.remove(cx('active'));
-            });
+        // eslint-disable-next-line array-callback-return
+        refLink&&refLink.current.map((value, indexSub) => {
+            if (indexSub === index) refLink.current[indexSub].classList.add(cx('active'));
+            else refLink.current[indexSub].classList.remove(cx('active'));
+        });
     };
     // eslint-disable-next-line no-const-assign
     refLink.current = [];
@@ -321,105 +341,135 @@ function Register() {
                         <div className={cx('content')}>
                             <div className={cx('text-input')}>
                                 <Text className={cx('text')}>Họ tên</Text>
-                                <input type="text" name="Họ tên" onChange={setInputKhachHang} value={KhachHang.name} />
+                                <input type="text" />
                             </div>
                             <div className={cx('text-input')}>
                                 <Text className={cx('text')}>Email</Text>
-                                <input type="email" name="email" onChange={setInputKhachHang} value={KhachHang.email} />
+                                <input type="email" />
+                            </div>
+                            <div className={cx('text-input')}>
+                                <Text className={cx('text')}>Tài khoản ngân hàng</Text>
+                                <select id="name-bank" onChange={handleSelectNameBank}>
+                                    <option value={0} key={0}>
+                                        Tên Ngân Hàng
+                                    </option>
+                                    {
+                                        // eslint-disable-next-line array-callback-return
+                                        nameBank&&nameBank.map((index) => {
+                                            return (
+                                                <option value={Number(index.MaNganHang)} key={Number(index.MaNganHang)}>
+                                                    {index.TenNH}
+                                                </option>
+                                            );
+                                        })
+                                    }
+                                </select>
+                                {
+                                    <select id="provinces-bank" onChange={handleSelectProvincesBank}>
+                                        <option value={0} key={0}>
+                                            Tỉnh thành
+                                        </option>
+                                        {
+                                            // eslint-disable-next-line array-callback-return
+                                            provincesBank &&
+                                                provincesBank&&provincesBank.map((index) => {
+                                                    return (
+                                                        <option value={index.TenTinhThanh} key={index.Code}>
+                                                            {index.TenTinhThanh}
+                                                        </option>
+                                                    );
+                                                })
+                                        }
+                                    </select>
+                                }
+                                {
+                                    <select id="branch-bank">
+                                        <option value={0} key={0}>
+                                            Chi nhánh
+                                        </option>
+                                        {
+                                            // eslint-disable-next-line array-callback-return
+                                            branch &&
+                                                branch&&branch.map((index) => {
+                                                    return (
+                                                        <option value={index.TenChiNhanh} key={index.MaChiNhanh}>
+                                                            {index.TenChiNhanh}
+                                                        </option>
+                                                    );
+                                                })
+                                        }
+                                    </select>
+                                }
+                                <input type="text" placeholder="Số tài khoản" />
                             </div>
                             <div className={cx('text-input')}>
                                 <Text className={cx('text')}>Địa chỉ</Text>
-                                <select
-                                    id="provinces"
-                                    name="tinh"
-                                    onChange={(e) => {
-                                        handleSelectProvinces();
-                                        setInputKhachHang(e);
-                                    }}
-                                >
-                                    <option value={''} key={0}>
+                                <select id="provinces" onChange={handleSelectProvinces}>
+                                    <option value={0} key={0}>
                                         Thành phố
                                     </option>
                                     {
                                         // eslint-disable-next-line array-callback-return
-                                        provinces &&
-                                            provinces.map((index) => {
-                                                return (
-                                                    <option value={index.name} key={index.code}>
-                                                        {index.name}
-                                                    </option>
-                                                );
-                                            })
+                                        provinces&&provinces.map((index) => {
+                                            return (
+                                                <option value={index.code} key={index.code}>
+                                                    {index.name}
+                                                </option>
+                                            );
+                                        })
                                     }
                                 </select>
-                                <select
-                                    id="districts"
-                                    name="huyen"
-                                    onChange={(e) => {
-                                        handleSelectDistricts();
-                                        setInputKhachHang(e);
-                                    }}
-                                >
-                                    <option value={''} key={0}>
-                                        Quận/Huyện
-                                    </option>
-                                    {
-                                        // eslint-disable-next-line array-callback-return
-                                        districts &&
-                                            districts.map((index) => {
-                                                return (
-                                                    <option value={index.name} key={index.code}>
-                                                        {index.name}
-                                                    </option>
-                                                );
-                                            })
-                                    }
-                                </select>
-                                <select id="wards" name="xa" onChange={setInputKhachHang}>
-                                    <option value={''} key={0}>
-                                        Phường/Xã
-                                    </option>
-                                    {
-                                        // eslint-disable-next-line array-callback-return
-                                        wards &&
+                                {
+                                    <select id="districts" onChange={handleSelectDistricts}>
+                                        <option value={0} key={0}>
+                                            Quận/Huyện
+                                        </option>
+                                        {
+                                            // eslint-disable-next-line array-callback-return
+                                            districts &&
+                                                districts&&districts.map((index) => {
+                                                    return (
+                                                        <option value={index.code} key={index.code}>
+                                                            {index.name}
+                                                        </option>
+                                                    );
+                                                })
+                                        }
+                                    </select>
+                                }
+
+                                {
+                                    <select id="wards" onChange={handleSelectDistricts}>
+                                        <option value={0} key={0}>
+                                            Phường/Xã
+                                        </option>
+                                        {
+                                            // eslint-disable-next-line array-callback-return
                                             wards &&
-                                            wards.map((index) => {
-                                                return (
-                                                    <option value={index.name} key={index.code}>
-                                                        {index.name}
-                                                    </option>
-                                                );
-                                            })
-                                    }
-                                </select>
+                                                wards&&wards.map((index) => {
+                                                    return (
+                                                        <option value={index.code} key={index.code}>
+                                                            {index.name}
+                                                        </option>
+                                                    );
+                                                })
+                                        }
+                                    </select>
+                                }
+
+                                <input type="text" placeholder="Số nhà, Tên đường, Khu phố" />
                             </div>
                             <div className={cx('text-input')}>
                                 <Text className={cx('text')}>Số điện thoại</Text>
-                                <input
-                                    type="text"
-                                    name="Số điện thoại"
-                                    onChange={setInputKhachHang}
-                                    value={KhachHang.dienthoai}
-                                />
+                                <input type="text" />
                             </div>
                             <div className={cx('text-input')}>
                                 <Text className={cx('text')}>Mật khẩu</Text>
-                                <input
-                                    type="password"
-                                    name="Mật khẩu"
-                                    onChange={setInputKhachHang}
-                                    value={KhachHang.matkhau}
-                                />
+                                <input type="password" />
                             </div>
                             <div className={cx('text-input')}>
                                 <Text className={cx('text')}>Nhập lại mật khẩu</Text>
-                                <input
-                                    type="password"
-                                    name="Nhập lại mật khẩu"
-                                    onChange={setInputKhachHang}
-                                    value={KhachHang.nhaplaimatkhau}
-                                />
-                                {!errPassword1 && <Text style={{ color: 'red' }}>Mật khẩu không trùng khớp</Text>}
+                                <input type="password" />
                             </div>
                         </div>
                     )}
@@ -427,145 +477,204 @@ function Register() {
                         <div className={cx('content')}>
                             <div className={cx('text-input')}>
                                 <Text className={cx('text')}>Họ tên</Text>
-                                <input type="text" name="Họ tên" onChange={setInputTaiXe} value={TaiXe.name} />
+                                <input type="text" />
                             </div>
                             <div className={cx('text-input')}>
                                 <Text className={cx('text')}>CMND</Text>
-                                <input type="text" name="CMND" onChange={setInputTaiXe} value={TaiXe.cmnd} />
+                                <input type="text" />
                             </div>
                             <div className={cx('text-input')}>
                                 <Text className={cx('text')}>Email</Text>
-                                <input type="email" name="email" onChange={setInputTaiXe} value={TaiXe.email} />
+                                <input type="email" />
                             </div>
                             <div className={cx('text-input')}>
                                 <Text className={cx('text')}>Địa chỉ</Text>
-                                <input type="text" name="Địa chỉ" onChange={setInputTaiXe} value={TaiXe.diachinha} />
-                            </div>
-                            <div className={cx('text-input')}>
-                                <Text className={cx('text')}>Biển số xe</Text>
-                                <input type="text" name="Biển số xe" onChange={setInputTaiXe} value={TaiXe.bienso} />
-                            </div>
-                            <div className={cx('text-input')}>
-                                <Text className={cx('text')}>Khu vực hoạt động</Text>
-                                <select
-                                    id="provinces"
-                                    name="tinh"
-                                    onChange={(e) => {
-                                        handleSelectProvinces();
-                                        setInputTaiXe(e);
-                                    }}
-                                >
-                                    <option value={''} key={0}>
+                                <select id="provinces" onChange={handleSelectProvinces}>
+                                    <option value={0} key={0}>
                                         Thành phố
                                     </option>
                                     {
                                         // eslint-disable-next-line array-callback-return
-                                        provinces &&
-                                            provinces.map((index) => {
-                                                return (
-                                                    <option value={index.name} key={index.code}>
-                                                        {index.name}
-                                                    </option>
-                                                );
-                                            })
+                                        provinces&&provinces.map((index) => {
+                                            return (
+                                                <option value={index.code} key={index.code}>
+                                                    {index.name}
+                                                </option>
+                                            );
+                                        })
                                     }
                                 </select>
-                                <select
-                                    id="districts"
-                                    name="huyen"
-                                    onChange={(e) => {
-                                        handleSelectDistricts();
-                                        setInputTaiXe(e);
-                                    }}
-                                >
-                                    <option value={''} key={0}>
-                                        Quận/Huyện
-                                    </option>
-                                    {
-                                        // eslint-disable-next-line array-callback-return
-                                        districts &&
+                                {
+                                    <select id="districts" onChange={handleSelectDistricts}>
+                                        <option value={0} key={0}>
+                                            Quận/Huyện
+                                        </option>
+                                        {
+                                            // eslint-disable-next-line array-callback-return
                                             districts &&
-                                            districts.map((index) => {
-                                                return (
-                                                    <option value={index.name} key={index.code}>
-                                                        {index.name}
-                                                    </option>
-                                                );
-                                            })
-                                    }
-                                </select>
-                                <select
-                                    id="wards"
-                                    name="xa"
-                                    onChange={(e) => {
-                                        setInputTaiXe(e);
-                                    }}
-                                >
-                                    <option value={''} key={0}>
-                                        Phường/Xã
+                                                districts&&districts.map((index) => {
+                                                    return (
+                                                        <option value={index.code} key={index.code}>
+                                                            {index.name}
+                                                        </option>
+                                                    );
+                                                })
+                                        }
+                                    </select>
+                                }
+
+                                {
+                                    <select id="wards" onChange={handleSelectDistricts}>
+                                        <option value={0} key={0}>
+                                            Phường/Xã
+                                        </option>
+                                        {
+                                            // eslint-disable-next-line array-callback-return
+                                            wards &&
+                                                wards&&wards.map((index) => {
+                                                    return (
+                                                        <option value={index.code} key={index.code}>
+                                                            {index.name}
+                                                        </option>
+                                                    );
+                                                })
+                                        }
+                                    </select>
+                                }
+
+                                <input type="text" placeholder="Số nhà, Tên đường, Khu phố" />
+                            </div>
+                            <div className={cx('text-input')}>
+                                <Text className={cx('text')}>Biển số xe</Text>
+                                <input type="text" />
+                            </div>
+                            <div className={cx('text-input')}>
+                                <Text className={cx('text')}>Khu vực hoạt động</Text>
+                                <select id="provinces" onChange={handleSelectProvinces}>
+                                    <option value={0} key={0}>
+                                        Thành phố
                                     </option>
                                     {
                                         // eslint-disable-next-line array-callback-return
-                                        wards &&
-                                            wards.map((index) => {
-                                                return (
-                                                    <option value={index.name} key={index.code}>
-                                                        {index.name}
-                                                    </option>
-                                                );
-                                            })
+                                        provinces&&provinces.map((index) => {
+                                            return (
+                                                <option value={index.code} key={index.code}>
+                                                    {index.name}
+                                                </option>
+                                            );
+                                        })
                                     }
                                 </select>
+                                {
+                                    <select id="districts" onChange={handleSelectDistricts}>
+                                        <option value={0} key={0}>
+                                            Quận/Huyện
+                                        </option>
+                                        {
+                                            // eslint-disable-next-line array-callback-return
+                                            districts &&
+                                                districts&&districts.map((index) => {
+                                                    return (
+                                                        <option value={index.code} key={index.code}>
+                                                            {index.name}
+                                                        </option>
+                                                    );
+                                                })
+                                        }
+                                    </select>
+                                }
+
+                                {
+                                    <select id="wards" onChange={handleSelectDistricts}>
+                                        <option value={0} key={0}>
+                                            Phường/Xã
+                                        </option>
+                                        {
+                                            // eslint-disable-next-line array-callback-return
+                                            wards &&
+                                                wards&&wards.map((index) => {
+                                                    return (
+                                                        <option value={index.code} key={index.code}>
+                                                            {index.name}
+                                                        </option>
+                                                    );
+                                                })
+                                        }
+                                    </select>
+                                }
+
+                                <input type="text" placeholder="Số nhà, Tên đường, Khu phố" />
                             </div>
                             <div className={cx('text-input')}>
                                 <Text className={cx('text')}>Tài khoản ngân hàng</Text>
-                                <select id="name-bank" name="bank" onChange={setInputTaiXe}>
-                                    <option value={''} key={0}>
+                                <select id="name-bank" onChange={handleSelectNameBank}>
+                                    <option value={0} key={0}>
                                         Tên Ngân Hàng
                                     </option>
                                     {
                                         // eslint-disable-next-line array-callback-return
-                                        nameBank &&
-                                            nameBank.map((index) => {
-                                                return (
-                                                    <option value={index.TenNH} key={Number(index.MaNganHang)}>
-                                                        {index.TenNH}
-                                                    </option>
-                                                );
-                                            })
+                                        nameBank&&nameBank.map((index) => {
+                                            return (
+                                                <option value={Number(index.MaNganHang)} key={Number(index.MaNganHang)}>
+                                                    {index.TenNH}
+                                                </option>
+                                            );
+                                        })
                                     }
                                 </select>
-                                <input
-                                    className={cx('input-bank')}
-                                    type="text"
-                                    placeholder="Số tài khoản"
-                                    name="Số tài khoản"
-                                    onChange={setInputTaiXe}
-                                    value={TaiXe.stk}
-                                />
+                                {
+                                    <select id="provinces-bank" onChange={handleSelectProvincesBank}>
+                                        <option value={0} key={0}>
+                                            Tỉnh thành
+                                        </option>
+                                        {
+                                            // eslint-disable-next-line array-callback-return
+                                            provincesBank &&
+                                                provincesBank&&provincesBank.map((index) => {
+                                                    return (
+                                                        <option value={index.TenTinhThanh} key={index.Code}>
+                                                            {index.TenTinhThanh}
+                                                        </option>
+                                                    );
+                                                })
+                                        }
+                                    </select>
+                                }
+                                {
+                                    <select id="branch-bank">
+                                        <option value={0} key={0}>
+                                            Chi nhánh
+                                        </option>
+                                        {
+                                            // eslint-disable-next-line array-callback-return
+                                            branch &&
+                                                branch&&branch.map((index) => {
+                                                    return (
+                                                        <option value={index.TenChiNhanh} key={index.MaChiNhanh}>
+                                                            {index.TenChiNhanh}
+                                                        </option>
+                                                    );
+                                                })
+                                        }
+                                    </select>
+                                }
+                                <input type="text" placeholder="Số tài khoản" />
+                            </div>
+                            <div className={cx('text-input')}>
+                                <Text className={cx('text')}>Số tài khoản (nếu có)</Text>
+                                <input type="password" />
                             </div>
                             <div className={cx('text-input')}>
                                 <Text className={cx('text')}>Số điện thoại</Text>
-                                <input
-                                    type="text"
-                                    name="Số điện thoại"
-                                    onChange={setInputTaiXe}
-                                    value={TaiXe.dienthoai}
-                                />
+                                <input type="text" />
                             </div>
                             <div className={cx('text-input')}>
                                 <Text className={cx('text')}>Mật khẩu</Text>
-                                <input type="password" name="Mật khẩu" onChange={setInputTaiXe} value={TaiXe.matkhau} />
+                                <input type="password" />
                             </div>
                             <div className={cx('text-input')}>
                                 <Text className={cx('text')}>Nhập lại mật khẩu</Text>
-                                <input
-                                    type="password"
-                                    name="Nhập lại mật khẩu"
-                                    onChange={setInputTaiXe}
-                                    value={TaiXe.nhaplaimatkhau}
-                                />
-                                {!errPassword2 && <Text style={{ color: 'red' }}>Mật khẩu không trùng khớp</Text>}
+                                <input type="password" />
                             </div>
                         </div>
                     )}
@@ -573,154 +682,105 @@ function Register() {
                         <div className={cx('content')}>
                             <div className={cx('text-input')}>
                                 <Text className={cx('text')}>Họ tên người đại diện</Text>
-                                <input type="text" name="Họ tên" onChange={setInputDoiTac} value={DoiTac.name} />
+                                <input type="text" />
                             </div>
                             <div className={cx('text-input')}>
                                 <Text className={cx('text')}>Email</Text>
-                                <input type="email" name="email" onChange={setInputDoiTac} value={DoiTac.email} />
+                                <input type="email" />
                             </div>
                             <div className={cx('text-input')}>
                                 <Text className={cx('text')}>Tên quán/Nhà hàng</Text>
-                                <input type="text" name="Tên quán" onChange={setInputDoiTac} value={DoiTac.TenNH} />
+                                <input type="text" />
                             </div>
                             <div className={cx('text-input')}>
-                                <Text className={cx('text')}>Tài khoản ngân hàng</Text>
-                                <select id="name-bank" name="bank" onChange={setInputDoiTac}>
-                                    <option value={''} key={0}>
-                                        Tên Ngân Hàng
+                                <Text className={cx('text')}>Địa chỉ</Text>
+                                <select id="provinces" onChange={handleSelectProvinces}>
+                                    <option value={0} key={0}>
+                                        Thành phố
                                     </option>
                                     {
                                         // eslint-disable-next-line array-callback-return
-                                        nameBank &&
-                                            nameBank.map((index) => {
-                                                return (
-                                                    <option value={index.TenNH} key={Number(index.MaNganHang)}>
-                                                        {index.TenNH}
-                                                    </option>
-                                                );
-                                            })
+                                        provinces&&provinces.map((index) => {
+                                            return (
+                                                <option value={index.code} key={index.code}>
+                                                    {index.name}
+                                                </option>
+                                            );
+                                        })
                                     }
                                 </select>
-                                <input
-                                    className={cx('input-bank')}
-                                    type="text"
-                                    placeholder="Số tài khoản"
-                                    name="Số tài khoản"
-                                    onChange={setInputDoiTac}
-                                    value={DoiTac.stk}
-                                />
-                            </div>
-                            <div className={cx('text-input')}>
-                                <Text className={cx('text')}>Địa chỉ kinh doanh</Text>
-                                <input
-                                    type="text"
-                                    name="Địa chỉ"
-                                    onChange={setInputDoiTac}
-                                    value={DoiTac.diachikinhdoanh}
-                                />
+                                {
+                                    <select id="districts" onChange={handleSelectDistricts}>
+                                        <option value={0} key={0}>
+                                            Quận/Huyện
+                                        </option>
+                                        {
+                                            // eslint-disable-next-line array-callback-return
+                                            districts &&
+                                                districts&&districts.map((index) => {
+                                                    return (
+                                                        <option value={index.code} key={index.code}>
+                                                            {index.name}
+                                                        </option>
+                                                    );
+                                                })
+                                        }
+                                    </select>
+                                }
+
+                                {
+                                    <select id="wards" onChange={handleSelectDistricts}>
+                                        <option value={0} key={0}>
+                                            Phường/Xã
+                                        </option>
+                                        {
+                                            // eslint-disable-next-line array-callback-return
+                                            wards &&
+                                                wards&&wards.map((index) => {
+                                                    return (
+                                                        <option value={index.code} key={index.code}>
+                                                            {index.name}
+                                                        </option>
+                                                    );
+                                                })
+                                        }
+                                    </select>
+                                }
+
+                                <input type="text" placeholder="Số nhà, Tên đường, Khu phố" />
                             </div>
                             <div className={cx('text-input')}>
                                 <Text className={cx('text')}>Số lượng chi nhánh</Text>
-                                <input
-                                    type="text"
-                                    name="Số lượng chi nhánh"
-                                    onChange={setInputDoiTac}
-                                    value={DoiTac.soluongchinhanh}
-                                />
+                                <input type="text" />
+                            </div>
+                            <div className={cx('text-input')}>
+                                <Text className={cx('text')}>
+                                    Số lượng đơn hàng dự kiến mỗi ngày (ví dụ: 0-50, 50-200...)
+                                </Text>
+                                <input type="text" />
                             </div>
                             <div className={cx('text-input')}>
                                 <Text className={cx('text')}>
                                     Loại ẩm thực (cơm, mì/bún/phở, bánh mì, đồ ăn nhanh, trà sữa...)
                                 </Text>
-                                <input
-                                    type="text"
-                                    name="Loại ẩm thực"
-                                    onChange={setInputDoiTac}
-                                    value={DoiTac.loaiamthuc}
-                                />
+                                <input type="text" />
                             </div>
                             <div className={cx('text-input')}>
                                 <Text className={cx('text')}>Số điện thoại</Text>
-                                <input
-                                    type="text"
-                                    name="Số điện thoại"
-                                    onChange={setInputDoiTac}
-                                    value={DoiTac.dienthoai}
-                                />
+                                <input type="text" />
                             </div>
                             <div className={cx('text-input')}>
                                 <Text className={cx('text')}>Mật khẩu</Text>
-                                <input
-                                    type="password"
-                                    name="Mật khẩu"
-                                    onChange={setInputDoiTac}
-                                    value={DoiTac.matkhau}
-                                />
+                                <input type="password" />
                             </div>
                             <div className={cx('text-input')}>
                                 <Text className={cx('text')}>Nhập lại mật khẩu</Text>
-                                <input
-                                    type="password"
-                                    name="Nhập lại mật khẩu"
-                                    onChange={setInputDoiTac}
-                                    value={DoiTac.nhaplaimatkhau}
-                                />
-                                {!errPassword3 && <Text style={{ color: 'red' }}>Mật khẩu không trùng khớp</Text>}
+                                <input type="password" />
                             </div>
                         </div>
                     )}
                     <div className={cx('btn-sub', 'text-input')}>
-                        <input
-                            className={cx('submit')}
-                            type="submit"
-                            value="Tạo tài khoản"
-                            onClick={() => {
-                                if (customer) RegisterKhachHang();
-                                else if (driver) RegisterTaiXe();
-                                else if (coop) RegisterDoiTac();
-                                setKhachHang({
-                                    name: '',
-                                    email: '',
-                                    tinh: '',
-                                    huyen: '',
-                                    xa: '',
-                                    dienthoai: '',
-                                    matkhau: '',
-                                    nhaplaimatkhau: '',
-                                });
-                                setTaiXe({
-                                    name: '',
-                                    cmnd: '',
-                                    bienso: '',
-                                    diachinha: '',
-                                    stk: '',
-                                    nganhang: '',
-                                    phithechan: 1000000,
-                                    email: '',
-                                    tinh: '',
-                                    huyen: '',
-                                    xa: '',
-                                    dienthoai: '',
-                                    matkhau: '',
-                                    nhaplaimatkhau: '',
-                                });
-                                setDoiTac({
-                                    name: '',
-                                    email: '',
-                                    masothue: '',
-                                    soluongchinhanh: 0,
-                                    soluongdonhang: 0,
-                                    loaiamthuc: '',
-                                    stk: '',
-                                    nganhang: '',
-                                    diachikinhdoanh: '',
-                                    dienthoai: '',
-                                    matkhau: '',
-                                    nhaplaimatkhau: '',
-                                    diachi: '',
-                                });
-                            }}
-                        />
+                        <input className={cx('submit')} type="submit" value="Tạo tài khoản" />
                     </div>
                 </div>
             </div>
