@@ -23,7 +23,7 @@ function Contact() {
         return date;
     }
 
-    useEffect(() => {
+    useEffect(() => { 
         const abortController = new AbortController();
         fetch(`http://localhost:5000/contact/getBranch/${id}`, {
             method: 'GET',

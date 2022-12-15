@@ -7,10 +7,12 @@ class BranchController {
 		const func = async () => {
 			try {
 				let pool = await sql.connect(config);
-				let products = pool.request().query(
-					`select CN.TenChiNhanh,datepart(HOUR,CN.ThoiGianDongCua) as GioDongCua, datepart(MINUTE,CN.ThoiGianDongCua) as PhutDongCua,
-						datepart(HOUR,CN.ThoiGianMoCua) as GioMoCua, datepart(MINUTE,CN.ThoiGianMoCua)as PhutMoCua, DT.LoaiAmThuc, TD.Rating from CHINHANH CN, DOITAC DT, THUCDON TD where MaChiNhanh='${req.params.slug}' and DT.MaDoiTac=CN.MaDoiTac and DT.MaDoiTac=TD.MaDoiTac`
-				);
+				let products = pool.request()
+					.input('MaDT', req.params.slug)
+				 	.execute(`DanhSachMonAn`)//.query(
+				// 	`select CN.TenChiNhanh,datepart(HOUR,CN.ThoiGianDongCua) as GioDongCua, datepart(MINUTE,CN.ThoiGianDongCua) as PhutDongCua,
+				// 		datepart(HOUR,CN.ThoiGianMoCua) as GioMoCua, datepart(MINUTE,CN.ThoiGianMoCua)as PhutMoCua, DT.LoaiAmThuc, TD.Rating from CHINHANH CN, DOITAC DT, THUCDON TD where MaChiNhanh='${req.params.slug}' and DT.MaDoiTac=CN.MaDoiTac and DT.MaDoiTac=TD.MaDoiTac`
+				// );
 				return products;
 			} catch (error) {
 				console.log(`Error: ${error}`);
@@ -42,12 +44,22 @@ class BranchController {
 	getName(req, res) {
 		const func = async () => {
 			try {
+				// await pool.connect();
+				// const result = await pool.request()
+				// 	.input('MaDT', req.query.name)
+				// 	.execute(`DanhSachMonAn`)
+				// const meomeo = result.recordset
+				
 				let pool = await sql.connect(config);
-				let products = pool
-					.request()
-					.query(
-						`select TenChiNhanh from CHINHANH where MaChiNhanh='${req.params.slug}'`
-					);
+				const result = await pool.request()
+				.input('MaDT', req.params.slug)
+				.execute(`DanhSachMonAn`)
+				let products = result.recordset
+				// let products = pool
+				// 	.request()
+				// 	.query(
+				// 		`select TenChiNhanh from CHINHANH where MaChiNhanh='${req.params.slug}'`
+				// 	);
 				return products;
 			} catch (error) {
 				console.log(`Error: ${error}`);

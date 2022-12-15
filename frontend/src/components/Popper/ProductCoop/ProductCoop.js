@@ -14,8 +14,8 @@ function ProductCoop({ children, title = 'Mì Trộn Tên Lửa - CMT8', type = 
     return (
         <>
             <div className={cx('list')}>
-                <h3 className={cx('type')}>
-                    <Text>Loại: {type}</Text>
+                <h3 className={cx('Menu')}>
+                    <Text>Chúng tôi có 4 món ăn {type}</Text>
                 </h3>
                 <h3 className={cx('type')}>
                     <Text>
