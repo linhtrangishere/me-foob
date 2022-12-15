@@ -6,15 +6,6 @@ class BranchController {
 	getBranch(req, res) {
 		const func = async () => {
 			try {
-<<<<<<< HEAD
-				let pool = await sql.connect(config);
-				let products = pool.request()
-					.input('MaDT', req.params.slug)
-				 	.execute(`DanhSachMonAn`)//.query(
-				// 	`select CN.TenChiNhanh,datepart(HOUR,CN.ThoiGianDongCua) as GioDongCua, datepart(MINUTE,CN.ThoiGianDongCua) as PhutDongCua,
-				// 		datepart(HOUR,CN.ThoiGianMoCua) as GioMoCua, datepart(MINUTE,CN.ThoiGianMoCua)as PhutMoCua, DT.LoaiAmThuc, TD.Rating from CHINHANH CN, DOITAC DT, THUCDON TD where MaChiNhanh='${req.params.slug}' and DT.MaDoiTac=CN.MaDoiTac and DT.MaDoiTac=TD.MaDoiTac`
-				// );
-=======
 				let products;
 				await sql.connect(config.config).then((conn) =>
 					conn
@@ -28,7 +19,6 @@ class BranchController {
 						})
 						.then(() => conn.close())
 				);
->>>>>>> 1f9d540b5b851752c16d47e2e6a5b78a38b9001a
 				return products;
 			} catch (error) {
 				console.log(`Error: ${error}`);
@@ -66,24 +56,23 @@ class BranchController {
 	getName(req, res) {
 		const func = async () => {
 			try {
-<<<<<<< HEAD
 				// await pool.connect();
 				// const result = await pool.request()
 				// 	.input('MaDT', req.query.name)
 				// 	.execute(`DanhSachMonAn`)
 				// const meomeo = result.recordset
-				
-				let pool = await sql.connect(config);
-				const result = await pool.request()
-				.input('MaDT', req.params.slug)
-				.execute(`DanhSachMonAn`)
-				let products = result.recordset
+
+				// let pool = await sql.connect(config);
+				// const result = await pool
+				// 	.request()
+				// 	.input("MaDT", req.params.slug)
+				// 	.execute(`DanhSachMonAn`);
+				// let products = result.recordset;
 				// let products = pool
 				// 	.request()
 				// 	.query(
 				// 		`select TenChiNhanh from CHINHANH where MaChiNhanh='${req.params.slug}'`
 				// 	);
-=======
 				let products;
 				await sql.connect(config.config).then((conn) =>
 					conn
@@ -96,7 +85,6 @@ class BranchController {
 						})
 						.then(() => conn.close())
 				);
->>>>>>> 1f9d540b5b851752c16d47e2e6a5b78a38b9001a
 				return products;
 			} catch (error) {
 				console.log(`Error: ${error}`);
