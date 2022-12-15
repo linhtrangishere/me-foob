@@ -4,10 +4,32 @@ import classNames from 'classnames/bind';
 import images from '~/assets/images';
 import Button from '~/components/Button';
 import Text from '~/components/Text';
+import { useEffect, useState } from 'react';
 
 const cx = classNames.bind(styles);
 
 function ManageDriver() {
+    function format(n) {
+        return n.toFixed(0).replace(/./g, function (c, i, a) {
+            return i > 0 && c !== '.' && (a.length - i) % 3 === 0 ? '.' + c : c;
+        });
+    }
+    const [data, setData] = useState();
+    useEffect(() => {
+        fetch('http://localhost:5000/manage-driver/', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
+        })
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                setData(data);
+            });
+    }, []);
     return (
         <>
             <div className={cx('container', 'grid')}>
@@ -26,28 +48,28 @@ function ManageDriver() {
                                 <th>Chi tiết</th>
                                 <th>Xác nhận</th>
                             </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>DH121212121</td>
-                                <td>227 Nguyễn Văn Cừ, P4, Quận 5, Tp HCM</td>
-                                <td>227 Nguyễn Văn Cừ, P4, Quận 5, Tp HCM</td>
-                                <td>1000000</td>
-                                <td className={cx('more')} data-toggle="modal" data-target="#more">
-                                    Chi tiết
-                                </td>
-                                <td className={cx('submit')}>Xác nhận</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>DH121212121</td>
-                                <td>227 Nguyễn Văn Cừ, P4, Quận 5, Tp HCM</td>
-                                <td>227 Nguyễn Văn Cừ, P4, Quận 5, Tp HCM</td>
-                                <td>1000000</td>
-                                <td className={cx('more')} data-toggle="modal" data-target="#more">
-                                    Chi tiết
-                                </td>
-                                <td className={cx('submit')}>Xác nhận</td>
-                            </tr>
+                            {data &&
+                                Object.keys(data).map(function (key) {
+                                    return (
+                                        <>
+                                            <tr key={key}>
+                                                <td>{parseInt(key) + 1}</td>
+                                                <td>{data[key].MaPhieuDatHang}</td>
+                                                <td>
+                                                    {data[key].xa1}, {data[key].huyen1}, {data[key].tinh1}
+                                                </td>
+                                                <td>
+                                                    {data[key].xa2}, {data[key].huyen2}, {data[key].tinh2}
+                                                </td>
+                                                <td>{format(data[key].TongHoaDon)}</td>
+                                                <td className={cx('more')} data-toggle="modal" data-target="#more">
+                                                    Chi tiết
+                                                </td>
+                                                <td className={cx('submit')}>Xác nhận</td>
+                                            </tr>
+                                        </>
+                                    );
+                                })}
                         </table>
                     </div>
                 </div>

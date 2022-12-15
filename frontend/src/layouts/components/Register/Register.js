@@ -110,16 +110,16 @@ function Register() {
         } else if (name === 'Địa chỉ') {
             if (value.length <= 50) setTaiXe((pre) => ({ ...pre, diachinha: value }));
         } else if (name === 'Biển số xe') {
-            if (value.length <= 50) setTaiXe((pre) => ({ ...pre, bienso: value }));
+            if (value.length <= 20) setTaiXe((pre) => ({ ...pre, bienso: value }));
         } else if (name === 'Số điện thoại') {
             if (value.length <= 10) {
                 if (value.length <= 0) setTaiXe((pre) => ({ ...pre, dienthoai: value }));
                 else if (arrNumber.includes(value[value.length - 1])) setTaiXe((pre) => ({ ...pre, dienthoai: value }));
             }
         } else if (name === 'bank') {
-            if (value.length <= 50) setTaiXe((pre) => ({ ...pre, nganhang: value }));
+            if (value.length <= 20) setTaiXe((pre) => ({ ...pre, nganhang: value }));
         } else if (name === 'Số tài khoản') {
-            if (value.length <= 50) setTaiXe((pre) => ({ ...pre, stk: value }));
+            if (value.length <= 20) setTaiXe((pre) => ({ ...pre, stk: value }));
         } else if (name === 'Mật khẩu') {
             if (value.length <= 20) setTaiXe((pre) => ({ ...pre, matkhau: value }));
             if (value.length === 0) setTaiXe((pre) => ({ ...pre, nhaplaimatkhau: value }));
@@ -132,11 +132,11 @@ function Register() {
                     setTaiXe((pre) => ({ ...pre, nhaplaimatkhau: value }));
             }
         } else if (name === 'tinh') {
-            if (value.length <= 50) setTaiXe((pre) => ({ ...pre, tinh: value }));
+            setTaiXe((pre) => ({ ...pre, tinh: value }));
         } else if (name === 'huyen') {
-            if (value.length <= 50) setTaiXe((pre) => ({ ...pre, huyen: value }));
+            setTaiXe((pre) => ({ ...pre, huyen: value }));
         } else if (name === 'xa') {
-            if (value.length <= 50) setTaiXe((pre) => ({ ...pre, xa: value }));
+            setTaiXe((pre) => ({ ...pre, xa: value }));
         }
     };
 
