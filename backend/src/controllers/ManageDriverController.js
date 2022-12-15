@@ -17,7 +17,7 @@ class ManageDriverController {
 											 join CHINHANH CN on CN.MaChiNhanh=DH.MaChiNhanh
 											 join DIACHI DC2 on CN.MaDiaChi=DC2.MaDiaChi --Địa chỉ chi nhánh
 											 join KHACHHANG KH on KH.MaKhachHang=DH.MaKhachHang
-						where MaTaiXe='TXAI7PM1X3'`
+						where MaTaiXe=''`
 						)
 						.then((v) => {
 							result = v;

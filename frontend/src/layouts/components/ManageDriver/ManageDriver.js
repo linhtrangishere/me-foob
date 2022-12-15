@@ -105,24 +105,29 @@ function ManageDriver() {
                                                 >
                                                     Chi tiết
                                                 </td>
-                                                <td className={cx('submit')} onClick={() => {
-                            fetch('http://localhost:5000/manage-driver/submitDriver', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    Accept: 'application/json',
-                                },
-                                body: JSON.stringify({
-                                    ma: '',
-                                }),
-                            })
-                                .then((res) => {
-                                    return res.json();
-                                })
-                                .then((data) => {
-                                    alert('Thành công');
-                                });
-                        }}>Xác nhận</td>
+                                                <td
+                                                    className={cx('submit')}
+                                                    onClick={() => {
+                                                        fetch('http://localhost:5000/manage-driver/submitDriver', {
+                                                            method: 'POST',
+                                                            headers: {
+                                                                'Content-Type': 'application/json',
+                                                                Accept: 'application/json',
+                                                            },
+                                                            body: JSON.stringify({
+                                                                ma: `TX1H16CWTX`,
+                                                            }),
+                                                        })
+                                                            .then((res) => {
+                                                                return res.json();
+                                                            })
+                                                            .then((data) => {
+                                                                alert('Thành công');
+                                                            });
+                                                    }}
+                                                >
+                                                    Xác nhận
+                                                </td>
                                             </tr>
                                         </>
                                     );
@@ -131,7 +136,7 @@ function ManageDriver() {
                     </div>
                 </div>
                 <div className={cx('btn-submit')}>
-                    <Button className={cx('btn')} to="/checkout">
+                    <Button className={cx('btn')} to="/">
                         Xác nhận
                     </Button>
                 </div>
@@ -190,7 +195,8 @@ function ManageDriver() {
                                             <div key={key} className={cx('dish')}>
                                                 <Text className={cx('name-dish')}>{listMonAn[key].TenMonAn}</Text>
                                                 <Text className={cx('price-dish')}>
-                                                    {listMonAn[key].SoLuongMonAn} x {format(parseInt(listMonAn[key].Gia))}
+                                                    {listMonAn[key].SoLuongMonAn} x{' '}
+                                                    {format(parseInt(listMonAn[key].Gia))}
                                                 </Text>
                                             </div>
                                         );
@@ -200,7 +206,9 @@ function ManageDriver() {
                                     <Text className={cx('name-dish')}>
                                         <strong>Tổng tiền</strong>
                                     </Text>
-                                    <Text className={cx('price-dish')}>{format(parseInt(data[keyIndex].TongHoaDon))}</Text>
+                                    <Text className={cx('price-dish')}>
+                                        {data && keyIndex !== -1 && format(parseInt(data[keyIndex].TongHoaDon))}
+                                    </Text>
                                 </div>
                             </div>
                             <div className={cx('separate-big')}></div>
