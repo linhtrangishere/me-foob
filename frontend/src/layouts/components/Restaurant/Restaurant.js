@@ -2,8 +2,8 @@ import styles from './Restaurant.module.scss';
 
 import classNames from 'classnames/bind';
 //import images from '~/assets/images';
-import Button from '~/components/Button';
-import Product from '~/components/Popper/Product';
+//import Button from '~/components/Button';
+//import Product from '~/components/Popper/Product';
 import Text from '~/components/Text';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -18,7 +18,7 @@ function Restaurant() {
 
     useEffect(() => {
         const abortController = new AbortController();
-        fetch(`http://localhost:5000/restaurants/getName/${id}`, {
+        fetch(`http://localhost:5000/restaurant/getName/${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

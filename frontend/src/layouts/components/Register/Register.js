@@ -11,6 +11,221 @@ function Register() {
     const [customer, setCustomer] = useState(true);
     const [driver, setDriver] = useState(false);
     const [coop, setCoop] = useState(false);
+    const [errPassword1, setErrPassword1] = useState(true);
+    const [errPassword2, setErrPassword2] = useState(true);
+    const [errPassword3, setErrPassword3] = useState(true);
+
+    const [KhachHang, setKhachHang] = useState({
+        name: '',
+        email: '',
+        tinh: '',
+        huyen: '',
+        xa: '',
+        dienthoai: '',
+        matkhau: '',
+        nhaplaimatkhau: '',
+    });
+
+    const arrNumber = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+
+    const setInputKhachHang = (e) => {
+        const { name, value } = e.target;
+        if (name === 'Họ tên') {
+            if (value.length <= 50) setKhachHang((pre) => ({ ...pre, name: value }));
+        } else if (name === 'email') {
+            if (value.length <= 50) setKhachHang((pre) => ({ ...pre, email: value }));
+        } else if (name === 'Số điện thoại') {
+            if (value.length <= 10) {
+                if (value.length <= 0) setKhachHang((pre) => ({ ...pre, dienthoai: value }));
+                else if (arrNumber.includes(value[value.length - 1]))
+                    setKhachHang((pre) => ({ ...pre, dienthoai: value }));
+            }
+        } else if (name === 'Mật khẩu') {
+            if (value.length <= 20) setKhachHang((pre) => ({ ...pre, matkhau: value }));
+            if (value.length === 0) setKhachHang((pre) => ({ ...pre, nhaplaimatkhau: value }));
+        } else if (name === 'Nhập lại mật khẩu') {
+            if (value.length <= 20) {
+                if (value.length > 0) {
+                    setErrPassword1(TaiXe.matkhau === value);
+                }
+                if (TaiXe.matkhau.length > 0 && value[value.length - 1] !== ' ')
+                    setKhachHang((pre) => ({ ...pre, nhaplaimatkhau: value }));
+            }
+        } else if (name === 'tinh') {
+            setKhachHang((pre) => ({ ...pre, tinh: value }));
+        } else if (name === 'huyen') {
+            setKhachHang((pre) => ({ ...pre, huyen: value }));
+        } else if (name === 'xa') {
+            setKhachHang((pre) => ({ ...pre, xa: value }));
+        }
+    };
+
+    const RegisterKhachHang = () => {
+        fetch('http://localhost:5000/register/customer', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
+            body: JSON.stringify(KhachHang),
+        })
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                console.log(data);
+            });
+    };
+
+    const [TaiXe, setTaiXe] = useState({
+        name: '',
+        cmnd: '',
+        bienso: '',
+        diachinha: '',
+        stk: '',
+        nganhang: '',
+        phithechan: 1000000,
+        email: '',
+        tinh: '',
+        huyen: '',
+        xa: '',
+        dienthoai: '',
+        matkhau: '',
+        nhaplaimatkhau: '',
+    });
+
+    const setInputTaiXe = (e) => {
+        const { name, value } = e.target;
+
+        if (name === 'Họ tên') {
+            if (value.length <= 50) setTaiXe((pre) => ({ ...pre, name: value }));
+        } else if (name === 'CMND') {
+            if (value.length <= 10) {
+                if (value.length <= 0) setTaiXe((pre) => ({ ...pre, cmnd: value }));
+                else if (arrNumber.includes(value[value.length - 1])) setTaiXe((pre) => ({ ...pre, cmnd: value }));
+            }
+        } else if (name === 'email') {
+            if (value.length <= 50) setTaiXe((pre) => ({ ...pre, email: value }));
+        } else if (name === 'Địa chỉ') {
+            if (value.length <= 50) setTaiXe((pre) => ({ ...pre, diachinha: value }));
+        } else if (name === 'Biển số xe') {
+            if (value.length <= 20) setTaiXe((pre) => ({ ...pre, bienso: value }));
+        } else if (name === 'Số điện thoại') {
+            if (value.length <= 10) {
+                if (value.length <= 0) setTaiXe((pre) => ({ ...pre, dienthoai: value }));
+                else if (arrNumber.includes(value[value.length - 1])) setTaiXe((pre) => ({ ...pre, dienthoai: value }));
+            }
+        } else if (name === 'bank') {
+            if (value.length <= 20) setTaiXe((pre) => ({ ...pre, nganhang: value }));
+        } else if (name === 'Số tài khoản') {
+            if (value.length <= 20) setTaiXe((pre) => ({ ...pre, stk: value }));
+        } else if (name === 'Mật khẩu') {
+            if (value.length <= 20) setTaiXe((pre) => ({ ...pre, matkhau: value }));
+            if (value.length === 0) setTaiXe((pre) => ({ ...pre, nhaplaimatkhau: value }));
+        } else if (name === 'Nhập lại mật khẩu') {
+            if (value.length <= 20) {
+                if (value.length > 0) {
+                    setErrPassword2(TaiXe.matkhau === value);
+                }
+                if (TaiXe.matkhau.length > 0 && value[value.length - 1] !== ' ')
+                    setTaiXe((pre) => ({ ...pre, nhaplaimatkhau: value }));
+            }
+        } else if (name === 'tinh') {
+            setTaiXe((pre) => ({ ...pre, tinh: value }));
+        } else if (name === 'huyen') {
+            setTaiXe((pre) => ({ ...pre, huyen: value }));
+        } else if (name === 'xa') {
+            setTaiXe((pre) => ({ ...pre, xa: value }));
+        }
+    };
+
+    const RegisterTaiXe = () => {
+        fetch('http://localhost:5000/register/driver', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
+            body: JSON.stringify(TaiXe),
+        })
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                console.log(data);
+            });
+    };
+
+    const [DoiTac, setDoiTac] = useState({
+        name: '',
+        email: '',
+        masothue: '',
+        soluongchinhanh: 0,
+        loaiamthuc: '',
+        stk: '',
+        nganhang: '',
+        diachikinhdoanh: '',
+        dienthoai: '',
+        matkhau: '',
+        nhaplaimatkhau: '',
+        diachi: '',
+    });
+
+    const setInputDoiTac = (e) => {
+        const { name, value } = e.target;
+        if (name === 'Họ tên') {
+            if (value.length <= 50) setDoiTac((pre) => ({ ...pre, name: value }));
+        } else if (name === 'email') {
+            if (value.length <= 50) setDoiTac((pre) => ({ ...pre, email: value }));
+        } else if (name === 'Số lượng chi nhánh') {
+            if (value.length <= 10) {
+                if (value.length <= 0) setDoiTac((pre) => ({ ...pre, soluongchinhanh: value }));
+                else if (arrNumber.includes(value[value.length - 1]))
+                    setDoiTac((pre) => ({ ...pre, dienthoai: value }));
+            }
+        } else if (name === 'Loại ẩm thực') {
+            if (value.length <= 50) setDoiTac((pre) => ({ ...pre, loaiamthuc: value }));
+        } else if (name === 'Số điện thoại') {
+            if (value.length <= 10) {
+                if (value.length <= 0) setDoiTac((pre) => ({ ...pre, dienthoai: value }));
+                else if (arrNumber.includes(value[value.length - 1]))
+                    setDoiTac((pre) => ({ ...pre, dienthoai: value }));
+            }
+        } else if (name === 'bank') {
+            if (value.length <= 50) setDoiTac((pre) => ({ ...pre, nganhang: value }));
+        } else if (name === 'Số tài khoản') {
+            if (value.length <= 50) setDoiTac((pre) => ({ ...pre, stk: value }));
+        } else if (name === 'Mật khẩu') {
+            if (value.length <= 20) setDoiTac((pre) => ({ ...pre, matkhau: value }));
+            if (value.length === 0) setDoiTac((pre) => ({ ...pre, nhaplaimatkhau: value }));
+        } else if (name === 'Nhập lại mật khẩu') {
+            if (value.length <= 20) {
+                if (value.length > 0) {
+                    setErrPassword3(TaiXe.matkhau === value);
+                }
+                if (TaiXe.matkhau.length > 0 && value[value.length - 1] !== ' ')
+                    setDoiTac((pre) => ({ ...pre, nhaplaimatkhau: value }));
+            }
+        }
+    };
+
+    const RegisterDoiTac = () => {
+        fetch('http://localhost:5000/register/coop', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
+            body: JSON.stringify(DoiTac),
+        })
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                console.log(data);
+            });
+    };
+
 
     const [provinces, setProvinces] = useState();
     const [districts, setDistricts] = useState();

@@ -126,7 +126,6 @@ function CheckOut() {
                                 </option>
                                 {
                                     // eslint-disable-next-line array-callback-return
-                                    branch &&
                                         branch &&
                                         branch.map((index) => {
                                             return (
