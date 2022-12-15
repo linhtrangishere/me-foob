@@ -3,8 +3,8 @@ const router = express.Router();
 
 const RegisterController = require('../controllers/RegisterController');
 
-router.post('/coop', RegisterController.registerCoop);
-router.post('/driver', RegisterController.registerDriver);
-router.post('/customer', RegisterController.registerCustomer)
+router.get('/getBranch1', RegisterController.getBranch1);
+router.get('/getBranch2', RegisterController.getBranch2);
+router.get('/', RegisterController.index)
 
 module.exports = router;
