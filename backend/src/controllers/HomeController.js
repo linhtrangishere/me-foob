@@ -6,12 +6,18 @@ class HomeController {
 	getBranch1(req, res) {
 		const func = async () => {
 			try {
-				let pool = await sql.connect(config);
-				let products = pool
-					.request()
-					.query(
-						"SELECT TOP 8 CN.MaChiNhanh,CN.TenChiNhanh, DT.LoaiAmThuc,TD.Rating FROM dbo.CHINHANH CN,dbo.DOITAC DT, dbo.THUCDON TD where CN.MaDoiTac = DT.MaDoiTac and TD.MaDoiTac=CN.MaDoiTac ORDER BY NEWID()"
-					);
+				let products;
+				await sql.connect(config.config).then((conn) =>
+					conn
+						.request()
+						.query(
+							"SELECT TOP 8 CN.MaChiNhanh,CN.TenChiNhanh, DT.LoaiAmThuc,TD.Rating FROM dbo.CHINHANH CN,dbo.DOITAC DT, dbo.THUCDON TD where CN.MaDoiTac = DT.MaDoiTac and TD.MaDoiTac=CN.MaDoiTac ORDER BY NEWID()"
+						)
+						.then((v) => {
+							products = v;
+						})
+						.then(() => conn.close())
+				);
 				return products;
 			} catch (error) {
 				console.log(`Error: ${error}`);
@@ -25,12 +31,18 @@ class HomeController {
 	getBranch2(req, res) {
 		const func = async () => {
 			try {
-				let pool = await sql.connect(config);
-				let products = pool
-					.request()
-					.query(
-						"SELECT TOP 8 CN.TenChiNhanh, CN.MaChiNhanh FROM dbo.CHINHANH CN ORDER BY NEWID()"
-					);
+				let products;
+				await sql.connect(config.config).then((conn) =>
+					conn
+						.request()
+						.query(
+							"SELECT TOP 8 CN.MaChiNhanh,CN.TenChiNhanh, DT.LoaiAmThuc,TD.Rating FROM dbo.CHINHANH CN,dbo.DOITAC DT, dbo.THUCDON TD where CN.MaDoiTac = DT.MaDoiTac and TD.MaDoiTac=CN.MaDoiTac ORDER BY NEWID()"
+						)
+						.then((v) => {
+							products = v;
+						})
+						.then(() => conn.close())
+				);
 				return products;
 			} catch (error) {
 				console.log(`Error: ${error}`);
