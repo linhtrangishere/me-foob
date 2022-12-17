@@ -3,7 +3,6 @@ const routes = {
     restaurants: '/restaurants',
     restaurant: '/restaurant/:id',
     register: '/register',
-    cart: '/cart',
     checkout: '/checkout',
     contact: '/contact/:id',
     branch: '/branch',

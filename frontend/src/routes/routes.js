@@ -1,5 +1,4 @@
 import config from '~/config/';
-import CartPage from '~/pages/Cart';
 
 //Layout
 
@@ -22,7 +21,6 @@ const publicRoutes = [
     { path: config.routes.restaurants, components: RestaurantsPage },
     { path: config.routes.restaurant, components: RestaurantPage },
     { path: config.routes.register, components: RegisterPage },
-    { path: config.routes.cart, components: CartPage },
     { path: config.routes.checkout, components: CheckOutPage },
     { path: config.routes.contact, components: ContactPage },
     { path: config.routes.branch, components: BranchPage },
