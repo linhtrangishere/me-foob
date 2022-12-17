@@ -5,7 +5,7 @@ const routes = {
     register: '/register',
     checkout: '/checkout',
     contact: '/contact/:id',
-    branch: '/branch',
+    branch: '/branch/:id',
     manageCart: '/manage-cart/:id',
     manageDriver: '/manage-driver',
     followOrder: '/follow-order',

@@ -1,4 +1,4 @@
-import React  from 'react';
+import React, { useEffect } from 'react';
 import styles from './ProductCoop.module.scss';
 
 import classNames from 'classnames/bind';
@@ -7,15 +7,19 @@ import Star from '~/components/Star';
 import images from '~/assets/images';
 import Button from '~/components/Button';
 import Item from './Item';
+import ListItem from '../ListItem';
 
 const cx = classNames.bind(styles);
 
-function ProductCoop({ children, title = 'Mì Trộn Tên Lửa - CMT8', type = 'Bún - Phở - Cháo,Tạp Dề Bạc' }) {
+function ProductCoop({ children, hint = false, title, addr, data = {} }) {
+    useEffect(() => {
+        console.log(data)
+    }, [data])
     return (
         <>
             <div className={cx('list')}>
                 <h3 className={cx('Menu')}>
-                    <Text>Chúng tôi có 4 món ăn {type}</Text>
+                    <Text>Thực đơn chúng tôi có 4 món ăn</Text>
                 </h3>
                 <h3 className={cx('type')}>
                     <Text>
@@ -29,20 +33,13 @@ function ProductCoop({ children, title = 'Mì Trộn Tên Lửa - CMT8', type = 
                     <Text>Thực đơn</Text>
                     <Button className={cx('add')} data-toggle="modal" data-target="#add">
                         Thêm món
-                     </Button>
+                    </Button>
                 </h1>
                 <div className={cx('list-item')}>
-                    <Item />
-                    <Item />
-                    <Item />
-                    <Item />
-                    <Item />
-                    <Item />
-                    <Item />
-                    <Item />
-                    <Item />
-                    <Item />
-                    <Item />
+                    {data && Object.keys(data).map(function (key) {
+                        console.log(data[key])
+                        return <Item data={data[key]}/>;
+                    })}
                 </div>
             </div>
             <div

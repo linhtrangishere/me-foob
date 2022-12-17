@@ -9,7 +9,7 @@ import Star from '~/components/Star';
 
 const cx = classNames.bind(styles);
 
-function Item({ children }) {
+function Item({ children, data={} }) {
 
 
     // const [amount, setAmount] = useState(1);
@@ -29,8 +29,7 @@ function Item({ children }) {
                     </div>
                     <div className={cx('group')}>
                         <h6 className={cx('name')}>
-                            <Text>Cơm Tấm Thăng Trầm - Tân Trang</Text>
-                            <Text className={cx('type')}>Cơm</Text>
+                            <Text>{data && data.TenMonAn}</Text>
                         </h6>
                         <div className={cx('group-row')}>
                             <Text>{format(70000)}</Text>
