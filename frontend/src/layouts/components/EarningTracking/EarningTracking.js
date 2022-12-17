@@ -96,12 +96,8 @@ function EarningTracking() {
                                         <tr key={key}>
                                             <td>{parseInt(key) + 1}</td>
                                             <td>{data[key].MaPhieuDatHang}</td>
-                                            <td>
-                                                {data[key].xa1}, {data[key].huyen1}, {data[key].tinh1}
-                                            </td>
-                                            <td>
-                                                {data[key].xa2}, {data[key].huyen2}, {data[key].tinh2}
-                                            </td>
+                                            <td>{data[key].dccn}</td>
+                                            <td>{data[key].dcgh}</td>
                                             <td>{format(data[key].TongHoaDon)}</td>
                                         </tr>
                                     );

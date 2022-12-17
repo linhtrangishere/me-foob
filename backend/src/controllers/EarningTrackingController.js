@@ -12,8 +12,8 @@ class EarningTrackingController {
 						.request()
 						.query(
 							`select DH.MaPhieuDatHang, DH.TongHoaDon,DH.PhiVanChuyen,
-										DC1.ThanhPho as tinh1, DC1.Huyen as huyen1, DC1.Xa as xa1,
-										DC2.ThanhPho as tinh2, DC2.Huyen as huyen2, DC2.Xa as xa2
+								DC1.Xa + ', '+ DC1.Huyen + ', ' + DC1.ThanhPho as dcgh,
+								DC2.Xa + ', '+ DC2.Huyen + ', ' + DC2.ThanhPho as dccn
 								from PHIEUDATHANG DH join DIACHI DC1 on DH.DiaChiGH=DC1.MaDiaChi --Địa chỉ giao hàng
 													join CHINHANH CN on CN.MaChiNhanh=DH.MaChiNhanh
 													join DIACHI DC2 on CN.MaDiaChi=DC2.MaDiaChi --Địa chỉ chi nhánh

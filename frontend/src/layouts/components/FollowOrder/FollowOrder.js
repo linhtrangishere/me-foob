@@ -146,7 +146,7 @@ function FollowOrder() {
                                 </Text>
                                 <Text>
                                     <strong>Địa chỉ chi nhánh: </strong>
-                                    {name && `${name[0].xa1}, ${name[0].huyen1}, ${name[0].tinh1}`}
+                                    {name && `${name[0].dccn}`}
                                 </Text>
                                 <Text>
                                     <strong>Tên khách hàng: </strong>
@@ -154,7 +154,7 @@ function FollowOrder() {
                                 </Text>
                                 <Text>
                                     <strong>Địa chỉ: </strong>
-                                    {name && `${name[0].xa2}, ${name[0].huyen2}, ${name[0].tinh2}`}
+                                    {name && `${name[0].dcgh}`}
                                 </Text>
                             </div>
                             <div className={cx('separate')}></div>

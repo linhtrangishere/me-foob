@@ -86,7 +86,7 @@ function ManageCart() {
                                         <tr key={key} value={data[key]}>
                                             <td>{key + 1}</td>
                                             <td>{data[key].MaPhieuDatHang}</td>
-                                            <td>{`${data[key].Xa}, ${data[key].Huyen}, ${data[key].ThanhPho}`}</td>
+                                            <td>{`${data[key].dc}`}</td>
                                             <td>{format(data[key].TongHoaDon)}</td>
                                             <td>{data[key].TinhTrangDonHang}</td>
                                             <td
@@ -161,7 +161,7 @@ function ManageCart() {
                                 <Text>
                                     <strong>Địa chỉ chi nhánh: </strong>
                                     {dataCustomer !== undefined &&
-                                        `${dataCustomer[0].XaChiNhanh}, ${dataCustomer[0].HuyenChiNhanh}, ${dataCustomer[0].ThanhPhoChiNhanh}`}
+                                        `${dataCustomer[0].dccn}`}
                                 </Text>
                                 <Text>
                                     <strong>Tên khách hàng: </strong>
@@ -170,7 +170,7 @@ function ManageCart() {
                                 <Text>
                                     <strong>Địa chỉ: </strong>
                                     {dataCustomer !== undefined &&
-                                        `${dataCustomer[0].XaDatHang}, ${dataCustomer[0].HuyenDatHang}, ${dataCustomer[0].ThanhPhoDatHang}`}
+                                        `${dataCustomer[0].dcgh}`}
                                 </Text>
                             </div>
                             <div className={cx('separate')}></div>

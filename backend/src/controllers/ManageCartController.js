@@ -11,7 +11,10 @@ class ManageCartController {
 					conn
 						.request()
 						.query(
-							`select PDH.MaPhieuDatHang, PDH.TongHoaDon, PDH.TinhTrangDonHang, DC.ThanhPho, DC.Huyen, DC.Xa from PHIEUDATHANG PDH, DOITAC DT, CHINHANH CN, DIACHI DC where DT.MaDoiTac='${req.params.slug}' AND CN.MaChiNhanh=PDH.MaChiNhanh AND CN.MaDoiTac=DT.MaDoiTac and DC.MaDiaChi = PDH.DiaChiGH`
+							`select PDH.MaPhieuDatHang, PDH.TongHoaDon, PDH.TinhTrangDonHang,
+							DC.Xa + ', '+ DC.Huyen + ', ' + DC.ThanhPho as dc
+							from PHIEUDATHANG PDH, DOITAC DT, CHINHANH CN, DIACHI DC
+							where DT.MaDoiTac='${req.params.slug}' AND CN.MaChiNhanh=PDH.MaChiNhanh AND CN.MaDoiTac=DT.MaDoiTac and DC.MaDiaChi = PDH.DiaChiGH`
 						)
 						.then((v) => {
 							products = v;
@@ -36,7 +39,12 @@ class ManageCartController {
 					conn
 						.request()
 						.query(
-							`select PDH.MaPhieuDatHang, PDH.TongHoaDon,CN.TenChiNhanh, DC1.ThanhPho as ThanhPhoDatHang, DC1.Huyen HuyenDatHang, DC1.Xa XaDatHang, DC2.ThanhPho as ThanhPhoChiNhanh, DC2.Huyen as HuyenChiNhanh, DC2.Xa XaChiNhanh, KH.TenKhachHang from dbo.PHIEUDATHANG PDH, dbo.CHINHANH CN, dbo.DIACHI DC1, dbo.DIACHI DC2, dbo.KHACHHANG KH where PDH.MaPhieuDatHang='${req.params.slug}' AND CN.MaChiNhanh=PDH.MaChiNhanh and DC1.MaDiaChi = PDH.DiaChiGH and DC2.MaDiaChi = CN.MaDiaChi and KH.MaKhachHang=PDH.MaKhachHang`
+							`select PDH.MaPhieuDatHang, PDH.TongHoaDon,CN.TenChiNhanh,
+								DC1.Xa + ', '+ DC1.Huyen + ', ' + DC1.ThanhPho as dcgh,
+								DC2.Xa + ', '+ DC2.Huyen + ', ' + DC2.ThanhPho as dccn,
+							KH.TenKhachHang
+							from dbo.PHIEUDATHANG PDH, dbo.CHINHANH CN, dbo.DIACHI DC1, dbo.DIACHI DC2, dbo.KHACHHANG KH
+							where PDH.MaPhieuDatHang='${req.params.slug}' AND CN.MaChiNhanh=PDH.MaChiNhanh and DC1.MaDiaChi = PDH.DiaChiGH and DC2.MaDiaChi = CN.MaDiaChi and KH.MaKhachHang=PDH.MaKhachHang`
 						)
 						.then((v) => {
 							products = v;

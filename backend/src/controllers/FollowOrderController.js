@@ -40,8 +40,8 @@ class FollowOrderController {
 						.request()
 						.query(
 							`select distinct(KH.TenKhachHang), CN.TenChiNhanh,
-								DC1.ThanhPho as tinh1, DC1.Huyen as huyen1, DC1.Xa as xa1,
-								DC2.ThanhPho as tinh2, DC2.Huyen as huyen2, DC2.Xa as xa2
+								DC1.Xa + ', '+ DC1.Huyen + ', ' + DC1.ThanhPho as dcgh,
+								DC2.Xa + ', '+ DC2.Huyen + ', ' + DC2.ThanhPho as dccn
 							from CHITIETPHIEUDATHANG CTDH
 								join PHIEUDATHANG DH on DH.MaPhieuDatHang=CTDH.MaPhieuDatHang
 								join KHACHHANG KH on KH.MaKhachHang=DH.MaKhachHang
