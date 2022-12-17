@@ -4,33 +4,60 @@ import classNames from 'classnames/bind';
 import Button from '~/components/Button';
 import ProductCoop from '~/components/Popper/ProductCoop';
 import Text from '~/components/Text';
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 const cx = classNames.bind(styles);
 
 function Branch() {
+    const { id } = useParams();
+    const [data, setData] = useState();
+    //const [name, setName] = useState();
+
+    useEffect(() => {
+        const abortController = new AbortController();
+        fetch(`http://localhost:5000/restaurant/getName/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => setData(data));
+        return () => {
+            abortController.abort();
+        };
+    }, [id]);
     return (
         <>
             <div className={cx('container', 'grid')}>
                 <div className={cx('title')}>
-                    <h1>Chi nhánh</h1>
+                    <h1>Nhà hàng</h1>
                 </div>
                 <div className={cx('content')}>
-                    <Text>
-                        Tên chi nhánh: <Button className={cx('btn-change')}>Đổi</Button>
-                    </Text>
-                    <Text>
-                        Thời gian hoạt động: <Button className={cx('btn-change')}>Đổi</Button>
-                    </Text>
-                    <Text>
-                        Tình trạng: <Button className={cx('btn-change')}>Đổi</Button>
-                    </Text>
+                    <div className={cx('cover')}>
+                        <div className={cx('box')}>
+                            <div className={cx('box-cover')}>
+                                <Text className={cx('text')}>Tên nhà hàng: {data != undefined && data[0].TenDoiTac}</Text>
+                            </div>
+                        </div>
+                        <div className={cx('box')}>
+                            <div className={cx('box-cover')}>
+                                <Text className={cx('text')}>Loại ẩm thực: {data != undefined && data[0].LoaiAmThuc}</Text>
+                            </div>
+                        </div>
+                        <div className={cx('box')}>
+                            <div className={cx('box-cover')}>
+                                <Text className={cx('text')}>Liên hệ: {data != undefined && data[0].Email}</Text>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <ProductCoop/>
-                <div className={cx('btn-submit')}>
-                    <Button className={cx('btn')} to="/checkout">
-                        Xác nhận
-                    </Button>
-                </div>
+            </div>
+            <div className={cx('container', 'grid')}>
+                <ProductCoop data={data}/>
             </div>
         </>
     );

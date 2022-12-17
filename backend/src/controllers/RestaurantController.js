@@ -11,7 +11,7 @@ class RestaurantController {
 					conn
 						.request()
 						.query(
-							`SELECT DT.TenDoiTac, DT.LoaiAmThuc, DT.Email FROM dbo.DOITAC DT where DT.MaDoiTac='${req.params.slug}'`
+							`SELECT DT.TenDoiTac, DT.LoaiAmThuc, DT.Email, MA.TenMonAn, MA.Gia FROM dbo.DOITAC DT, dbo.THUCDON TD, dbo.MONAN MA where DT.MaDoiTac='${req.params.slug}' and DT.MaDoiTac=TD.MaDoiTac and TD.MaThucDon=MA.MaThucDon`
 						)
 						.then((v) => {
 							products = v;
