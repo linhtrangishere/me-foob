@@ -19,7 +19,7 @@ function ProductCoop({ children, hint = false, title, addr, data = {} }) {
         <>
             <div className={cx('list')}>
                 <h3 className={cx('Menu')}>
-                    <Text>Thực đơn chúng tôi có 4 món ăn</Text>
+                    <Text>Thực đơn chúng tôi có món ăn</Text>
                 </h3>
                 <h3 className={cx('type')}>
                     <Text>

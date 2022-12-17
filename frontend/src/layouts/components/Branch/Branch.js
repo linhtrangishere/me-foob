@@ -16,7 +16,7 @@ function Branch() {
 
     useEffect(() => {
         const abortController = new AbortController();
-        fetch(`http://localhost:5000/restaurant/getName/${id}`, {
+        fetch(`http://localhost:5000/branch/getMenu/${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

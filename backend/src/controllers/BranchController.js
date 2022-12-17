@@ -37,7 +37,9 @@ class BranchController {
 					conn
 						.request()
 						.query(
-							`select MA.TenMonAn, MA.Gia, MA.MieuTaMon from CHINHANH CN, DOITAC DT, THUCDON TD, MONAN MA where MaChiNhanh='${req.params.slug}' and DT.MaDoiTac=CN.MaDoiTac and DT.MaDoiTac=TD.MaDoiTac and MA.MaThucDon=TD.MaThucDon`
+							`SELECT DT.TenDoiTac, DT.LoaiAmThuc, DT.Email, MA.TenMonAn, MA.Gia 
+							FROM dbo.DOITAC DT, dbo.THUCDON TD, dbo.MONAN MA 
+							where DT.MaDoiTac='${req.params.slug}' and DT.MaDoiTac=TD.MaDoiTac and TD.MaThucDon=MA.MaThucDon`
 						)
 						.then((v) => {
 							products = v;
