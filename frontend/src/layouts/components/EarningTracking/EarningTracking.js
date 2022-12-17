@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './EarningTracking.module.scss';
 
 import classNames from 'classnames/bind';
@@ -10,6 +10,44 @@ const cx = classNames.bind(styles);
 function EarningTracking() {
     const refFollow = useRef();
     const refStatistical = useRef();
+
+    const [data, setData] = useState();
+    const [data2, setData2] = useState();
+
+    function format(n) {
+        return n.toFixed(0).replace(/./g, function (c, i, a) {
+            return i > 0 && c !== '.' && (a.length - i) % 3 === 0 ? '.' + c : c;
+        });
+    }
+
+    useEffect(() => {
+        fetch('http://localhost:5000/earning-tracking/getThuNhap', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
+        })
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                setData(data);
+            });
+        fetch('http://localhost:5000/earning-tracking/getThongKe', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
+        })
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                setData2(data);
+            });
+    }, []);
 
     return (
         <>
@@ -51,28 +89,23 @@ function EarningTracking() {
                                 <th>Địa chỉ nhận</th>
                                 <th>Địa chỉ giao</th>
                                 <th>Phí vận chuyển</th>
-                                <th>Chi tiết</th>
                             </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>DH121212121</td>
-                                <td>227 Nguyễn Văn Cừ, P4, Quận 5, Tp HCM</td>
-                                <td>227 Nguyễn Văn Cừ, P4, Quận 5, Tp HCM</td>
-                                <td>1000000</td>
-                                <td className={cx('more')} data-toggle="modal" data-target="#more">
-                                    Chi tiết
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>DH121212121</td>
-                                <td>227 Nguyễn Văn Cừ, P4, Quận 5, Tp HCM</td>
-                                <td>227 Nguyễn Văn Cừ, P4, Quận 5, Tp HCM</td>
-                                <td>1000000</td>
-                                <td className={cx('more')} data-toggle="modal" data-target="#more">
-                                    Chi tiết
-                                </td>
-                            </tr>
+                            {data &&
+                                Object.keys(data).map(function (key) {
+                                    return (
+                                        <tr key={key}>
+                                            <td>{parseInt(key) + 1}</td>
+                                            <td>{data[key].MaPhieuDatHang}</td>
+                                            <td>
+                                                {data[key].xa1}, {data[key].huyen1}, {data[key].tinh1}
+                                            </td>
+                                            <td>
+                                                {data[key].xa2}, {data[key].huyen2}, {data[key].tinh2}
+                                            </td>
+                                            <td>{format(data[key].TongHoaDon)}</td>
+                                        </tr>
+                                    );
+                                })}
                         </table>
                     </div>
                 </div>
@@ -86,95 +119,22 @@ function EarningTracking() {
                         <table>
                             <tr>
                                 <th>STT</th>
-                                <th>Ngày</th>
+                                <th>Tháng</th>
                                 <th>Số lượng đơn hàng</th>
                                 <th>Thu nhập</th>
                             </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>20/10/2022</td>
-                                <td>200</td>
-                                <td>1000000</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>20/10/2022</td>
-                                <td>200</td>
-                                <td>1000000</td>
-                            </tr>
+                            {data2 &&
+                                Object.keys(data2).map(function (key) {
+                                    return (
+                                        <tr key={key}>
+                                            <td>{parseInt(key) + 1}</td>
+                                            <td>{data2[key].thang}</td>
+                                            <td>{data2[key].sldh}</td>
+                                            <td>{format(data2[key].phi)}</td>
+                                        </tr>
+                                    );
+                                })}
                         </table>
-                    </div>
-                </div>
-            </div>
-            <div
-                className="modal fade"
-                id="more"
-                tabIndex="-1"
-                role="dialog"
-                aria-labelledby="exampleModalLongTitle"
-                aria-hidden="true"
-            >
-                <div className="modal-dialog" role="document">
-                    <div className="modal-content" style={{ overflow: 'hidden' }}>
-                        <div className={cx('content-wrapper-modal')}>
-                            <div className={cx('content')}>
-                                <div className={cx('close')} data-dismiss="modal" aria-label="Close">
-                                    <img src={images.close} alt="" />
-                                </div>
-                            </div>
-                            <div className={cx('separate')}></div>
-                            <div className={cx('item-modal')}>
-                                <Text>
-                                    <strong>Mã đơn hàng: </strong>Anh Ngọc Trần
-                                </Text>
-                                <Text>
-                                    <strong>Chi nhánh: </strong>Anh Ngọc Trần
-                                </Text>
-                                <Text>
-                                    <strong>Địa chỉ chi nhánh: </strong>Anh Ngọc Trần
-                                </Text>
-                                <Text>
-                                    <strong>Tên khách hàng: </strong>Anh Ngọc Trần
-                                </Text>
-                                <Text>
-                                    <strong>Địa chỉ: </strong>Anh Ngọc Trần
-                                </Text>
-                            </div>
-                            <div className={cx('separate')}></div>
-                            <div className={cx('item-modal')}>
-                                <Text>
-                                    <strong>Món được đặt:</strong>
-                                </Text>
-                                <div className={cx('dish')}>
-                                    <Text className={cx('name-dish')}>Cơm Tấm Thăng Trầm - Tân Trang</Text>
-                                    <Text className={cx('price-dish')}>70000</Text>
-                                </div>
-                                <div className={cx('dish')}>
-                                    <Text className={cx('name-dish')}>Cơm Tấm Thăng Trầm - Tân Trang</Text>
-                                    <Text className={cx('price-dish')}>70000</Text>
-                                </div>
-                                <div className={cx('dish')}>
-                                    <Text className={cx('name-dish')}>Cơm Tấm Thăng Trầm - Tân Trang</Text>
-                                    <Text className={cx('price-dish')}>70000</Text>
-                                </div>
-                                <div className={cx('dish')}>
-                                    <Text className={cx('name-dish')}>Cơm Tấm Thăng Trầm - Tân Trang</Text>
-                                    <Text className={cx('price-dish')}>70000</Text>
-                                </div>
-                                <div className={cx('dish')}>
-                                    <Text className={cx('name-dish')}>
-                                        <strong>Tổng tiền</strong>
-                                    </Text>
-                                    <Text className={cx('price-dish')}>70000</Text>
-                                </div>
-                            </div>
-                            <div className={cx('separate-big')}></div>
-                            <div className={cx('footer')}>
-                                <div className={cx('btn-modal')} data-dismiss="modal" aria-label="Close">
-                                    <div> Hoàn thành</div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

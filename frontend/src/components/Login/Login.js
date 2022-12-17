@@ -45,9 +45,6 @@ function Login({ children, login = false, name = '', ...props }) {
                     render={(attrs) => (
                         <ul className={cx('dropdown-menu')} tabIndex="-1" {...attrs}>
                             <li className={cx('item')}>
-                                <Button className={cx('item-link')} to="/cart">Giỏ hàng</Button>
-                            </li>
-                            <li className={cx('item')}>
                                 <Button className={cx('item-link')} to="/contact/DT000HNUKU">Xem hợp đồng</Button>
                             </li>
                             <li className={cx('item')}>

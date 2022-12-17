@@ -3,9 +3,9 @@ const router = express.Router();
 
 const ManageDriverController = require('../controllers/ManageDriverController');
 
-router.get('/getDetail', ManageDriverController.getDetail);
+router.post('/getDetail', ManageDriverController.getDetail);
 router.get('/getDonHang', ManageDriverController.getDonHang)
-router.get('/getTenKH', ManageDriverController.getTenKH)
+router.post('/getTenKH', ManageDriverController.getTenKH)
 router.post('/submitDriver', ManageDriverController.submitDriver)
 
 module.exports = router;

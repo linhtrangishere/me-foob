@@ -49,12 +49,6 @@ function Header({ white = false, register = false }) {
                     </div>
                     {register && (
                         <div className={cx('btn-group')}>
-                            <Button headerGroup to="/cart">
-                                <div
-                                    className={cx('cart-icon')}
-                                    style={{ backgroundImage: `url("${images.cart}")` }}
-                                ></div>
-                            </Button>
 
                             <Login/>
                         </div>

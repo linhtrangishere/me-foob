@@ -3,8 +3,8 @@ const router = express.Router();
 
 const FollowOrderController = require('../controllers/FollowOrderController');
 
-router.get('/getBranch1', FollowOrderController.getBranch1);
-router.get('/getBranch2', FollowOrderController.getBranch2);
-router.get('/', FollowOrderController.index)
+router.post('/getDetail', FollowOrderController.getDetail);
+router.get('/getDonHang/:slug', FollowOrderController.getDonHang);
+router.post('/getTenKH', FollowOrderController.getTenKH)
 
 module.exports = router;

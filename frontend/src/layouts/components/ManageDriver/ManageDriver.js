@@ -34,13 +34,14 @@ function ManageDriver() {
 
     const [name, setName] = useState();
     const [listMonAn, setListMonAn] = useState();
-    const hanldeOnClickDetail = () => {
+    const hanldeOnClickDetail = (pdh) => {
         fetch('http://localhost:5000/manage-driver/getTenKH', {
-            method: 'GET',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 Accept: 'application/json',
             },
+            body: JSON.stringify({ pdh: pdh }),
         })
             .then((res) => {
                 return res.json();
@@ -49,11 +50,12 @@ function ManageDriver() {
                 setName(data);
             });
         fetch('http://localhost:5000/manage-driver/getDetail', {
-            method: 'GET',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 Accept: 'application/json',
             },
+            body: JSON.stringify({ pdh: pdh }),
         })
             .then((res) => {
                 return res.json();
@@ -99,7 +101,7 @@ function ManageDriver() {
                                                     data-toggle="modal"
                                                     data-target="#more"
                                                     onClick={() => {
-                                                        hanldeOnClickDetail();
+                                                        hanldeOnClickDetail(data[key].MaPhieuDatHang);
                                                         setKeyIndex(parseInt(key));
                                                     }}
                                                 >
@@ -116,6 +118,7 @@ function ManageDriver() {
                                                             },
                                                             body: JSON.stringify({
                                                                 ma: `TX1H16CWTX`,
+                                                                pdh: `${data[key].MaPhieuDatHang}`,
                                                             }),
                                                         })
                                                             .then((res) => {

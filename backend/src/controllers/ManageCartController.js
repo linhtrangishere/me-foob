@@ -77,6 +77,31 @@ class ManageCartController {
 			res.json(ress.recordset);
 		});
 	}
+	// [GET] /manage-cart/submit
+	submitOrder(req, res) {
+		const func = async () => {
+			try {
+				let products;
+				await sql.connect(config.config).then((conn) =>
+					conn
+						.request()
+						.query(
+							`update dbo.PHIEUDATHANG set TinhTrangDonHang=N'Đã xử lý' where MaPhieuDatHang='${req.body.pdh}'`
+						)
+						.then((v) => {
+							products = v;
+						})
+						.then(() => conn.close())
+				);
+				return products;
+			} catch (error) {
+				console.log(`Error: ${error}`);
+			}
+		};
+		func().then((ress) => {
+			res.json(ress);
+		});
+	}
 }
 
 module.exports = new ManageCartController();

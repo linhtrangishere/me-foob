@@ -8,7 +8,7 @@ const routes = {
     branch: '/branch',
     manageCart: '/manage-cart/:id',
     manageDriver: '/manage-driver',
-    followOrder: '/follow-order',
+    followOrder: '/follow-order/:id',
     earningTracking: '/earning-tracking',
     manageCoop: '/manage-coop',
     login: '/login',

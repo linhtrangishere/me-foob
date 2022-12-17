@@ -10,6 +10,11 @@ import { useEffect, useState } from 'react';
 const cx = classNames.bind(styles);
 
 function ManageCart() {
+    function format(n) {
+        return n.toFixed(0).replace(/./g, function (c, i, a) {
+            return i > 0 && c !== '.' && (a.length - i) % 3 === 0 ? '.' + c : c;
+        });
+    }
     const { id } = useParams();
     const [data, setData] = useState();
     const [dataCustomer, setDataCustomer] = useState();
@@ -82,7 +87,7 @@ function ManageCart() {
                                             <td>{key + 1}</td>
                                             <td>{data[key].MaPhieuDatHang}</td>
                                             <td>{`${data[key].Xa}, ${data[key].Huyen}, ${data[key].ThanhPho}`}</td>
-                                            <td>{data[key].TongHoaDon}</td>
+                                            <td>{format(data[key].TongHoaDon)}</td>
                                             <td>{data[key].TinhTrangDonHang}</td>
                                             <td
                                                 className={cx('more')}
@@ -92,7 +97,29 @@ function ManageCart() {
                                             >
                                                 Chi tiết
                                             </td>
-                                            <td className={cx('submit')}>Xác nhận</td>
+                                            <td
+                                                className={cx('submit')}
+                                                onClick={() => {
+                                                    fetch('http://localhost:5000/manage-cart/submit', {
+                                                        method: 'POST',
+                                                        headers: {
+                                                            'Content-Type': 'application/json',
+                                                            Accept: 'application/json',
+                                                        },
+                                                        body: JSON.stringify({
+                                                            pdh: `${data[key].MaPhieuDatHang}`,
+                                                        }),
+                                                    })
+                                                        .then((res) => {
+                                                            return res.json();
+                                                        })
+                                                        .then((data) => {
+                                                            alert('Thành công');
+                                                        });
+                                                }}
+                                            >
+                                                Xác nhận
+                                            </td>
                                         </tr>
                                     );
                                 })}
