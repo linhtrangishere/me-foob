@@ -153,6 +153,7 @@ class RegisterController {
 						.input("STKNganHang", sql.VarChar(20), req.body.stk)
 						.input("NganHang", sql.VarChar(20), req.body.nganhang)
 						.input("Diachikinhdoanh", sql.NVarChar(100), req.body.diachikinhdoanh)
+						.input("TenDoiTac", sql.VarChar(50), req.body.tendt)
 						.execute("dbo.SP_DangKy_DT")
 						.then((v) => {
 							result = v;
