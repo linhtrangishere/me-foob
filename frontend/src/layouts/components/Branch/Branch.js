@@ -16,7 +16,7 @@ function Branch() {
 
     useEffect(() => {
         const abortController = new AbortController();
-        fetch(`http://localhost:5000/restaurant/getName/${id}`, {
+        fetch(`http://localhost:5000/branch/getMenu/${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ function Branch() {
                         </div>
                         <div className={cx('box')}>
                             <div className={cx('box-cover')}>
-                                <Text className={cx('text')}>Liên hệ: {data != undefined && data[0].Email}</Text>
+                                <Text className={cx('text')}>Liên hệ: {data != undefined && data[0].MaThucDon}</Text>
                             </div>
                         </div>
                     </div>

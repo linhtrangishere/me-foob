@@ -32,7 +32,7 @@ function Item({ children, data={} }) {
                             <Text>{data && data.TenMonAn}</Text>
                         </h6>
                         <div className={cx('group-row')}>
-                            <Text>{format(70000)}</Text>
+                            <Text>{data && data.Gia}</Text>
                             <div className={cx('btn')}>
                                 <Button className={cx('remove')}>Xóa</Button>
                                 <Button data-toggle="modal" data-target="#view">
