@@ -8,14 +8,14 @@ import Star from '~/components/Star';
 
 const cx = classNames.bind(styles);
 
-function Item({ children, hint = false, value = {} ,key}) {
+function Item({ children, hint = false, value = {}, key }) {
     return (
         <div className={cx('item')} key={key}>
-            <Button to={`/restaurant/${value.MaChiNhanh}`} className={cx('link')}>
+            <Button to={`/restaurant/${value.MaDoiTac}`} className={cx('link')}>
                 <div className={cx('img')}>
                     <img src={images.product} alt="" />
                 </div>
-                <h6 className={cx('name')}>{'Rỗng' && value.TenChiNhanh}</h6>
+                <h6 className={cx('name')}>{'Rỗng' && value.TenDoiTac}</h6>
                 {!hint && (
                     <div className={cx('more')}>
                         <h3 className={cx('type')}>{'Rỗng' && value.LoaiAmThuc}</h3>

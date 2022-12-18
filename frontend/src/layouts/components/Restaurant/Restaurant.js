@@ -11,7 +11,7 @@ function Restaurant() {
     const { id } = useParams();
     const [name, setName] = useState();
     useEffect(() => {
-        fetch(`http://localhost:5000/branch/getName/${id}`, {
+        fetch(`http://localhost:5000/restaurant/getName/${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -20,8 +20,10 @@ function Restaurant() {
             .then((res) => {
                 return res.json();
             })
-            .then((data) => setName(data));
-    }, []);
+            .then((data) => {
+                setName(data);
+            });
+    }, [id]);
     return (
         <>
             <div className={cx('address', 'container', 'grid')}>
@@ -33,10 +35,10 @@ function Restaurant() {
                 <Text className={cx('img')}>
                     <img src={images.right} alt="" />
                 </Text>
-                {name !== undefined && <Text>{name && name[0].TenChiNhanh}</Text>}
+                {name && <Text>{name[0].TenDoiTac}</Text>}
             </div>
             <div className={cx('container', 'grid')}>
-                <Product />
+                <Product TenDoiTac={name && <Text>{name[0].TenDoiTac}</Text>} />
             </div>
         </>
     );

@@ -43,7 +43,7 @@ function ListItem({ children, hint = false, title, addr, data = {} }) {
                 </h1>
                 <div className={classesListItem} ref={refTransform}>
                     {Object.keys(data).map(function (key) {
-                        return <Item/>;
+                        return <Item value={data[key]} />;
                     })}
                 </div>
                 {!hint && (

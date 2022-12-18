@@ -117,7 +117,7 @@ function ManageDriver() {
                                                                 Accept: 'application/json',
                                                             },
                                                             body: JSON.stringify({
-                                                                ma: `TX1H16CWTX`,
+                                                                ma: `${localStorage.getItem('ma')}`,
                                                                 pdh: `${data[key].MaPhieuDatHang}`,
                                                             }),
                                                         })
@@ -137,11 +137,6 @@ function ManageDriver() {
                                 })}
                         </table>
                     </div>
-                </div>
-                <div className={cx('btn-submit')}>
-                    <Button className={cx('btn')} to="/">
-                        Xác nhận
-                    </Button>
                 </div>
             </div>
             <div

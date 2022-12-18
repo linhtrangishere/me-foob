@@ -22,8 +22,6 @@ function Item({ children, key, value = null }) {
         <>
             <div
                 className={cx('item')}
-                data-toggle="modal"
-                data-target="#exampleModalLong"
                 key={key}
                 onClick={() => {
                     if (modal) setModal(false);
@@ -48,91 +46,6 @@ function Item({ children, key, value = null }) {
                     </div>
                 </div>
             </div>
-            {modal && (
-                <div
-                    className="modal fade"
-                    id="exampleModalLong"
-                    tabIndex="-1"
-                    role="dialog"
-                    aria-labelledby="exampleModalLongTitle"
-                    aria-hidden="true"
-                >
-                    <div className="modal-dialog" role="document">
-                        <div className="modal-content" style={{ overflow: 'hidden' }}>
-                            <div className={cx('content-wrapper')}>
-                                <div className={cx('content')}>
-                                    <div className={cx('close')} data-dismiss="modal" aria-label="Close">
-                                        <img src={images.close} alt="" />
-                                    </div>
-                                </div>
-                                <div className={cx('separate')}></div>
-                                <div className={cx('item-modal')}>
-                                    <div className={cx('link-modal')}>
-                                        <div className={cx('img')}>
-                                            <img src={images.product} alt="" />
-                                        </div>
-                                        <div className={cx('group')}>
-                                            <h6 className={cx('name')}>
-                                                <Text>{value !== undefined && value.TenMonAn}</Text>
-                                            </h6>
-                                            <div className={cx('group-row')}>
-                                                <Text>{format(value !== undefined && value.Gia)}</Text>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                {value !== undefined && value.length > 0 && (
-                                    <>
-                                        <div className={cx('separate')}></div>
-                                        <div className={cx('note')}>
-                                            <h6>Mô tả món ăn</h6>
-                                            <Text>{value.MieuTaMon} </Text>
-                                        </div>
-                                    </>
-                                )}
-                                <div className={cx('separate-big')}></div>
-                                <div className={cx('note')}>
-                                    <h6>Ghi chú người bán hoặc người giao hàng</h6>
-                                    <input type="text" placeholder="Ghi chú ..." />
-                                </div>
-                                <div className={cx('footer')}>
-                                    <div className={cx('amount')}>
-                                        <div
-                                            className={cx('sub')}
-                                            onClick={() => {
-                                                if (amount > 0) setAmount(amount - 1);
-                                            }}
-                                        >
-                                            <img src={images.sub} alt="" />
-                                        </div>
-                                        {amount}
-                                        <div
-                                            className={cx('plus')}
-                                            onClick={() => {
-                                                setAmount(amount + 1);
-                                            }}
-                                        >
-                                            <img src={images.plus} alt="" />
-                                        </div>
-                                    </div>
-                                    <div className={cx('btn-modal')}>
-                                        {amount !== 0 && (
-                                            <div>
-                                                Add to Basket - {format(value !== undefined && value.Gia * amount)} ₫
-                                            </div>
-                                        )}
-                                        {amount === 0 && (
-                                            <div className={cx('cancel')} data-dismiss="modal" aria-label="Close">
-                                                Cancel
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
         </>
     );
 }

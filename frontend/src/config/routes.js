@@ -9,7 +9,7 @@ const routes = {
     manageCart: '/manage-cart/:id',
     manageDriver: '/manage-driver',
     followOrder: '/follow-order/:id',
-    earningTracking: '/earning-tracking',
+    earningTracking: '/earning-tracking/:id',
     manageCoop: '/manage-coop',
     login: '/login',
 };

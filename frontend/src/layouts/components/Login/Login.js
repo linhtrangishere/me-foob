@@ -27,11 +27,18 @@ function Login() {
                 return res.json();
             })
             .then((data) => {
+                console.log(data);
                 if (data.recordset) {
                     localStorage.setItem('userName', data.recordset[0].Ten);
                     localStorage.setItem('dienThoai', refUser.current.value);
-                    window.location.href = '/';
+                    const roll = data.recordset[0].ma.slice(0, 2)
+                    if (roll === 'NV') localStorage.setItem('roll', 1);
+                    else if (roll === 'TX') localStorage.setItem('roll', 2);
+                    else if (roll === 'DT') localStorage.setItem('roll', 3);
+                    else if (roll === 'KH') localStorage.setItem('roll', 4);
+                    localStorage.setItem('ma', data.recordset[0].ma)
                     setLoginErr(false);
+                    window.location.href = '/';
                 } else {
                     setLoginErr(true);
                 }
@@ -67,7 +74,11 @@ function Login() {
                                 ref={refPassword}
                             />
                         </div>
-                        {loginErr && <Text className="mb-4" style={{color:'red'}}>Bạn đã nhập sai tài khoản hoặc mật khẩu</Text>}
+                        {loginErr && (
+                            <Text className="mb-4" style={{ color: 'red' }}>
+                                Bạn đã nhập sai tài khoản hoặc mật khẩu
+                            </Text>
+                        )}
                         {/* <!-- 2 column grid layout for inline styling --> */}
                         <div className="row mb-4">
                             <div className="col d-flex justify-content-center">

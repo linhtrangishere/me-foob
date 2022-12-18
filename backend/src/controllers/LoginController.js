@@ -28,7 +28,7 @@ class BranchController {
 								conn
 									.request()
 									.query(
-										`SELECT TenNhanVien AS Ten FROM dbo.NHANVIEN WHERE DienThoaiNhanVien='${req.body.user}'`
+										`SELECT MaNhanVien as ma, TenNhanVien AS Ten FROM dbo.NHANVIEN WHERE DienThoaiNhanVien='${req.body.user}'`
 									)
 									.then((v) => {
 										name = v;
@@ -40,7 +40,7 @@ class BranchController {
 									conn
 										.request()
 										.query(
-											`SELECT TenTaiXe AS Ten FROM dbo.TAIXE WHERE DienThoaiTaiXe='${req.body.user}'`
+											`SELECT MaTaiXe as ma, TenTaiXe AS Ten FROM dbo.TAIXE WHERE DienThoaiTaiXe='${req.body.user}'`
 										)
 										.then((v) => {
 											name = v;
@@ -53,7 +53,7 @@ class BranchController {
 									conn
 										.request()
 										.query(
-											`SELECT NguoiDaiDien AS Ten FROM dbo.DOITAC WHERE DienThoaiDoiTac='${req.body.user}'`
+											`SELECT MaDoiTac as ma, NguoiDaiDien AS Ten FROM dbo.DOITAC WHERE DienThoaiDoiTac='${req.body.user}'`
 										)
 										.then((v) => {
 											name = v;
@@ -66,7 +66,7 @@ class BranchController {
 									conn
 										.request()
 										.query(
-											`SELECT TenKhachHang AS Ten FROM dbo.KHACHHANG WHERE DienThoaiKhachHang='${req.body.user}'`
+											`SELECT MaKhachHang as ma, TenKhachHang AS Ten FROM dbo.KHACHHANG WHERE DienThoaiKhachHang='${req.body.user}'`
 										)
 										.then((v) => {
 											name = v;

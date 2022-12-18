@@ -4,10 +4,14 @@ import styles from './EarningTracking.module.scss';
 import classNames from 'classnames/bind';
 import images from '~/assets/images';
 import Text from '~/components/Text';
+import { useParams } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
 function EarningTracking() {
+
+    const { id } = useParams();
+
     const refFollow = useRef();
     const refStatistical = useRef();
 
@@ -21,7 +25,7 @@ function EarningTracking() {
     }
 
     useEffect(() => {
-        fetch('http://localhost:5000/earning-tracking/getThuNhap', {
+        fetch(`http://localhost:5000/earning-tracking/getThuNhap/${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -34,7 +38,7 @@ function EarningTracking() {
             .then((data) => {
                 setData(data);
             });
-        fetch('http://localhost:5000/earning-tracking/getThongKe', {
+        fetch(`http://localhost:5000/earning-tracking/getThongKe/${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

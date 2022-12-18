@@ -9,60 +9,36 @@ import { useParams } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
-function Product({ children }) {
+function Product({ children, TenDoiTac = '' }) {
     const { id } = useParams();
 
-    const [dataBranch, setDataBranch] = useState();
     const [dataMenu, setDataMenu] = useState();
 
     useEffect(() => {
-        setTimeout(() => {
-            fetch(`http://localhost:5000/branch/getBranch/${id}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+        fetch(`http://localhost:5000/restaurant/getMenu/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then((res) => {
+                return res.json();
             })
-                .then((res) => {
-                    return res.json();
-                })
-                .then((data) => setDataBranch(data));
-        }, 100);
-        setTimeout(() => {
-            fetch(`http://localhost:5000/branch/getMenu/${id}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            })
-                .then((res) => {
-                    return res.json();
-                })
-                .then((data) => setDataMenu(data));
-        }, 100);
-    }, []);
+            .then((data) => setDataMenu(data));
+    }, [id]);
     return (
         <>
             <div className={cx('list')}>
                 <h1 className={cx('title')}>
-                    <Text>{dataBranch !== undefined && dataBranch[0].TenChiNhanh}</Text>
+                    <Text>{TenDoiTac}</Text>
                 </h1>
                 <h3 className={cx('type')}>
-                    <Text>{dataBranch !== undefined && dataBranch[0].LoaiAmThuc}</Text>
+                    <Text>{dataMenu !== undefined && dataMenu[0].LoaiAmThuc}</Text>
                 </h3>
-                <Star amount={dataBranch !== undefined && dataBranch[0].Rating} />
-                <Text className={cx('time')}>
-                    <Text className={cx('time-open')}>Giờ mở cửa</Text>
-                    <Text>
-                        {dataBranch !== undefined && dataBranch[0].GioMoCua}:
-                        {dataBranch !== undefined && dataBranch[0].PhutMoCua}-
-                        {dataBranch !== undefined && dataBranch[0].GioDongCua}:
-                        {dataBranch !== undefined && dataBranch[0].PhutDongCua}
-                    </Text>
-                </Text>
+                <Star amount={dataMenu !== undefined && dataMenu[0].Rating} />
             </div>
             <div className={cx('menu')}>
-                <h1 className={cx('title')}>
+                <h1 className={cx('title', 'thuc-don')}>
                     <Text>Thực đơn</Text>
                 </h1>
                 <div className={cx('list-item')}>

@@ -44,29 +44,95 @@ function Login({ children, login = false, name = '', ...props }) {
                     placement="bottom-start"
                     render={(attrs) => (
                         <ul className={cx('dropdown-menu')} tabIndex="-1" {...attrs}>
+                            {
+                                // eslint-disable-next-line eqeqeq
+                                (localStorage.getItem('roll') == 1 || localStorage.getItem('roll') == 3) && (
+                                    <li className={cx('item')}>
+                                        <Button
+                                            className={cx('item-link')}
+                                            to={`/contact/${localStorage.getItem('ma')}`}
+                                        >
+                                            Xem hợp đồng
+                                        </Button>
+                                    </li>
+                                )
+                            }
+                            {
+                                // eslint-disable-next-line eqeqeq
+                                localStorage.getItem('roll') == 3 && (
+                                    <li className={cx('item')}>
+                                        <Button
+                                            className={cx('item-link')}
+                                            to={`/branch/${localStorage.getItem('ma')}`}
+                                        >
+                                            Thông tin chi nhánh
+                                        </Button>
+                                    </li>
+                                )
+                            }
+                            {
+                                // eslint-disable-next-line eqeqeq
+                                localStorage.getItem('roll') == 3 && (
+                                    <li className={cx('item')}>
+                                        <Button
+                                            className={cx('item-link')}
+                                            to={`/manage-cart/${localStorage.getItem('ma')}`}
+                                        >
+                                            Quản lý đơn hàng (Đối tác)
+                                        </Button>
+                                    </li>
+                                )
+                            }
+                            {
+                                // eslint-disable-next-line eqeqeq
+                                localStorage.getItem('roll') == 2 && (
+                                    <li className={cx('item')}>
+                                        <Button className={cx('item-link')} to="/manage-driver">
+                                            Quản lý đơn hàng (tài xế)
+                                        </Button>
+                                    </li>
+                                )
+                            }
+                            {
+                                // eslint-disable-next-line eqeqeq
+                                localStorage.getItem('roll') == 4 && (
+                                    <li className={cx('item')}>
+                                        <Button
+                                            className={cx('item-link')}
+                                            to={`/follow-order/${localStorage.getItem('ma')}`}
+                                        >
+                                            Theo dõi đơn hàng
+                                        </Button>
+                                    </li>
+                                )
+                            }
+                            {
+                                // eslint-disable-next-line eqeqeq
+                                localStorage.getItem('roll') == 2 && (
+                                    <li className={cx('item')}>
+                                        <Button
+                                            className={cx('item-link')}
+                                            to={`/earning-tracking/${localStorage.getItem('ma')}`}
+                                        >
+                                            Theo dõi thu nhập (tài xế)
+                                        </Button>
+                                    </li>
+                                )
+                            }
+                            {
+                                // eslint-disable-next-line eqeqeq
+                                localStorage.getItem('roll') == 1 && (
+                                    <li className={cx('item')}>
+                                        <Button className={cx('item-link')} to="/manage-coop">
+                                            Quản lý đối tác (đối tác)
+                                        </Button>
+                                    </li>
+                                )
+                            }
                             <li className={cx('item')}>
-                                <Button className={cx('item-link')} to="/contact/DT000HNUKU">Xem hợp đồng</Button>
-                            </li>
-                            <li className={cx('item')}>
-                                <Button className={cx('item-link')} to="/branch">Thông tin chi nhánh</Button>
-                            </li>
-                            <li className={cx('item')}>
-                                <Button className={cx('item-link')} to="/manage-cart/DT000HNUKU">Quản lý đơn hàng (Đối tác)</Button>
-                            </li>
-                            <li className={cx('item')}>
-                                <Button className={cx('item-link')} to="/manage-driver">Quản lý đơn hàng (tài xế)</Button>
-                            </li>
-                            <li className={cx('item')}>
-                                <Button className={cx('item-link')} to="/follow-order">Theo dõi đơn hàng</Button>
-                            </li>
-                            <li className={cx('item')}>
-                                <Button className={cx('item-link')} to="/earning-tracking">Theo dõi thu nhập (tài xế)</Button>
-                            </li>
-                            <li className={cx('item')}>
-                                <Button className={cx('item-link')} to="/manage-coop">Quản lý đối tác (đối tác)</Button>
-                            </li>
-                            <li className={cx('item')}>
-                                <Button className={cx('item-link')} onClick={() => handleLogout()}>Đăng xuất</Button>
+                                <Button className={cx('item-link')} onClick={() => handleLogout()}>
+                                    Đăng xuất
+                                </Button>
                             </li>
                         </ul>
                     )}

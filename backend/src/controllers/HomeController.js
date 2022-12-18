@@ -11,7 +11,9 @@ class HomeController {
 					conn
 						.request()
 						.query(
-							"SELECT TOP 8 CN.MaChiNhanh,CN.TenChiNhanh, DT.LoaiAmThuc,TD.Rating FROM dbo.CHINHANH CN,dbo.DOITAC DT, dbo.THUCDON TD where CN.MaDoiTac = DT.MaDoiTac and TD.MaDoiTac=CN.MaDoiTac ORDER BY NEWID()"
+							`SELECT TOP 8 DT.MaDoiTac, Dt.TenDoiTac, DT.LoaiAmThuc,TD.Rating
+							FROM dbo.DOITAC DT, dbo.THUCDON TD
+							where DT.MaDoiTac = TD.MaDoiTac`
 						)
 						.then((v) => {
 							products = v;
@@ -36,7 +38,9 @@ class HomeController {
 					conn
 						.request()
 						.query(
-							"SELECT TOP 8 CN.MaChiNhanh,CN.TenChiNhanh, DT.LoaiAmThuc,TD.Rating FROM dbo.CHINHANH CN,dbo.DOITAC DT, dbo.THUCDON TD where CN.MaDoiTac = DT.MaDoiTac and TD.MaDoiTac=CN.MaDoiTac ORDER BY NEWID()"
+							`SELECT TOP 8 DT.MaDoiTac, Dt.TenDoiTac, DT.LoaiAmThuc,TD.Rating
+							FROM dbo.DOITAC DT, dbo.THUCDON TD
+							where DT.MaDoiTac = TD.MaDoiTac`
 						)
 						.then((v) => {
 							products = v;

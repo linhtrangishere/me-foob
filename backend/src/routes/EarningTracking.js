@@ -3,8 +3,8 @@ const router = express.Router();
 
 const EarningTrackingController = require('../controllers/EarningTrackingController');
 
-router.get('/getThuNhap', EarningTrackingController.getThuNhap);
-router.get('/getThongKe', EarningTrackingController.getThongKe);
+router.get('/getThuNhap/:slug', EarningTrackingController.getThuNhap);
+router.get('/getThongKe/:slug', EarningTrackingController.getThongKe);
 router.get('/', EarningTrackingController.index)
 
 module.exports = router;
