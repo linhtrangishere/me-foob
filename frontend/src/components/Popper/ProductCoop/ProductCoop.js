@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './ProductCoop.module.scss';
 
 import classNames from 'classnames/bind';
@@ -12,9 +12,26 @@ import ListItem from '../ListItem';
 const cx = classNames.bind(styles);
 
 function ProductCoop({ children, hint = false, title, addr, data = {} }) {
-    useEffect(() => {
-        console.log(data)
-    }, [data])
+    const [Name, setName] = useState();
+    const [Price, setPrice] = useState();
+    const [Desc, setDesc] = useState();
+    const refInput = useRef();
+    const handleOnClickAdd = () => {
+        console.log(data[0].MaThucDon)
+        fetch(`http://localhost:5000/branch/add/${data[0].MaThucDon}`,{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({TenMonAn: Name,
+                                Gia: Price,
+                                MieuTa: Desc
+                            })
+        })
+            .then((res) => {
+                return res.json();
+            })
+    }
     return (
         <>
             <div className={cx('list')}>
@@ -38,7 +55,7 @@ function ProductCoop({ children, hint = false, title, addr, data = {} }) {
                 <div className={cx('list-item')}>
                     {data && Object.keys(data).map(function (key) {
                         console.log(data[key])
-                        return <Item data={data[key]}/>;
+                        return <Item key={key} data={data[key]}/>;
                     })}
                 </div>
             </div>
@@ -64,15 +81,27 @@ function ProductCoop({ children, hint = false, title, addr, data = {} }) {
                                     <div className={cx('group')}>
                                         <div className={cx('text-input')}>
                                             <Text className={cx('text')}>Tên món ăn</Text>
-                                            <input type="text" placeholder="Nhập . . ." />
+                                            <input type="text" placeholder="Nhập . . ." value={Name !== undefined && Name} onChange={
+                                                (e) => {
+                                                    setName(e.target.value)
+                                                }
+                                            } ref={refInput}/>
                                         </div>
                                         <div className={cx('text-input')}>
                                             <Text className={cx('text')}>Giá</Text>
-                                            <input type="text" placeholder="Nhập . . ." />
+                                            <input type="text" placeholder="Nhập . . ." value={Price !== undefined && Price} onChange={
+                                                (e) => {
+                                                    setPrice(e.target.value)
+                                                }
+                                            } ref={refInput}/>
                                         </div>
                                         <div className={cx('text-input')}>
                                             <Text className={cx('text')}>Mô tả</Text>
-                                            <input type="text" placeholder="Nhập . . ." />
+                                            <input type="text" placeholder="Nhập . . ." value={Desc !== undefined && Desc} onChange={
+                                                (e) => {
+                                                    setDesc(e.target.value)
+                                                }
+                                            } ref={refInput}/>
                                         </div>
                                         <div className={cx('text-input')}>
                                             <Text className={cx('text')}>Hình ảnh</Text>
@@ -83,7 +112,10 @@ function ProductCoop({ children, hint = false, title, addr, data = {} }) {
                             </div>
                             <div className={cx('footer')}>
                                 <div className={cx('btn-modal')} data-dismiss="modal" aria-label="Close">
-                                    <div> Hoàn thành</div>
+                                    <Button className={cx('btn')} onClick={handleOnClickAdd}>
+                                        Hoan thanh
+                                    </Button>
+                                    {/* <div> Hoàn thành</div> */}
                                 </div>
                             </div>
                         </div>
