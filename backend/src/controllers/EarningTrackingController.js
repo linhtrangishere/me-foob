@@ -2,7 +2,7 @@ const config = require("../DbConfig");
 const sql = require("mssql");
 class EarningTrackingController {
 	async index(req, res) {}
-	// [GET] /earning-tracking/getThuNhap
+	// [GET] /earning-tracking/getThuNhap/:slug
 	getThuNhap(req, res) {
 		const func = async () => {
 			try {
@@ -18,7 +18,7 @@ class EarningTrackingController {
 													join CHINHANH CN on CN.MaChiNhanh=DH.MaChiNhanh
 													join DIACHI DC2 on CN.MaDiaChi=DC2.MaDiaChi --Địa chỉ chi nhánh
 													join KHACHHANG KH on KH.MaKhachHang=DH.MaKhachHang
-								where MaTaiXe ='TX4ALV5QOR'`
+								where MaTaiXe ='${req.params.slug}'`
 						)
 						.then((v) => {
 							products = v;
@@ -34,7 +34,7 @@ class EarningTrackingController {
 			res.json(ress.recordset);
 		});
 	}
-	// [GET] /earning-tracking/getThongKe
+	// [GET] /earning-tracking/getThongKe/:slug
 	getThongKe(req, res) {
 		const func = async () => {
 			try {
@@ -45,7 +45,7 @@ class EarningTrackingController {
 						.query(
 							`select month(NgayGiaoHang) as thang, count(*) as sldh, sum(PhiVanChuyen) as phi
 							from PHIEUDATHANG
-							where year(NgayGiaoHang) = '2007' and MaTaiXe is null
+							where year(NgayGiaoHang) = '2007' and MaTaiXe ='${req.params.slug}'
 							group by month(NgayGiaoHang)
 							ORDER BY month(NgayGiaoHang) ASC`
 						)
