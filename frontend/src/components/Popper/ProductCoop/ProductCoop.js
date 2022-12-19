@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {  useRef, useState } from 'react';
 import styles from './ProductCoop.module.scss';
 
 import classNames from 'classnames/bind';
@@ -7,7 +7,6 @@ import Star from '~/components/Star';
 import images from '~/assets/images';
 import Button from '~/components/Button';
 import Item from './Item';
-import ListItem from '../ListItem';
 
 const cx = classNames.bind(styles);
 

@@ -6,6 +6,7 @@ import Product from '~/components/Popper/Product';
 import Text from '~/components/Text';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import Star from '~/components/Star';
 const cx = classNames.bind(styles);
 function Restaurant() {
     const { id } = useParams();
@@ -22,10 +23,8 @@ function Restaurant() {
                 return res.json();
             })
             .then((data) => setData(data));
-    
     }, [id]);
     useEffect(() => {
-        //const abortController = new AbortController();
         if (data)
             fetch(`http://localhost:5000/restaurant/getMenu/${data[0].MaThucDon}`, {
                 method: 'GET',
@@ -36,18 +35,15 @@ function Restaurant() {
                 .then((res) => {
                     return res.json();
                 })
-                .then((data0) => { 
-                    console.log("data0", data0)
+                .then((data0) => {
+                    console.log('data0', data0);
                     setData0(data0);
                 });
-        // return () => {
-        //     abortController.abort();
-        // }
-    }, [data]); 
+    }, [data]);
 
     useEffect(() => {
-        console.log(data0)
-    })
+        console.log(data0);
+    });
     return (
         <>
             <div className={cx('address', 'container', 'grid')}>
@@ -59,31 +55,21 @@ function Restaurant() {
                 <Text className={cx('img')}>
                     <img src={images.right} alt="" />
                 </Text>
+                <Text>{data !== undefined && data[0].TenDoiTac}</Text>
             </div>
             <div className={cx('container', 'grid')}>
-                <div className={cx('content')}>
-                    <div className={cx('cover')}>
-                        <div className={cx('box')}>
-                            <div className={cx('box-cover')}>
-                                <Text className={cx('text')}>Tên nhà hàng: {data != undefined && data[0].TenDoiTac}</Text>
-                            </div>
-                        </div>
-                        <div className={cx('box')}>
-                            <div className={cx('box-cover')}>
-                                <Text className={cx('text')}>Loại ẩm thực: {data != undefined && data[0].LoaiAmThuc}</Text>
-                            </div>
-                        </div>
-                        <div className={cx('box')}>
-                            <div className={cx('box-cover')}>
-                                <Text className={cx('text')}>Liên hệ: {data != undefined && data[0].Email}</Text>
-                            </div>
-                        </div>
-                    </div>
+                <div className={cx('list')}>
+                    <h1 className={cx('title')}>
+                        <Text>{data !== undefined && data[0].TenDoiTac}</Text>
+                    </h1>
+                    <h3 className={cx('type')}>
+                        <Text>{data !== undefined && data[0].LoaiAmThuc}</Text>
+                    </h3>
+                    <Star amount={data !== undefined && data[0].Rating} />
+                    <Text className={cx('contact')}>Liên hệ: {data !== undefined && data[0].Email}</Text>
                 </div>
             </div>
-            <div className={cx('container', 'grid')}>
-               {data0 &&  <Product data={data0} /> }
-            </div>
+            <div className={cx('container', 'grid')}>{data0 && <Product data={data0} />}</div>
         </>
     );
 }
