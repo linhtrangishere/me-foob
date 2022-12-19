@@ -50,7 +50,7 @@ function Branch() {
                         </div>
                         <div className={cx('box')}>
                             <div className={cx('box-cover')}>
-                                <Text className={cx('text')}>Liên hệ: {data != undefined && data[0].MaThucDon}</Text>
+                                <Text className={cx('text')}>Liên hệ: {data != undefined && data[0].Email}</Text>
                             </div>
                         </div>
                     </div>

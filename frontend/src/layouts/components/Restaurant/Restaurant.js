@@ -9,9 +9,11 @@ import { useEffect, useState } from 'react';
 const cx = classNames.bind(styles);
 function Restaurant() {
     const { id } = useParams();
-    const [name, setName] = useState();
+    const [data, setData] = useState();
+    const [data0, setData0] = useState();
     useEffect(() => {
-        fetch(`http://localhost:5000/branch/getName/${id}`, {
+        const abortController = new AbortController();
+        fetch(`http://localhost:5000/restaurant/getName/${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -20,8 +22,28 @@ function Restaurant() {
             .then((res) => {
                 return res.json();
             })
-            .then((data) => setName(data));
-    }, []);
+            .then((data) => setData(data));
+        return () => {
+             abortController.abort();
+        }
+    }, [id]);
+    useEffect(() => {
+        //const abortController = new AbortController();
+        if (data)
+            fetch(`http://localhost:5000/restaurant/getMenu/${data[0].MaThucDon}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then((res) => {
+                    return res.json();
+                })
+                .then((data0) => { setData0(data0);});
+        // return () => {
+        //     abortController.abort();
+        // }
+    }, [data]);
     return (
         <>
             <div className={cx('address', 'container', 'grid')}>
@@ -33,10 +55,30 @@ function Restaurant() {
                 <Text className={cx('img')}>
                     <img src={images.right} alt="" />
                 </Text>
-                {name !== undefined && <Text>{name && name[0].TenChiNhanh}</Text>}
             </div>
             <div className={cx('container', 'grid')}>
-                <Product />
+                <div className={cx('content')}>
+                    <div className={cx('cover')}>
+                        <div className={cx('box')}>
+                            <div className={cx('box-cover')}>
+                                <Text className={cx('text')}>Tên nhà hàng: {data != undefined && data[0].TenDoiTac}</Text>
+                            </div>
+                        </div>
+                        <div className={cx('box')}>
+                            <div className={cx('box-cover')}>
+                                <Text className={cx('text')}>Loại ẩm thực: {data != undefined && data[0].LoaiAmThuc}</Text>
+                            </div>
+                        </div>
+                        <div className={cx('box')}>
+                            <div className={cx('box-cover')}>
+                                <Text className={cx('text')}>Liên hệ: {data != undefined && data[0].Email}</Text>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className={cx('container', 'grid')}>
+               {data0 &&  <Product data={data0} /> }
             </div>
         </>
     );

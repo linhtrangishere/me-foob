@@ -9,66 +9,17 @@ import { useParams } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
-function Product({ children }) {
-    const { id } = useParams();
-
-    const [dataBranch, setDataBranch] = useState();
-    const [dataMenu, setDataMenu] = useState();
-
-    useEffect(() => {
-        setTimeout(() => {
-            fetch(`http://localhost:5000/branch/getBranch/${id}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            })
-                .then((res) => {
-                    return res.json();
-                })
-                .then((data) => setDataBranch(data));
-        }, 100);
-        setTimeout(() => {
-            fetch(`http://localhost:5000/branch/getMenu/${id}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            })
-                .then((res) => {
-                    return res.json();
-                })
-                .then((data) => setDataMenu(data));
-        }, 100);
-    }, []);
+function Product({ data = {} }) {
+    console.log("Data: ", data);
     return (
         <>
-            <div className={cx('list')}>
-                <h1 className={cx('title')}>
-                    <Text>{dataBranch !== undefined && dataBranch[0].TenChiNhanh}</Text>
-                </h1>
-                <h3 className={cx('type')}>
-                    <Text>{dataBranch !== undefined && dataBranch[0].LoaiAmThuc}</Text>
-                </h3>
-                <Star amount={dataBranch !== undefined && dataBranch[0].Rating} />
-                <Text className={cx('time')}>
-                    <Text className={cx('time-open')}>Giờ mở cửa</Text>
-                    <Text>
-                        {dataBranch !== undefined && dataBranch[0].GioMoCua}:
-                        {dataBranch !== undefined && dataBranch[0].PhutMoCua}-
-                        {dataBranch !== undefined && dataBranch[0].GioDongCua}:
-                        {dataBranch !== undefined && dataBranch[0].PhutDongCua}
-                    </Text>
-                </Text>
-            </div>
             <div className={cx('menu')}>
                 <h1 className={cx('title')}>
-                    <Text>Thực đơn</Text>
+                    <Text>Thực đơn gồm có {data[0].Tong} món ăn</Text>
                 </h1>
                 <div className={cx('list-item')}>
-                    {dataMenu !== undefined &&
-                        Object.keys(dataMenu).map(function (key) {
-                            return <Item key={key} value={dataMenu[key]} />;
+                    {data && Object.keys(data).map(function (key) {
+                            return <Item key={key} data={data[key]} />;
                         })}
                 </div>
             </div>

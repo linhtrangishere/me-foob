@@ -15,9 +15,9 @@ function ProductCoop({ children, hint = false, title, addr, data = {} }) {
     const [Name, setName] = useState();
     const [Price, setPrice] = useState();
     const [Desc, setDesc] = useState();
+    const [Status, setStatus] = useState();
     const refInput = useRef();
-    const handleOnClickAdd = () => {
-        console.log(data[0].MaThucDon)
+    const handleOnClickAdd = () => {  
         fetch(`http://localhost:5000/branch/add/${data[0].MaThucDon}`,{
             method: 'POST',
             headers: {
@@ -25,12 +25,10 @@ function ProductCoop({ children, hint = false, title, addr, data = {} }) {
             },
             body: JSON.stringify({TenMonAn: Name,
                                 Gia: Price,
-                                MieuTa: Desc
+                                MieuTa: Desc,
+                                TinhTrang: Status
                             })
         })
-            .then((res) => {
-                return res.json();
-            })
     }
     return (
         <>
@@ -54,7 +52,6 @@ function ProductCoop({ children, hint = false, title, addr, data = {} }) {
                 </h1>
                 <div className={cx('list-item')}>
                     {data && Object.keys(data).map(function (key) {
-                        console.log(data[key])
                         return <Item key={key} data={data[key]}/>;
                     })}
                 </div>
@@ -100,6 +97,14 @@ function ProductCoop({ children, hint = false, title, addr, data = {} }) {
                                             <input type="text" placeholder="Nhập . . ." value={Desc !== undefined && Desc} onChange={
                                                 (e) => {
                                                     setDesc(e.target.value)
+                                                }
+                                            } ref={refInput}/>
+                                        </div>
+                                        <div className={cx('text-input')}>
+                                            <Text className={cx('text')}>Tình trạng món</Text>
+                                            <input type="text" placeholder="Nhập . . ." value={Status !== undefined && Status} onChange={
+                                                (e) => {
+                                                    setStatus(e.target.value)
                                                 }
                                             } ref={refInput}/>
                                         </div>

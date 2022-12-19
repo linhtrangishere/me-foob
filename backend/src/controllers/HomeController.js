@@ -24,7 +24,7 @@ class HomeController {
 			}
 		};
 		func().then((ress) => {
-			res.json(ress.recordset);
+			res?.json(ress?.recordset);
 		});
 	}
 	// [GET] /home/getBranch2
@@ -49,7 +49,7 @@ class HomeController {
 			}
 		};
 		func().then((ress) => {
-			res.json(ress.recordset);
+			res?.json(ress?.recordset);
 		});
 	}
 }

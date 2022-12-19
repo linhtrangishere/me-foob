@@ -8,7 +8,7 @@ import Text from '~/components/Text';
 
 const cx = classNames.bind(styles);
 
-function Item({ children, key, value = null }) {
+function Item({ children, data = {} }) {
     const [amount, setAmount] = useState(1);
     const [modal, setModal] = useState(false);
 
@@ -24,7 +24,7 @@ function Item({ children, key, value = null }) {
                 className={cx('item')}
                 data-toggle="modal"
                 data-target="#exampleModalLong"
-                key={key}
+                // key={key}
                 onClick={() => {
                     if (modal) setModal(false);
                     else setModal(true);
@@ -36,11 +36,10 @@ function Item({ children, key, value = null }) {
                     </div>
                     <div className={cx('group')}>
                         <h6 className={cx('name')}>
-                            {console.log(value.TenMonAn)}
-                            <Text>{value !== undefined && value.TenMonAn}</Text>
+                            <Text>{data && data.TenMonAn}</Text>
                         </h6>
                         <div className={cx('group-row')}>
-                            <Text>{format(value !== undefined && value.Gia)}</Text>
+                            <Text>{format(data && data.Gia)}</Text>
                             <div className={cx('btn')}>
                                 <Button>asd</Button>
                             </div>
@@ -73,20 +72,20 @@ function Item({ children, key, value = null }) {
                                         </div>
                                         <div className={cx('group')}>
                                             <h6 className={cx('name')}>
-                                                <Text>{value !== undefined && value.TenMonAn}</Text>
+                                                <Text>{data !== undefined && data.TenMonAn}</Text>
                                             </h6>
                                             <div className={cx('group-row')}>
-                                                <Text>{format(value !== undefined && value.Gia)}</Text>
+                                                <Text>{format(data !== undefined && data.Gia)}</Text>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                {value !== undefined && value.length > 0 && (
+                                {data !== undefined && data.length > 0 && (
                                     <>
                                         <div className={cx('separate')}></div>
                                         <div className={cx('note')}>
                                             <h6>Mô tả món ăn</h6>
-                                            <Text>{value.MieuTaMon} </Text>
+                                            <Text>{data.MieuTaMon} </Text>
                                         </div>
                                     </>
                                 )}
@@ -118,7 +117,7 @@ function Item({ children, key, value = null }) {
                                     <div className={cx('btn-modal')}>
                                         {amount !== 0 && (
                                             <div>
-                                                Add to Basket - {format(value !== undefined && value.Gia * amount)} ₫
+                                                Add to Basket - {format(data !== undefined && data.Gia * amount)} ₫
                                             </div>
                                         )}
                                         {amount === 0 && (
