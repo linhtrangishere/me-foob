@@ -17,7 +17,7 @@ function ProductCoop({ children, hint = false, title, addr, data = {} }) {
     const [Desc, setDesc] = useState();
     const [Status, setStatus] = useState();
     const refInput = useRef();
-    const handleOnClickAdd = () => {  
+    const handleOnClickAdd = () => {
         fetch(`http://localhost:5000/branch/add/${data[0].MaThucDon}`,{
             method: 'POST',
             headers: {

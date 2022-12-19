@@ -10,12 +10,11 @@ import { useParams } from 'react-router-dom';
 const cx = classNames.bind(styles);
 
 function Product({ data = {} }) {
-    console.log("Data: ", data);
     return (
         <>
             <div className={cx('menu')}>
                 <h1 className={cx('title')}>
-                    <Text>Thực đơn gồm có {data[0]?.Tong} món ăn</Text>
+                    <Text>Thực đơn gồm có món ăn</Text>
                 </h1>
                 <div className={cx('list-item')}>
                     {data && Object.keys(data).map(function (key) {

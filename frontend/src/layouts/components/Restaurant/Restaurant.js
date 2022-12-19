@@ -12,42 +12,40 @@ function Restaurant() {
     const [data, setData] = useState();
     const [data0, setData0] = useState();
     useEffect(() => {
+        const abortController = new AbortController();
         fetch(`http://localhost:5000/restaurant/getName/${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
             },
+            signal: abortController.signal
         })
             .then((res) => {
                 return res.json();
             })
             .then((data) => setData(data));
-    
-    }, [id]);
+        return () => {
+            abortController.abort();
+        }
+        }, [id]);
     useEffect(() => {
-        //const abortController = new AbortController();
+        const abortController = new AbortController();
         if (data)
             fetch(`http://localhost:5000/restaurant/getMenu/${data[0].MaThucDon}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                signal: abortController.signal
             })
                 .then((res) => {
                     return res.json();
                 })
-                .then((data0) => { 
-                    console.log("data0", data0)
-                    setData0(data0);
-                });
-        // return () => {
-        //     abortController.abort();
-        // }
-    }, [data]); 
-
-    useEffect(() => {
-        console.log(data0)
-    })
+                .then((data0) => setData0(data0));
+        return () => {
+            abortController.abort();
+        }
+    }, [data]);
     return (
         <>
             <div className={cx('address', 'container', 'grid')}>
@@ -82,7 +80,7 @@ function Restaurant() {
                 </div>
             </div>
             <div className={cx('container', 'grid')}>
-               {data0 &&  <Product data={data0} /> }
+                <Product data={data0} />
             </div>
         </>
     );

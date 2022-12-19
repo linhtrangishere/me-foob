@@ -56,9 +56,7 @@ class BranchController {
 		});
 	}
 
-	add(req, res) { 
-		console.log("ADDDDDDDDDDDDDDDDDDDDDDDDDDDD") 
-		console.log(req.params.slug)
+	add(req, res) {
 		const func = async () => {
 			try {
 				let products;
@@ -67,16 +65,9 @@ class BranchController {
 					Math.floor(Math.random() * (9999999 - 1000000 + 1)) +
 					1000000;
 				ma = ma.slice(0, 10);
-				console.log( "DATA HEREEEEEEEEEEEEEEEEEEEEEE:Y ",
-					req.body
-				);
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
-						// .query(
-						// 	`INSERT INTO dbo.MONAN(MaMonAn,MaThucDon,TenMonAn,Gia,TinhTrangMon)
-						// 	values('MA30002','${req.params.slug}','${req.body.TenMonAn}','${req.body.Gia}','NULL')`
-						// )
 						.input("MaTD", sql.VarChar(10),req.params.slug)
 						.input("MaMonAn", sql.VarChar(10),ma)
 						.input("Ten", sql.NVarChar(80),req.body.TenMonAn)
