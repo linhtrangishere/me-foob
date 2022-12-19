@@ -13,6 +13,7 @@ function Product({ data = {} }) {
             <div className={cx('menu')}>
                 <h1 className={cx('title', 'thuc-don')}>
                     <Text>Thực đơn</Text>
+                    <h1 className={cx('type')}><Text>Thực đơn gồm có {data[0].Tong} món ăn</Text></h1>
                 </h1>
                 <div className={cx('list-item')}>
                     {data && Object.keys(data).map(function (key) {
