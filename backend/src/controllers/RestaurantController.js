@@ -11,7 +11,7 @@ class RestaurantController {
 					conn
 						.request()
 						.query(
-							`SELECT DT.TenDoiTac, DT.LoaiAmThuc, DT.Email, TD.MaThucDon
+							`SELECT DT.TenDoiTac, DT.LoaiAmThuc, DT.Email, TD.MaThucDon, TD.Rating
 							FROM dbo.DOITAC DT, dbo.THUCDON TD
 							where TD.MaDoiTac='${req.params.slug}' and DT.MaDoiTac=TD.MaDoiTac`
 						)

@@ -1,7 +1,6 @@
 import styles from './Branch.module.scss';
 
 import classNames from 'classnames/bind';
-import Button from '~/components/Button';
 import ProductCoop from '~/components/Popper/ProductCoop';
 import Text from '~/components/Text';
 import { useParams } from 'react-router-dom';
@@ -40,17 +39,17 @@ function Branch() {
                     <div className={cx('cover')}>
                         <div className={cx('box')}>
                             <div className={cx('box-cover')}>
-                                <Text className={cx('text')}>Tên nhà hàng: {data != undefined && data[0].TenDoiTac}</Text>
+                                <Text className={cx('text')}>Tên nhà hàng: {data !== undefined && data[0].TenDoiTac}</Text>
                             </div>
                         </div>
                         <div className={cx('box')}>
                             <div className={cx('box-cover')}>
-                                <Text className={cx('text')}>Loại ẩm thực: {data != undefined && data[0].LoaiAmThuc}</Text>
+                                <Text className={cx('text')}>Loại ẩm thực: {data !== undefined && data[0].LoaiAmThuc}</Text>
                             </div>
                         </div>
                         <div className={cx('box')}>
                             <div className={cx('box-cover')}>
-                                <Text className={cx('text')}>Liên hệ: {data != undefined && data[0].Email}</Text>
+                                <Text className={cx('text')}>Liên hệ: {data !== undefined && data[0].Email}</Text>
                             </div>
                         </div>
                     </div>
