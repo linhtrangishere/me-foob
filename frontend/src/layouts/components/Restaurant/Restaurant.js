@@ -12,7 +12,6 @@ function Restaurant() {
     const [data, setData] = useState();
     const [data0, setData0] = useState();
     useEffect(() => {
-        const abortController = new AbortController();
         fetch(`http://localhost:5000/restaurant/getName/${id}`, {
             method: 'GET',
             headers: {
@@ -23,9 +22,7 @@ function Restaurant() {
                 return res.json();
             })
             .then((data) => setData(data));
-        return () => {
-             abortController.abort();
-        }
+    
     }, [id]);
     useEffect(() => {
         //const abortController = new AbortController();
@@ -39,11 +36,18 @@ function Restaurant() {
                 .then((res) => {
                     return res.json();
                 })
-                .then((data0) => { setData0(data0);});
+                .then((data0) => { 
+                    console.log("data0", data0)
+                    setData0(data0);
+                });
         // return () => {
         //     abortController.abort();
         // }
-    }, [data]);
+    }, [data]); 
+
+    useEffect(() => {
+        console.log(data0)
+    })
     return (
         <>
             <div className={cx('address', 'container', 'grid')}>
