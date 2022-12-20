@@ -68,12 +68,20 @@ class BranchController {
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
-						.input("MaTD", sql.VarChar(10),req.params.slug)
-						.input("MaMonAn", sql.VarChar(10),ma)
-						.input("Ten", sql.NVarChar(80),req.body.TenMonAn)
-						.input("MieuTa", sql.NVarChar(100), req.body.MieuTa || " ncn")
-						.input("Gia", sql.Int,req.body.Gia)
-						.input("TinhTrang", sql.NVarChar(20),req.body.TinhTrang)
+						.input("MaTD", sql.VarChar(10), req.params.slug)
+						.input("MaMonAn", sql.VarChar(10), ma)
+						.input("Ten", sql.NVarChar(80), req.body.TenMonAn)
+						.input(
+							"MieuTa",
+							sql.NVarChar(100),
+							req.body.MieuTa || " ncn"
+						)
+						.input("Gia", sql.Int, req.body.Gia)
+						.input(
+							"TinhTrang",
+							sql.NVarChar(20),
+							req.body.TinhTrang
+						)
 						.execute("dbo.Add_mon_an")
 						.then((v) => {
 							products = v;
@@ -90,27 +98,9 @@ class BranchController {
 		});
 	}
 
-
 	getName(req, res) {
 		const func = async () => {
 			try {
-				// await pool.connect();
-				// const result = await pool.request()
-				// 	.input('MaDT', req.query.name)
-				// 	.execute(`DanhSachMonAn`)
-				// const meomeo = result.recordset
-
-				// let pool = await sql.connect(config);
-				// const result = await pool
-				// 	.request()
-				// 	.input("MaDT", req.params.slug)
-				// 	.execute(`DanhSachMonAn`);
-				// let products = result.recordset;
-				// let products = pool
-				// 	.request()
-				// 	.query(
-				// 		`select TenChiNhanh from CHINHANH where MaChiNhanh='${req.params.slug}'`
-				// 	);
 				let products;
 				await sql.connect(config.config).then((conn) =>
 					conn

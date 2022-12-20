@@ -8,7 +8,7 @@
     text-overflow: ellipsis;
     color: rgb(28, 28, 28);
 }
-.thuc-don{
+.thuc-don {
     font-size: 28px;
 }
 .type {
@@ -44,4 +44,22 @@
 .open {
     max-height: 99999px;
     transition: 0.3s max-height ease-in-out;
+}
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.btn-submit {
+    display: flex;
+    float: right;
+    margin-top: 32px;
+    & .btn {
+        padding: 8px 32px;
+        border-radius: 8px;
+        color: white;
+        background-color: var(--primary-color);
+        border: none;
+        font-size: 18px;
+    }
 }

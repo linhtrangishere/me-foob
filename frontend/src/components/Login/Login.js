@@ -28,7 +28,6 @@ function Login({ children, login = false, name = '', ...props }) {
                 if (data.returnValue === 0) alert('Thất bại');
                 else {
                     localStorage.setItem('userName', '');
-                    console.log(localStorage.getItem('userName'));
                     window.location.href = '/';
                 }
             });

@@ -23,7 +23,7 @@ function Contact() {
         return date;
     }
 
-    useEffect(() => { 
+    useEffect(() => {
         const abortController = new AbortController();
         fetch(`http://localhost:5000/contact/getBranch/${id}`, {
             method: 'GET',
@@ -189,12 +189,14 @@ function Contact() {
                         <div className={cx('box')}>
                             <div className={cx('box-cover')}>
                                 <Text className={cx('text')}>Ngày hết hợp đồng</Text>
-                                <input type="date" value={deadline !== undefined && deadline} onChange={
-                                    (e)=>{
-                                        console.log(e.target.value)
-                                        setDeadline(e.target.value)
-                                    }
-                                } ref={refInput} />
+                                <input
+                                    type="date"
+                                    value={deadline !== undefined && deadline}
+                                    onChange={(e) => {
+                                        setDeadline(e.target.value);
+                                    }}
+                                    ref={refInput}
+                                />
                             </div>
                         </div>
                     </div>

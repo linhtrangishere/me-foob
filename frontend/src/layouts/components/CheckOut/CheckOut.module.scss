@@ -75,9 +75,6 @@ span {
 .price,
 .status,
 .btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 .amount {
     width: 10%;
@@ -93,10 +90,10 @@ span {
 .plus {
     margin-left: 8px;
 }
-.btn-submit{
+.btn-submit {
     float: right;
     margin-top: 32px;
-    & .btn{
+    & .btn {
         padding: 8px 32px;
         border-radius: 8px;
         color: white;
@@ -115,7 +112,12 @@ span {
         padding: 8px 16px;
         border-radius: 12px;
         border: 1px solid var(--primary-color);
+        margin: 0 auto;
     }
+}
+.cover {
+    display: flex;
+    width: 100%;
 }
 .text {
     display: block;
@@ -123,4 +125,31 @@ span {
     width: 100%;
     line-height: 20px;
     padding-bottom: 12px;
+}
+
+.row {
+    display: flex;
+    & > .content {
+        &:first-child {
+            width: 70%;
+        }
+        &:last-child {
+            width: 30%;
+            padding-left: 20px;
+            margin-left: 20px;
+            border-left: 2px solid #ccc;
+        }
+    }
+}
+.product {
+    justify-content: space-between;
+    & .x {
+        margin: 0 8px;
+    }
+}
+.name.price {
+    border-top: 2px solid #000;
+}
+.sum{
+    justify-content: space-between;
 }
