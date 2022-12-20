@@ -90,6 +90,56 @@ class BranchController {
 		});
 	}
 
+	updatePrice(req, res) {
+		const func = async () => {
+			try {
+				let products;
+				await sql.connect(config.config).then((conn) =>
+					conn
+						.request()
+						.input("MaMonAn", sql.VarChar(10),req.params.slug)
+						.input("GiaMonAn", sql.Int,req.body.Gia)
+						.execute("dbo.USP_ThayDoiThongTinMonAn")
+						.then((v) => {
+							products = v;
+						})
+						.then(() => conn.close())
+				);
+				return products;
+			} catch (error) {
+				console.log(`Error: ${error}`);
+			}
+		};
+		func().then((ress) => {
+			res?.json(ress?.recordset);
+		});
+	}
+
+	saleoff(req, res) {
+		const func = async () => {
+			try {
+				let products;
+				await sql.connect(config.config).then((conn) =>
+					conn
+						.request()
+						.input("MaMonAn", sql.VarChar(10),req.params.slug)
+						.input("PhanTramKhuyenMai", sql.Int,req.body.PhanTram)
+						.execute("dbo.USP_ApDungKhuyenMai")
+						.then((v) => {
+							products = v;
+						})
+						.then(() => conn.close())
+				);
+				return products;
+			} catch (error) {
+				console.log(`Error: ${error}`);
+			}
+		};
+		func().then((ress) => {
+			res?.json(ress?.recordset);
+		});
+	}
+
 	remove(req, res) {
 		const func = async () => {
 			try {
@@ -157,5 +207,6 @@ class BranchController {
 		});
 	}
 }
+
 
 module.exports = new BranchController();

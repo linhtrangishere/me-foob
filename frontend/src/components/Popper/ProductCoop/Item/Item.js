@@ -9,7 +9,10 @@ import Star from '~/components/Star';
 
 const cx = classNames.bind(styles);
 
-function Item({ children, data={} }) {
+function Item({ children, data = {} }) {
+    const [Price, setPrice] = useState();
+    const [Sale, setSale] = useState();
+    const refInput = useRef();
     const handleOnClickDelete = () => {
         fetch(`http://localhost:5000/branch/delete/${data.MaMonAn}`, {
             method: 'DELETE',
@@ -18,8 +21,28 @@ function Item({ children, data={} }) {
             }
         })
     }
-    // const [amount, setAmount] = useState(1);
-
+    const handleOnClickUpdatePrice = () => {
+        fetch(`http://localhost:5000/branch/updatePrice/${data.MaMonAn}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                Gia: Price
+            })
+        })
+    }
+    const handleOnClickSaleOff = () => {
+        fetch(`http://localhost:5000/branch/saleoff/${data.MaMonAn}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                PhanTram: Sale
+            })
+        })
+    }
     function format(n) {
         return n.toFixed(0).replace(/./g, function (c, i, a) {
             return i > 0 && c !== '.' && (a.length - i) % 3 === 0 ? '.' + c : c;
@@ -185,19 +208,40 @@ function Item({ children, data={} }) {
                                     <div className={cx('group')}>
                                         <div className={cx('text-input')}>
                                             <Text className={cx('text')}>Tên món ăn</Text>
-                                            <input type="text" placeholder='Để trống nếu không sửa'/>
+                                            <input type="text" placeholder='Để trống nếu không sửa' />
+                                        </div>
+                                        <div className={cx('btn-modal')} data-dismiss="modal" aria-label="Close">
+                                            <div>Cập nhật tên món</div>
                                         </div>
                                         <div className={cx('text-input')}>
                                             <Text className={cx('text')}>Giá</Text>
-                                            <input type="text" placeholder='Để trống nếu không sửa'/>
+                                            <input type="text" placeholder='Để trống nếu không sửa' value={Price !== undefined && Price} onChange={
+                                                (e) => {
+                                                    setPrice(e.target.value)
+                                                }
+                                            } ref={refInput}/>
+                                        </div>
+                                        <div className={cx('btn-modal')} data-dismiss="modal" aria-label="Close" onClick={handleOnClickUpdatePrice}>
+                                            <div>Cập nhật giá</div>
+                                        </div>
+                                        <div className={cx('text-input')}>
+                                            <Text className={cx('text')}>Khuyến mãi</Text>
+                                            <input type="text" placeholder='20% sale off nhập 20' value={Sale !== undefined && Sale} onChange={
+                                                (e) => {
+                                                    setSale(e.target.value)
+                                                }
+                                            } ref={refInput}/>
+                                        </div>
+                                        <div className={cx('btn-modal')} data-dismiss="modal" aria-label="Close" onClick={handleOnClickSaleOff}>
+                                            <div>Áp dụng khuyến mãi</div>
                                         </div>
                                         <div className={cx('text-input')}>
                                             <Text className={cx('text')}>Mô tả</Text>
-                                            <input type="text" placeholder='Để trống nếu không sửa'/>
+                                            <input type="text" placeholder='Để trống nếu không sửa' />
                                         </div>
                                         <div className={cx('text-input')}>
                                             <Text className={cx('text')}>Hình ảnh</Text>
-                                            <input className={cx('file')} type="file"/>
+                                            <input className={cx('file')} type="file" />
                                         </div>
                                     </div>
                                 </div>
