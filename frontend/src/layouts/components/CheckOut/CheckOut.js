@@ -4,19 +4,20 @@ import styles from './CheckOut.module.scss';
 import classNames from 'classnames/bind';
 import Button from '~/components/Button';
 
-import { banks } from '~/assets/Banks';
 import Text from '~/components/Text';
 
 const cx = classNames.bind(styles);
 
 function CheckOut() {
+    function format(n) {
+        return n.toFixed(0).replace(/./g, function (c, i, a) {
+            return i > 0 && c !== '.' && (a.length - i) % 3 === 0 ? '.' + c : c;
+        });
+    }
+
     const [provinces, setProvinces] = useState();
     const [districts, setDistricts] = useState();
     const [wards, setWards] = useState();
-
-    const [nameBank, setNameBank] = useState();
-    const [provincesBank, setProvincesBank] = useState();
-    const [branch, setBranch] = useState();
 
     useEffect(() => {
         const fetchApi = async () => {
@@ -24,16 +25,15 @@ function CheckOut() {
                 .then((response) => response.json())
                 .then((data) => data);
             setProvinces(result);
-            setNameBank(banks);
         };
         fetchApi();
     }, []);
 
     const handleSelectProvinces = () => {
+        var value = document.getElementById('provinces').value;
+        var results = provinces.find((x) => x.name === value);
         const fetchApi = async () => {
-            const result = await fetch(
-                `https://provinces.open-api.vn/api/p/${document.getElementById('provinces').value}?depth=2`,
-            )
+            const result = await fetch(`https://provinces.open-api.vn/api/p/${results.code}?depth=2`)
                 .then((response) => response.json())
                 .then((data) => data);
             setDistricts(result.districts);
@@ -42,10 +42,10 @@ function CheckOut() {
     };
 
     const handleSelectDistricts = () => {
+        var value = document.getElementById('districts').value;
+        var results = districts.find((x) => x.name === value);
         const fetchApi = async () => {
-            const result = await fetch(
-                `https://provinces.open-api.vn/api/d/${document.getElementById('districts').value}?depth=2`,
-            )
+            const result = await fetch(`https://provinces.open-api.vn/api/d/${results.code}?depth=2`)
                 .then((response) => response.json())
                 .then((data) => data);
             setWards(result.wards);
@@ -53,133 +53,121 @@ function CheckOut() {
         fetchApi();
     };
 
-    const handleSelectNameBank = () => {
-        const fetchApi = async () => {
-            var result = document.getElementById('name-bank').value;
-            result = nameBank.find(({ MaNganHang }) => MaNganHang === `${result}`);
-            setProvincesBank(result.province);
-        };
-        fetchApi();
+    const [sumPriceProduct, setSumPriceProduct] = useState(0);
+    const [product, setProduct] = useState(JSON.parse(localStorage.getItem('Món ăn')));
+    useEffect(() => {
+        setSumPriceProduct(() => {
+            var sum = 0;
+            product.map((value, index) => {
+                sum += value.gia * value.sl;
+                return value;
+            });
+            return sum;
+        });
+    });
+    const [DonHang, setDonHang] = useState({
+        makh: '',
+        products: '',
+        tinh: '',
+        huyen: '',
+        xa: '',
+        hinhthuc: '',
+        tong: 0,
+        phi: 20000,
+    });
+    const setInputDonHang = (e) => {
+        const { name, value } = e.target;
+        if (DonHang.products.length === 0) {
+            setDonHang((pre) => ({ ...pre, products: product }));
+            setDonHang((pre) => ({ ...pre, tong: sumPriceProduct }));
+            setDonHang((pre) => ({ ...pre, makh: localStorage.getItem('ma') }));
+        }
+        if (name === 'tinh') {
+            setDonHang((pre) => ({ ...pre, tinh: value }));
+        } else if (name === 'huyen') {
+            setDonHang((pre) => ({ ...pre, huyen: value }));
+        } else if (name === 'xa') {
+            setDonHang((pre) => ({ ...pre, xa: value }));
+        } else if (name === 'Hình thức thanh toán') {
+            setDonHang((pre) => ({ ...pre, hinhthuc: value }));
+        }
     };
-    const handleSelectProvincesBank = () => {
-        const fetchApi = async () => {
-            var result1 = document.getElementById('name-bank').value;
-            var result2 = document.getElementById('provinces-bank').value;
-            var result = nameBank.find(({ MaNganHang }) => MaNganHang === `${result1}`);
-            result = result.province.find(({ TenTinhThanh }) => TenTinhThanh === result2);
-            setBranch(result.branch);
-        };
-        fetchApi();
+    
+    const OrderIntoDB = () => {
+        fetch('http://localhost:5000/checkout/order', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
+            body: JSON.stringify(DonHang),
+        })
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                console.log(data);
+            });
     };
+
     return (
         <>
             <div className={cx('container', 'grid')}>
                 <div className={cx('title')}>
                     <h1>Đặt hàng</h1>
                 </div>
-                <div className={cx('content')}>
-                    <div className={cx('text-input')}>
-                        <Text className={cx('text')}>Họ tên</Text>
-                        <input type="text" />
-                    </div>
-                    <div className={cx('text-input')}>
-                        <Text className={cx('text')}>Tài khoản ngân hàng</Text>
-                        <select id="name-bank" onChange={handleSelectNameBank}>
-                            <option value={0} key={0}>
-                                Tên Ngân Hàng
-                            </option>
-                            {
-                                // eslint-disable-next-line array-callback-return
-                                nameBank &&
-                                    nameBank.map((index) => {
-                                        return (
-                                            <option value={Number(index.MaNganHang)} key={Number(index.MaNganHang)}>
-                                                {index.TenNH}
-                                            </option>
-                                        );
-                                    })
-                            }
-                        </select>
-                        {
-                            <select id="provinces-bank" onChange={handleSelectProvincesBank}>
-                                <option value={0} key={0}>
-                                    Tỉnh thành
+                <div className={cx('row')}>
+                    <div className={cx('content')}>
+                        <div className={cx('text-input')}>
+                            <Text className={cx('text')}>Địa chỉ giao</Text>
+                            <select
+                                id="provinces"
+                                name="tinh"
+                                onChange={(e) => {
+                                    handleSelectProvinces();
+                                    setInputDonHang(e);
+                                }}
+                            >
+                                <option value={''} key={0}>
+                                    Thành phố
                                 </option>
                                 {
                                     // eslint-disable-next-line array-callback-return
-                                    provincesBank &&
-                                        provincesBank &&
-                                        provincesBank.map((index) => {
+                                    provinces &&
+                                        provinces.map((index) => {
                                             return (
-                                                <option value={index.TenTinhThanh} key={index.Code}>
-                                                    {index.TenTinhThanh}
-                                                </option>
-                                            );
-                                        })
-                                }
-                            </select>
-                        }
-                        {
-                            <select id="branch-bank">
-                                <option value={0} key={0}>
-                                    Chi nhánh
-                                </option>
-                                {
-                                    // eslint-disable-next-line array-callback-return
-                                        branch &&
-                                        branch.map((index) => {
-                                            return (
-                                                <option value={index.TenChiNhanh} key={index.MaChiNhanh}>
-                                                    {index.TenChiNhanh}
-                                                </option>
-                                            );
-                                        })
-                                }
-                            </select>
-                        }
-                        <input type="text" placeholder="Số tài khoản" />
-                    </div>
-                    <div className={cx('text-input')}>
-                        <Text className={cx('text')}>Địa chỉ</Text>
-                        <select id="provinces" onChange={handleSelectProvinces}>
-                            <option value={0} key={0}>
-                                Thành phố
-                            </option>
-                            {
-                                // eslint-disable-next-line array-callback-return
-                                provinces &&
-                                    provinces.map((index) => {
-                                        return (
-                                            <option value={index.code} key={index.code}>
-                                                {index.name}
-                                            </option>
-                                        );
-                                    })
-                            }
-                        </select>
-                        {
-                            <select id="districts" onChange={handleSelectDistricts}>
-                                <option value={0} key={0}>
-                                    Quận/Huyện
-                                </option>
-                                {
-                                    // eslint-disable-next-line array-callback-return
-                                    districts &&
-                                        districts &&
-                                        districts.map((index) => {
-                                            return (
-                                                <option value={index.code} key={index.code}>
+                                                <option value={index.name} key={index.code}>
                                                     {index.name}
                                                 </option>
                                             );
                                         })
                                 }
                             </select>
-                        }
-
-                        {
-                            <select id="wards" onChange={handleSelectDistricts}>
-                                <option value={0} key={0}>
+                            <select
+                                id="districts"
+                                name="huyen"
+                                onChange={(e) => {
+                                    handleSelectDistricts();
+                                    setInputDonHang(e);
+                                }}
+                            >
+                                <option value={''} key={0}>
+                                    Quận/Huyện
+                                </option>
+                                {
+                                    // eslint-disable-next-line array-callback-return
+                                    districts &&
+                                        districts.map((index) => {
+                                            return (
+                                                <option value={index.name} key={index.code}>
+                                                    {index.name}
+                                                </option>
+                                            );
+                                        })
+                                }
+                            </select>
+                            <select id="wards" name="xa" onChange={setInputDonHang}>
+                                <option value={''} key={0}>
                                     Phường/Xã
                                 </option>
                                 {
@@ -188,38 +176,53 @@ function CheckOut() {
                                         wards &&
                                         wards.map((index) => {
                                             return (
-                                                <option value={index.code} key={index.code}>
+                                                <option value={index.name} key={index.code}>
                                                     {index.name}
                                                 </option>
                                             );
                                         })
                                 }
                             </select>
-                        }
-
-                        <input type="text" placeholder="Số nhà, Tên đường, Khu phố" />
+                        </div>
+                        <div className={cx('text-input')}>
+                            <Text className={cx('text')}>Hình thức thanh toán</Text>
+                            <select name="Hình thức thanh toán" onChange={setInputDonHang}>
+                                <option value={''} key={0}>
+                                    Hình thức thanh toán
+                                </option>
+                                <option value={'Tiền mặt'} key={1}>
+                                    Tiền mặt
+                                </option>
+                                <option value={'Chuyển khoản'} key={2}>
+                                    Chuyển khoản
+                                </option>
+                            </select>
+                        </div>
                     </div>
-                    <div className={cx('text-input')}>
-                        <Text className={cx('text')}>Số điện thoại</Text>
-                        <input type="text" />
-                    </div>
-                    <div className={cx('text-input')}>
-                        <Text className={cx('text')}>Hình thức thanh toán</Text>
-                        <select>
-                            <option value={0} key={0}>
-                                Hình thức thanh toán
-                            </option>
-                            <option value={1} key={1}>
-                                Tiền mặt
-                            </option>
-                            <option value={2} key={2}>
-                                Chuyển khoản
-                            </option>
-                        </select>
+                    <div className={cx('content')}>
+                        {product &&
+                            Object.keys(product).map(function (key) {
+                                return (
+                                    <div className={cx('product', 'row')}>
+                                        <Text className={cx('name')}>{`${parseInt(key) + 1}. ${
+                                            product[key].ten
+                                        }`}</Text>
+                                        <div className={cx('row')}>
+                                            <Text className={cx('price')}>{product[key].sl}</Text>
+                                            <Text className={cx('x')}>x</Text>
+                                            <Text className={cx('amount')}>{format(product[key].gia)} </Text>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        <div className={cx('row', 'sum')}>
+                            <Text className={cx('name')}>Tổng</Text>
+                            <Text className={cx('name', 'price')}>{format(sumPriceProduct)}</Text>
+                        </div>
                     </div>
                 </div>
                 <div className={cx('btn-submit')}>
-                    <Button className={cx('btn')} to="/checkout">
+                    <Button className={cx('btn')} onClick={OrderIntoDB}>
                         Đặt hàng
                     </Button>
                 </div>
