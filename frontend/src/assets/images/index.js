@@ -1,4 +1,5 @@
 const images = {
+    edit: require('~/assets/images/edit.png'),
     logo: require('~/assets/images/logo.png'),
     logo1: require('~/assets/images/logo.png'),
     cart: require('~/assets/images/icon-cart-default-black.svg').default,
