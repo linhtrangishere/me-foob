@@ -1,4 +1,4 @@
-import React, {  useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styles from './ProductCoop.module.scss';
 
 import classNames from 'classnames/bind';
@@ -17,24 +17,22 @@ function ProductCoop({ children, hint = false, title, addr, data = {} }) {
     const [Status, setStatus] = useState();
     const refInput = useRef();
     const handleOnClickAdd = () => {
-        fetch(`http://localhost:5000/branch/add/${data[0].MaThucDon}`,{
+        fetch(`http://localhost:5000/branch/add/${data[0].MaThucDon}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({TenMonAn: Name,
-                                Gia: Price,
-                                MieuTa: Desc,
-                                TinhTrang: Status
-                            })
+            body: JSON.stringify({
+                TenMonAn: Name,
+                Gia: Price,
+                MieuTa: Desc,
+                TinhTrang: Status
+            })
         })
     }
     return (
         <>
             <div className={cx('list')}>
-                <h3 className={cx('Menu')}>
-                    <Text>Thực đơn chúng tôi có món ăn</Text>
-                </h3>
                 <h3 className={cx('type')}>
                     <Text>
                         <Text style={{ marginRight: '12px' }}>Đánh giá:</Text>
@@ -51,7 +49,7 @@ function ProductCoop({ children, hint = false, title, addr, data = {} }) {
                 </h1>
                 <div className={cx('list-item')}>
                     {data && Object.keys(data).map(function (key) {
-                        return <Item key={key} data={data[key]}/>;
+                        return <Item key={key} data={data[key]} />;
                     })}
                 </div>
             </div>
@@ -81,7 +79,7 @@ function ProductCoop({ children, hint = false, title, addr, data = {} }) {
                                                 (e) => {
                                                     setName(e.target.value)
                                                 }
-                                            } ref={refInput}/>
+                                            } ref={refInput} />
                                         </div>
                                         <div className={cx('text-input')}>
                                             <Text className={cx('text')}>Giá</Text>
@@ -89,7 +87,7 @@ function ProductCoop({ children, hint = false, title, addr, data = {} }) {
                                                 (e) => {
                                                     setPrice(e.target.value)
                                                 }
-                                            } ref={refInput}/>
+                                            } ref={refInput} />
                                         </div>
                                         <div className={cx('text-input')}>
                                             <Text className={cx('text')}>Mô tả</Text>
@@ -97,7 +95,7 @@ function ProductCoop({ children, hint = false, title, addr, data = {} }) {
                                                 (e) => {
                                                     setDesc(e.target.value)
                                                 }
-                                            } ref={refInput}/>
+                                            } ref={refInput} />
                                         </div>
                                         <div className={cx('text-input')}>
                                             <Text className={cx('text')}>Tình trạng món</Text>
@@ -105,7 +103,7 @@ function ProductCoop({ children, hint = false, title, addr, data = {} }) {
                                                 (e) => {
                                                     setStatus(e.target.value)
                                                 }
-                                            } ref={refInput}/>
+                                            } ref={refInput} />
                                         </div>
                                         <div className={cx('text-input')}>
                                             <Text className={cx('text')}>Hình ảnh</Text>
@@ -116,10 +114,11 @@ function ProductCoop({ children, hint = false, title, addr, data = {} }) {
                             </div>
                             <div className={cx('footer')}>
                                 <div className={cx('btn-modal')} data-dismiss="modal" aria-label="Close">
-                                    <Button className={cx('btn')} onClick={handleOnClickAdd}>
-                                        Hoan thanh
-                                    </Button>
-                                    {/* <div> Hoàn thành</div> */}
+                                    <div>
+                                        <Button className={cx('add')} data-toggle="modal" data-target="#add" onClick={handleOnClickAdd}>
+                                            Hoàn thành
+                                        </Button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

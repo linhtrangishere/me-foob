@@ -10,8 +10,14 @@ import Star from '~/components/Star';
 const cx = classNames.bind(styles);
 
 function Item({ children, data={} }) {
-
-
+    const handleOnClickDelete = () => {
+        fetch(`http://localhost:5000/branch/delete/${data.MaMonAn}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+    }
     // const [amount, setAmount] = useState(1);
 
     function format(n) {
@@ -34,7 +40,7 @@ function Item({ children, data={} }) {
                         <div className={cx('group-row')}>
                             <Text>{data && data.Gia}</Text>
                             <div className={cx('btn')}>
-                                <Button className={cx('remove')}>Xóa</Button>
+                                <Button className={cx('remove')} onClick={handleOnClickDelete}>Xóa</Button>
                                 <Button data-toggle="modal" data-target="#view">
                                     Xem
                                 </Button>

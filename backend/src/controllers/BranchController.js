@@ -37,7 +37,7 @@ class BranchController {
 					conn
 						.request()
 						.query(
-							`SELECT DT.TenDoiTac, DT.LoaiAmThuc, DT.Email, TD.MaThucDon, MA.TenMonAn, MA.Gia 
+							`SELECT DT.TenDoiTac, DT.LoaiAmThuc, DT.Email, TD.MaThucDon, MA.MaMonAn, MA.TenMonAn, MA.Gia 
 							FROM dbo.DOITAC DT, dbo.THUCDON TD, dbo.MONAN MA 
 							where DT.MaDoiTac='${req.params.slug}' and DT.MaDoiTac=TD.MaDoiTac and TD.MaThucDon=MA.MaThucDon`
 						)
@@ -83,6 +83,30 @@ class BranchController {
 							req.body.TinhTrang
 						)
 						.execute("dbo.Add_mon_an")
+						.then((v) => {
+							products = v;
+						})
+						.then(() => conn.close())
+				);
+				return products;
+			} catch (error) {
+				console.log(`Error: ${error}`);
+			}
+		};
+		func().then((ress) => {
+			res?.json(ress?.recordset);
+		});
+	}
+	remove(req, res) {
+		const func = async () => {
+			try {
+				let products;
+				await sql.connect(config.config).then((conn) =>
+					conn
+						.request()
+						.query(
+							`DELETE FROM dbo.MONAN where MaMonAn='${req.params.slug}'`
+						)
 						.then((v) => {
 							products = v;
 						})
