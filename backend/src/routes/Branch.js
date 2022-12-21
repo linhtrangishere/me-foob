@@ -8,6 +8,7 @@ router.get('/getMenu/:slug', BranchController.getMenu);
 router.get('/getName/:slug', BranchController.getName);
 router.post('/add/:slug', BranchController.add);
 router.post('/updatePrice/:slug', BranchController.updatePrice);
+router.post('/updateName/:slug', BranchController.updateName);
 router.post('/saleoff/:slug', BranchController.saleoff);
 router.delete('/delete/:slug', BranchController.remove);
 router.get('/', BranchController.index)

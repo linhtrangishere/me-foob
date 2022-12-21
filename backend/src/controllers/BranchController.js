@@ -98,6 +98,32 @@ class BranchController {
 		});
 	}
 
+	updateName(req, res) {
+		const func = async () => {
+			try {
+				let products;
+				await sql.connect(config.config).then((conn) =>
+					conn
+						.request()
+						.input("MaMonAn", sql.VarChar(10),req.params.slug)
+						.input("MaThucDon", sql.VarChar(10),req.body.MaTD)
+						.input("TenMoi", sql.NVarChar(80),req.body.Ten)
+						.execute("dbo.SP_UPDATE_TEN")
+						.then((v) => {
+							products = v;
+						})
+						.then(() => conn.close())
+				);
+				return products;
+			} catch (error) {
+				console.log(`Error: ${error}`);
+			}
+		};
+		func().then((ress) => {
+			res?.json(ress?.recordset);
+		});
+	}
+
 	updatePrice(req, res) {
 		const func = async () => {
 			try {
