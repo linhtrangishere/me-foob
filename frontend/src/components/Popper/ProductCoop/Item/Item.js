@@ -12,6 +12,7 @@ const cx = classNames.bind(styles);
 function Item({ children, data = {} }) {
     const [Price, setPrice] = useState();
     const [Sale, setSale] = useState();
+    const [Name, setName] = useState();
     const refInput = useRef();
     const handleOnClickDelete = () => {
         fetch(`http://localhost:5000/branch/delete/${data.MaMonAn}`, {
@@ -40,6 +41,18 @@ function Item({ children, data = {} }) {
             },
             body: JSON.stringify({
                 PhanTram: Sale
+            })
+        })
+    }
+    const handleOnClickUpdateName = () => {
+        fetch(`http://localhost:5000/branch/updateName/${data.MaMonAn}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                MaTD: data.MaThucDon,
+                Ten: Name
             })
         })
     }
@@ -208,9 +221,13 @@ function Item({ children, data = {} }) {
                                     <div className={cx('group')}>
                                         <div className={cx('text-input')}>
                                             <Text className={cx('text')}>Tên món ăn</Text>
-                                            <input type="text" placeholder='Để trống nếu không sửa' />
+                                            <input type="text" placeholder='Để trống nếu không sửa' value={Name !== undefined && Name} onChange={
+                                                (e) => {
+                                                    setName(e.target.value)
+                                                }
+                                            } ref={refInput}/>
                                         </div>
-                                        <div className={cx('btn-modal')} data-dismiss="modal" aria-label="Close">
+                                        <div className={cx('btn-modal')} data-dismiss="modal" aria-label="Close" onClick={handleOnClickUpdateName}>
                                             <div>Cập nhật tên món</div>
                                         </div>
                                         <div className={cx('text-input')}>

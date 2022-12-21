@@ -48,3 +48,23 @@
 .contact{
     margin-top: 12px;
 }
+
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-submit {
+    display: flex;
+    float: left;
+    margin-top: 20px;
+    & .btn {
+        padding: 8px 32px;
+        border-radius: 8px;
+        color: white;
+        background-color: var(--primary-color);
+        border: none;
+        font-size: 18px;
+    }
+}
