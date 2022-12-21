@@ -2,8 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import styles from './ManageCoop.module.scss';
 
 import classNames from 'classnames/bind';
-import images from '~/assets/images';
-import Text from '~/components/Text';
 
 const cx = classNames.bind(styles);
 

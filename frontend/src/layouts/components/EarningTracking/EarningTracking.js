@@ -2,8 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import styles from './EarningTracking.module.scss';
 
 import classNames from 'classnames/bind';
-import images from '~/assets/images';
-import Text from '~/components/Text';
 import { useParams } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
