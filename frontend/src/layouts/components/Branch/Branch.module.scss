@@ -5,7 +5,7 @@
     justify-content: center;
 }
 .container {
-    padding: 48px 40px;
+    padding: 48px 40px 0 40px;
 }
 
 .title {
@@ -93,11 +93,11 @@ span {
 .plus {
     margin-left: 8px;
 }
-.btn-submit{
+.btn-submit {
     display: flex;
     float: right;
     margin-top: 32px;
-    & .btn{
+    & .btn {
         padding: 8px 32px;
         border-radius: 8px;
         color: white;
@@ -106,13 +106,25 @@ span {
         font-size: 18px;
     }
 }
-.btn-change{
+.btn-change {
     background-color: transparent;
     color: var(--primary-color);
     border: none;
     margin-left: 24px;
-    &:hover{
+    &:hover {
         text-decoration: underline;
     }
 }
 
+.contact {
+    margin-top: 12px;
+}
+.type {
+    font-weight: 400;
+    font-size: 16px;
+    margin-bottom: 12px;
+    opacity: 0.8;
+}
+.thuc-don {
+    font-size: 28px;
+}
