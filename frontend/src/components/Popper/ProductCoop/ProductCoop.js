@@ -32,14 +32,6 @@ function ProductCoop({ children, hint = false, title, addr, data = {} }) {
     }
     return (
         <>
-            <div className={cx('list')}>
-                <h3 className={cx('type')}>
-                    <Text>
-                        <Text style={{ marginRight: '12px' }}>Đánh giá:</Text>
-                        <Star amount={4.8} />
-                    </Text>
-                </h3>
-            </div>
             <div className={cx('menu')}>
                 <h1 className={cx('title')}>
                     <Text>Thực đơn</Text>
