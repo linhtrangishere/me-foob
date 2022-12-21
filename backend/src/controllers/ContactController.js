@@ -11,7 +11,10 @@ class ContactController {
 					conn
 						.request()
 						.query(
-							`SELECT HP.MaHopDong, HP.NgayKichHoat, HP.NgayHetHan, DT.MaSoThue, DT.NguoiDaiDien, DT.SoLuongChiNhanh, DT.Diachikinhdoanh, DT.STKNganHang, DT.NganHang FROM dbo.DOITAC DT, dbo.HOPDONG HP where DT.MaDoiTac=HP.MaDoiTac and DT.MaDoiTac='${req.params.slug}'`
+							`SELECT HP.MaHopDong, HP.NgayKichHoat, HP.NgayHetHan, DT.MaSoThue, DT.NguoiDaiDien,
+									DT.SoLuongChiNhanh, DT.Diachikinhdoanh, DT.STKNganHang, DT.NganHang, HP.NhanVienXacNhan
+							FROM dbo.DOITAC DT, dbo.HOPDONG HP
+							where DT.MaDoiTac=HP.MaDoiTac and DT.MaDoiTac='${req.params.slug}'`
 						)
 						.then((v) => {
 							products = v;
@@ -90,6 +93,31 @@ class ContactController {
 						.execute("dbo.SP_SELECT_HOPDONG_FIX")
 						.then((v) => {
 							products = v;
+						})
+						.then(() => conn.close())
+				);
+				return result;
+			} catch (error) {
+				console.log(`Error: ${error}`);
+			}
+		};
+		func().then((ress) => {
+			res.json(ress);
+		});
+	}
+	submit(req, res) {
+		const func = async () => {
+			try {
+				let result;
+				await sql.connect(config.config).then((conn) =>
+					conn
+						.request()
+						.query(
+							`update HOPDONG set NhanVienXacNhan='${req.body.nv}'
+							where MaHopDong='${req.body.hd}'`
+						)
+						.then((v) => {
+							result = v;
 						})
 						.then(() => conn.close())
 				);

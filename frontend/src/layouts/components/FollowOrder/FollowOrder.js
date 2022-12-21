@@ -71,6 +71,15 @@ function FollowOrder() {
             });
     };
 
+    const [comment, setComment] = useState(false);
+    const [commentContent, setCommentContent] = useState({
+        binhluan: '',
+        danhgia: 0,
+        tenmonan: '',
+        mamonan: '',
+        ma: localStorage.getItem('ma'),
+    });
+
     return (
         <>
             <div className={cx('container', 'grid')}>
@@ -102,6 +111,14 @@ function FollowOrder() {
                                                 onClick={() => {
                                                     hanldeOnClickDetail(data[key].MaPhieuDatHang);
                                                     setKeyIndex(parseInt(key));
+                                                    setCommentContent({
+                                                        binhluan: '',
+                                                        danhgia: 0,
+                                                        tenmonan: '',
+                                                        mamonan: '',
+                                                        ma: localStorage.getItem('ma'),
+                                                    });
+                                                    setComment(false);
                                                 }}
                                             >
                                                 Chi tiết
@@ -111,11 +128,6 @@ function FollowOrder() {
                                 })}
                         </table>
                     </div>
-                </div>
-                <div className={cx('btn-submit')}>
-                    <Button className={cx('btn')} to="/checkout">
-                        Xác nhận
-                    </Button>
                 </div>
             </div>
             <div
@@ -166,7 +178,22 @@ function FollowOrder() {
                                     Object.keys(listMonAn).map(function (key) {
                                         return (
                                             <div key={key} className={cx('dish')}>
-                                                <Text className={cx('name-dish')}>{listMonAn[key].TenMonAn}</Text>
+                                                <Text className={cx('name-dish')}>
+                                                    {listMonAn[key].TenMonAn}{' '}
+                                                    <Button
+                                                        className={cx('btn')}
+                                                        onClick={(e) => {
+                                                            setComment(true);
+                                                            setCommentContent((pre) => ({
+                                                                ...pre,
+                                                                tenmonan: listMonAn[key].TenMonAn,
+                                                                mamonan: listMonAn[key].MaMonAn,
+                                                            }));
+                                                        }}
+                                                    >
+                                                        Bình luận
+                                                    </Button>
+                                                </Text>
                                                 <Text className={cx('price-dish')}>
                                                     {listMonAn[key].SoLuongMonAn} x{' '}
                                                     {format(parseInt(listMonAn[key].Gia))}
@@ -184,6 +211,59 @@ function FollowOrder() {
                                     </Text>
                                 </div>
                             </div>
+                            {comment && (
+                                <>
+                                    <div className={cx('separate')}></div>
+                                    <div className={cx('comment')}>
+                                        <Text className={cx('title-comment')}>Bình luận món: {commentContent.tenmonan}</Text>
+                                        <input className={cx('input-comment')}
+                                            type="text"
+                                            value={commentContent.binhluan}
+                                            onChange={(e) => {
+                                                if (e.target.value.length <= 100)
+                                                    setCommentContent((pre) => ({ ...pre, binhluan: e.target.value }));
+                                            }}
+                                        />
+                                        <input className={cx('input-comment')}
+                                            type="number"
+                                            value={commentContent.danhgia}
+                                            onChange={(e) => {
+                                                if (e.target.value <= 5 && e.target.value >= 0)
+                                                    setCommentContent((pre) => ({ ...pre, danhgia: e.target.value }));
+                                            }}
+                                        />
+                                        <Button
+                                            className="btn btn-primary btn-block mb-4"
+                                            style={{ backgroundColor: 'var(--primary-color)' }}
+                                            onClick={() => {
+                                                fetch('http://localhost:5000/follow-order/submit', {
+                                                    method: 'POST',
+                                                    headers: {
+                                                        'Content-Type': 'application/json',
+                                                        Accept: 'application/json',
+                                                    },
+                                                    body: JSON.stringify(commentContent),
+                                                })
+                                                    .then((res) => {
+                                                        return res.json();
+                                                    })
+                                                    .then((data) => {
+                                                        setCommentContent({
+                                                            binhluan: '',
+                                                            danhgia: 0,
+                                                            tenmonan: '',
+                                                            mamonan: '',
+                                                            ma: localStorage.getItem('ma'),
+                                                        });
+                                                        setComment(false);
+                                                    });
+                                            }}
+                                        >
+                                            Bình luận
+                                        </Button>
+                                    </div>
+                                </>
+                            )}
                             <div className={cx('separate-big')}></div>
                             <div className={cx('footer')}>
                                 <div className={cx('btn-modal')} data-dismiss="modal" aria-label="Close">

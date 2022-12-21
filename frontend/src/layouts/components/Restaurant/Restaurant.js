@@ -7,6 +7,7 @@ import Text from '~/components/Text';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Star from '~/components/Star';
+import Rating from '~/components/Popper/Rating';
 const cx = classNames.bind(styles);
 function Restaurant() {
     const { id } = useParams();
@@ -19,7 +20,7 @@ function Restaurant() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            signal: abortController.signal
+            signal: abortController.signal,
         })
             .then((res) => {
                 return res.json();
@@ -27,24 +28,33 @@ function Restaurant() {
             .then((data) => setData(data));
         return () => {
             abortController.abort();
-        }
-        }, [id]);
+        };
+    }, [id]);
+    const [rating, setRating] = useState();
     useEffect(() => {
-        const abortController = new AbortController();
-        if (data)
+        if (data) {
             fetch(`http://localhost:5000/restaurant/getMenu/${data[0].MaThucDon}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                signal: abortController.signal
             })
                 .then((res) => {
                     return res.json();
                 })
                 .then((data0) => setData0(data0));
-        return () => {
-            abortController.abort();
+            fetch(`http://localhost:5000/restaurant/getComment/${data[0].MaThucDon}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then((res) => {
+                    return res.json();
+                })
+                .then((data) => {
+                    setRating(data);
+                });
         }
     }, [data]);
     return (
@@ -73,6 +83,11 @@ function Restaurant() {
                 </div>
             </div>
             <div className={cx('container', 'grid')}>{data0 && <Product data={data0} />}</div>
+            {rating && (
+                <div className={cx('container', 'grid')}>
+                    <Rating data={rating} />
+                </div>
+            )}
         </>
     );
 }

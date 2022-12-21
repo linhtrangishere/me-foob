@@ -94,7 +94,7 @@ class ManageCartController {
 					conn
 						.request()
 						.query(
-							`update dbo.PHIEUDATHANG set TinhTrangDonHang=N'Đã xử lý' where MaPhieuDatHang='${req.body.pdh}'`
+							`update dbo.PHIEUDATHANG set TinhTrangDonHang=N'${req.body.tinhtrang}' where MaPhieuDatHang='${req.body.pdh}'`
 						)
 						.then((v) => {
 							products = v;

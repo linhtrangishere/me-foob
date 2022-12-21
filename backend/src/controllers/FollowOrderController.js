@@ -74,7 +74,7 @@ class FollowOrderController {
 					conn
 						.request()
 						.query(
-							`select MA.TenMonAn, CTDH.SoLuongMonAn, MA.Gia, CTDH.Ghichu
+							`select MA.TenMonAn, CTDH.SoLuongMonAn, MA.Gia, CTDH.Ghichu, MA.MaMonAn
 							from CHITIETPHIEUDATHANG CTDH
 								join MONAN MA on CTDH.MaMonAn=MA.MaMonAn
 								join PHIEUDATHANG DH on DH.MaPhieuDatHang=CTDH.MaPhieuDatHang
@@ -92,6 +92,32 @@ class FollowOrderController {
 		};
 		func().then((ress) => {
 			res.json(ress.recordset);
+		});
+	}
+	// [POST] /follow-order/submit
+	submit(req, res) {
+		const func = async () => {
+			try {
+				let products;
+				await sql.connect(config.config).then((conn) =>
+					conn
+						.request()
+						.query(
+							`insert into PHANHOI values('${req.body.mamonan}', '${req.body.ma}',
+							'${req.body.binhluan}', '${req.body.danhgia}')`
+						)
+						.then((v) => {
+							products = v;
+						})
+						.then(() => conn.close())
+				);
+				return products;
+			} catch (error) {
+				console.log(`Error: ${error}`);
+			}
+		};
+		func().then((ress) => {
+			res.json(ress);
 		});
 	}
 }

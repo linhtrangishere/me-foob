@@ -12,6 +12,7 @@ const followOrderRouter = require("./FollowOrder");
 const earningTrackingRouter = require("./EarningTracking");
 const manageCoopRouter = require("./ManageCoop");
 const loginRouter = require("./Login");
+const ListCoopRouter = require("./ListCoop");
 
 function route(app) {
 	app.use("/register", registerRouter);
@@ -19,6 +20,7 @@ function route(app) {
 	app.use("/cart", cartRouter);
 	app.use("/checkout", checkoutRouter);
 	app.use("/contact", contactRouter);
+	app.use("/list-coop", ListCoopRouter);
 	app.use("/branch", branchRouter);
 	app.use("/manage-cart", manageCartRouter);
 	app.use("/manage-driver", manageDriverRouter);

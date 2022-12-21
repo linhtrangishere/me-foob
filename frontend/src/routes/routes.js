@@ -15,6 +15,7 @@ import ManageDriverPage from '~/pages/ManageDriver';
 import EarningTrackingPage from '~/pages/EarningTracking';
 import ManageCoopPage from '~/pages/ManageCoop';
 import LoginPage from '~/pages/Login';
+import ListCoopPage from '~/pages/ListCoop';
 
 const publicRoutes = [
     { path: config.routes.home, components: Home },
@@ -29,6 +30,7 @@ const publicRoutes = [
     { path: config.routes.followOrder, components: FollowOrderPage },
     { path: config.routes.earningTracking, components: EarningTrackingPage },
     { path: config.routes.manageCoop, components: ManageCoopPage },
+    { path: config.routes.listCoop, components: ListCoopPage },
     { path: config.routes.login, components: LoginPage },
 ];
 const privateRoutes = [];

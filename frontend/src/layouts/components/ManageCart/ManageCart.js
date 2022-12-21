@@ -20,6 +20,8 @@ function ManageCart() {
     const [dataCustomer, setDataCustomer] = useState();
     const [dataCart, setDataCart] = useState();
 
+    const arrSelection = ['Chờ xử lý', 'Đã xử lý', 'Chờ nhận', 'Đã nhận đơn', 'Đang giao', 'Đã giao'];
+
     useEffect(() => {
         setTimeout(() => {
             fetch(`http://localhost:5000/manage-cart/getCarts/${id}`, {
@@ -88,7 +90,47 @@ function ManageCart() {
                                             <td>{data[key].MaPhieuDatHang}</td>
                                             <td>{`${data[key].dc}`}</td>
                                             <td>{format(data[key].TongHoaDon)}</td>
-                                            <td>{data[key].TinhTrangDonHang}</td>
+                                            <td>
+                                                <select className={cx('status')} name="Tình trạng đơn hàng">
+                                                    {arrSelection.findIndex((e) => e === data[key].TinhTrangDonHang) <=
+                                                        0 && (
+                                                        <option value={'Chờ xử lý'} key={0}>
+                                                            Chờ xử lý
+                                                        </option>
+                                                    )}
+                                                    {arrSelection.findIndex((e) => e === data[key].TinhTrangDonHang) <=
+                                                        1 && (
+                                                        <option value={'Đã xử lý'} key={1}>
+                                                            Đã xử lý
+                                                        </option>
+                                                    )}
+                                                    {arrSelection.findIndex((e) => e === data[key].TinhTrangDonHang) <=
+                                                        2 && (
+                                                        <option value={'Chờ nhận'} key={2}>
+                                                            `` Chờ nhận
+                                                        </option>
+                                                    )}
+                                                    {arrSelection.findIndex((e) => e === data[key].TinhTrangDonHang) <=
+                                                        3 && (
+                                                        <option value={'Đã nhận đơn'} key={3}>
+                                                            Đã nhận đơn
+                                                        </option>
+                                                    )}
+                                                    {arrSelection.findIndex((e) => e === data[key].TinhTrangDonHang) <=
+                                                        4 && (
+                                                        <option value={'Đang giao'} key={4}>
+                                                            Đang giao
+                                                        </option>
+                                                    )}
+                                                    {arrSelection.findIndex((e) => e === data[key].TinhTrangDonHang) <=
+                                                        5 && (
+                                                        <option value={'Đã giao'} key={5}>
+                                                            Đã giao
+                                                        </option>
+                                                    )}
+                                                </select>
+                                            </td>
+                                            {/* <td>{data[key].TinhTrangDonHang}</td> */}
                                             <td
                                                 className={cx('more')}
                                                 data-toggle="modal"
@@ -108,6 +150,9 @@ function ManageCart() {
                                                         },
                                                         body: JSON.stringify({
                                                             pdh: `${data[key].MaPhieuDatHang}`,
+                                                            tinhtrang: `${
+                                                                document.querySelectorAll(`.${cx('status')}`)[key].value
+                                                            }`,
                                                         }),
                                                     })
                                                         .then((res) => {
@@ -160,8 +205,7 @@ function ManageCart() {
                                 </Text>
                                 <Text>
                                     <strong>Địa chỉ chi nhánh: </strong>
-                                    {dataCustomer !== undefined &&
-                                        `${dataCustomer[0].dccn}`}
+                                    {dataCustomer !== undefined && `${dataCustomer[0].dccn}`}
                                 </Text>
                                 <Text>
                                     <strong>Tên khách hàng: </strong>
@@ -169,8 +213,7 @@ function ManageCart() {
                                 </Text>
                                 <Text>
                                     <strong>Địa chỉ: </strong>
-                                    {dataCustomer !== undefined &&
-                                        `${dataCustomer[0].dcgh}`}
+                                    {dataCustomer !== undefined && `${dataCustomer[0].dcgh}`}
                                 </Text>
                             </div>
                             <div className={cx('separate')}></div>

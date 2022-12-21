@@ -37,14 +37,18 @@ function Contact() {
             })
             .then((data) => {
                 setData(data);
-                setDayEnd(convertDate(data[0].NgayHetHan));
-                setDayStart(convertDate(data[0].NgayKichHoat));
             });
 
         return () => {
             abortController.abort();
         };
     }, [id]);
+    useEffect(() => {
+        if (data !== undefined) {
+            setDayEnd(convertDate(data[0].NgayHetHan));
+            setDayStart(convertDate(data[0].NgayKichHoat));
+        }
+    }, [data]);
 
     const handleOnClickReset = () => {
         if (testTransaction)
@@ -116,9 +120,6 @@ function Contact() {
             });
     };
 
-    useEffect(() => {
-        console.log(testTransaction);
-    }, [testTransaction]);
     return (
         <>
             <div className={cx('container', 'grid')}>
@@ -223,16 +224,43 @@ function Contact() {
                     </div>
                 </div>
                 <div className={cx('btn-submit')}>
-                    <Button className={cx('btn')} style={{ backgroundColor: 'red' }}>
-                        Hủy
-                    </Button>
+                    {localStorage.getItem('roll') == 1 && (
+                        <Button className={cx('btn')} style={{ backgroundColor: 'red' }}>
+                            Hủy
+                        </Button>
+                    )}
                     <Button className={cx('btn')} onClick={handleOnClickReset}>
                         Tải lại dữ liệu
                     </Button>
-                    <Button className={cx('btn')} onClick={handleOnClickUpdate}>
-                        Gia hạn
-                    </Button>
-                    <Button className={cx('btn')}>Xác nhận</Button>
+                    {localStorage.getItem('roll') == 1 && (
+                        <Button className={cx('btn')} onClick={handleOnClickUpdate}>
+                            Gia hạn
+                        </Button>
+                    )}
+                    {localStorage.getItem('roll') == 1 && (
+                        <Button
+                            className={cx('btn')}
+                            onClick={()=>{fetch('http://localhost:5000/contact/submit', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    Accept: 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    nv: localStorage.getItem('ma'),
+                                    hd: data[0].MaHopDong,
+                                }),
+                            })
+                                .then((res) => {
+                                    return res.json();
+                                })
+                                .then((data) => {
+                                    console.log(data);
+                                })}}
+                        >
+                            Xác nhận
+                        </Button>
+                    )}
                 </div>
             </div>
         </>
