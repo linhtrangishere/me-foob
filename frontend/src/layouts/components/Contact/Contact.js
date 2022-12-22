@@ -5,6 +5,7 @@ import Button from '~/components/Button';
 import Text from '~/components/Text';
 import { useParams } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
+import ErrorPage from '../ErrorPage';
 
 const cx = classNames.bind(styles);
 
@@ -24,24 +25,26 @@ function Contact() {
     }
 
     useEffect(() => {
-        const abortController = new AbortController();
-        fetch(`http://localhost:5000/contact/getBranch/${id}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            signal: abortController.signal,
-        })
-            .then((res) => {
-                return res.json();
+        if (localStorage.getItem('roll') == 1 || localStorage.getItem('roll') == 3) {
+            const abortController = new AbortController();
+            fetch(`http://localhost:5000/contact/getBranch/${id}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                signal: abortController.signal,
             })
-            .then((data) => {
-                setData(data);
-            });
+                .then((res) => {
+                    return res.json();
+                })
+                .then((data) => {
+                    setData(data);
+                });
 
-        return () => {
-            abortController.abort();
-        };
+            return () => {
+                abortController.abort();
+            };
+        }
     }, [id]);
     useEffect(() => {
         if (data !== undefined) {
@@ -122,147 +125,156 @@ function Contact() {
 
     return (
         <>
-            <div className={cx('container', 'grid')}>
-                <div className={cx('title')}>
-                    <h1>Hợp đồng</h1>
-                    <div className={cx('transaction-test')}>
-                        <div className={cx('input-tran')}>
-                            <input
-                                type="radio"
-                                name="test-tran"
-                                for="no-fix"
-                                id="no-fix"
-                                onClick={(e) => {
-                                    setTestTransaction(true);
-                                }}
-                            />
-                            <label for="no-fix">No Fix</label>
-                        </div>
-                        <div className={cx('input-tran')}>
-                            <input
-                                type="radio"
-                                name="test-tran"
-                                id="fix"
-                                for="fix"
-                                onClick={(e) => {
-                                    setTestTransaction(false);
-                                }}
-                            />
-                            <label for="fix">Fix</label>
-                        </div>
-                    </div>
-                </div>
-                <div className={cx('content')}>
-                    <div className={cx('cover')}>
-                        <div className={cx('box')}>
-                            <div className={cx('box-cover')}>
-                                <Text className={cx('text')}>Mã hợp đồng</Text>
-                                {data !== undefined && data[0].MaHopDong}
+            {(localStorage.getItem('roll') == 1 || localStorage.getItem('roll') == 3) && (
+                <>
+                    <div className={cx('container', 'grid')}>
+                        <div className={cx('title')}>
+                            <h1>Hợp đồng</h1>
+                            <div className={cx('transaction-test')}>
+                                <div className={cx('input-tran')}>
+                                    <input
+                                        type="radio"
+                                        name="test-tran"
+                                        for="no-fix"
+                                        id="no-fix"
+                                        onClick={(e) => {
+                                            setTestTransaction(true);
+                                        }}
+                                    />
+                                    <label for="no-fix">No Fix</label>
+                                </div>
+                                <div className={cx('input-tran')}>
+                                    <input
+                                        type="radio"
+                                        name="test-tran"
+                                        id="fix"
+                                        for="fix"
+                                        onClick={(e) => {
+                                            setTestTransaction(false);
+                                        }}
+                                    />
+                                    <label for="fix">Fix</label>
+                                </div>
                             </div>
                         </div>
-                        <div className={cx('box')}>
-                            <div className={cx('box-cover')}>
-                                <Text className={cx('text')}>Mã số thuế</Text> {data !== undefined && data[0].MaSoThue}
+                        <div className={cx('content')}>
+                            <div className={cx('cover')}>
+                                <div className={cx('box')}>
+                                    <div className={cx('box-cover')}>
+                                        <Text className={cx('text')}>Mã hợp đồng</Text>
+                                        {data !== undefined && data[0].MaHopDong}
+                                    </div>
+                                </div>
+                                <div className={cx('box')}>
+                                    <div className={cx('box-cover')}>
+                                        <Text className={cx('text')}>Mã số thuế</Text>{' '}
+                                        {data !== undefined && data[0].MaSoThue}
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={cx('cover')}>
+                                <div className={cx('box')}>
+                                    <div className={cx('box-cover')}>
+                                        <Text className={cx('text')}>Người đại diện</Text>
+                                        {data !== undefined && data[0].NguoiDaiDien}
+                                    </div>
+                                </div>
+                                <div className={cx('box')}>
+                                    <div className={cx('box-cover')}>
+                                        <Text className={cx('text')}>Số chi nhánh đăng ký</Text>
+                                        {data !== undefined && data[0].SoLuongChiNhanh}
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={cx('cover')}>
+                                <div className={cx('box')}>
+                                    <div className={cx('box-cover')}>
+                                        <Text className={cx('text')}>Ngày lập hợp đồng</Text>
+                                        {dayStart !== undefined && `${dayStart[2]}/${dayStart[1]}/${dayStart[0]}`}
+                                    </div>
+                                </div>
+                                <div className={cx('box')}>
+                                    <div className={cx('box-cover')}>
+                                        <Text className={cx('text')}>Ngày hết hợp đồng</Text>
+                                        <input
+                                            type="date"
+                                            value={deadline !== undefined && deadline}
+                                            onChange={(e) => {
+                                                setDeadline(e.target.value);
+                                            }}
+                                            ref={refInput}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={cx('cover')}>
+                                <div className={cx('box')}>
+                                    <div className={cx('box-cover')}>
+                                        <Text className={cx('text')}>Địa chỉ</Text>
+                                        {data !== undefined && data[0].Diachikinhdoanh}
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={cx('cover')}>
+                                <div className={cx('box')}>
+                                    <div className={cx('box-cover')}>
+                                        <Text className={cx('text')}>Số tài khoản</Text>
+                                        {data !== undefined && data[0].STKNganHang}
+                                    </div>
+                                </div>
+                                <div className={cx('box')}>
+                                    <div className={cx('box-cover')}>
+                                        <Text className={cx('text')}>Ngân hàng</Text>{' '}
+                                        {data !== undefined && data[0].NganHang}
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className={cx('cover')}>
-                        <div className={cx('box')}>
-                            <div className={cx('box-cover')}>
-                                <Text className={cx('text')}>Người đại diện</Text>
-                                {data !== undefined && data[0].NguoiDaiDien}
-                            </div>
-                        </div>
-                        <div className={cx('box')}>
-                            <div className={cx('box-cover')}>
-                                <Text className={cx('text')}>Số chi nhánh đăng ký</Text>
-                                {data !== undefined && data[0].SoLuongChiNhanh}
-                            </div>
-                        </div>
-                    </div>
-                    <div className={cx('cover')}>
-                        <div className={cx('box')}>
-                            <div className={cx('box-cover')}>
-                                <Text className={cx('text')}>Ngày lập hợp đồng</Text>
-                                {dayStart !== undefined && `${dayStart[2]}/${dayStart[1]}/${dayStart[0]}`}
-                            </div>
-                        </div>
-                        <div className={cx('box')}>
-                            <div className={cx('box-cover')}>
-                                <Text className={cx('text')}>Ngày hết hợp đồng</Text>
-                                <input
-                                    type="date"
-                                    value={deadline !== undefined && deadline}
-                                    onChange={(e) => {
-                                        setDeadline(e.target.value);
+                        <div className={cx('btn-submit')}>
+                            {localStorage.getItem('roll') == 1 && (
+                                <Button className={cx('btn')} style={{ backgroundColor: 'red' }}>
+                                    Hủy
+                                </Button>
+                            )}
+                            <Button className={cx('btn')} onClick={handleOnClickReset}>
+                                Tải lại dữ liệu
+                            </Button>
+                            {localStorage.getItem('roll') == 1 && (
+                                <Button className={cx('btn')} onClick={handleOnClickUpdate}>
+                                    Gia hạn
+                                </Button>
+                            )}
+                            {localStorage.getItem('roll') == 1 && (
+                                <Button
+                                    className={cx('btn')}
+                                    onClick={() => {
+                                        fetch('http://localhost:5000/contact/submit', {
+                                            method: 'POST',
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                                Accept: 'application/json',
+                                            },
+                                            body: JSON.stringify({
+                                                nv: localStorage.getItem('ma'),
+                                                hd: data[0].MaHopDong,
+                                            }),
+                                        })
+                                            .then((res) => {
+                                                return res.json();
+                                            })
+                                            .then((data) => {
+                                                console.log(data);
+                                            });
                                     }}
-                                    ref={refInput}
-                                />
-                            </div>
+                                >
+                                    Xác nhận
+                                </Button>
+                            )}
                         </div>
                     </div>
-                    <div className={cx('cover')}>
-                        <div className={cx('box')}>
-                            <div className={cx('box-cover')}>
-                                <Text className={cx('text')}>Địa chỉ</Text>
-                                {data !== undefined && data[0].Diachikinhdoanh}
-                            </div>
-                        </div>
-                    </div>
-                    <div className={cx('cover')}>
-                        <div className={cx('box')}>
-                            <div className={cx('box-cover')}>
-                                <Text className={cx('text')}>Số tài khoản</Text>
-                                {data !== undefined && data[0].STKNganHang}
-                            </div>
-                        </div>
-                        <div className={cx('box')}>
-                            <div className={cx('box-cover')}>
-                                <Text className={cx('text')}>Ngân hàng</Text> {data !== undefined && data[0].NganHang}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className={cx('btn-submit')}>
-                    {localStorage.getItem('roll') == 1 && (
-                        <Button className={cx('btn')} style={{ backgroundColor: 'red' }}>
-                            Hủy
-                        </Button>
-                    )}
-                    <Button className={cx('btn')} onClick={handleOnClickReset}>
-                        Tải lại dữ liệu
-                    </Button>
-                    {localStorage.getItem('roll') == 1 && (
-                        <Button className={cx('btn')} onClick={handleOnClickUpdate}>
-                            Gia hạn
-                        </Button>
-                    )}
-                    {localStorage.getItem('roll') == 1 && (
-                        <Button
-                            className={cx('btn')}
-                            onClick={()=>{fetch('http://localhost:5000/contact/submit', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    Accept: 'application/json',
-                                },
-                                body: JSON.stringify({
-                                    nv: localStorage.getItem('ma'),
-                                    hd: data[0].MaHopDong,
-                                }),
-                            })
-                                .then((res) => {
-                                    return res.json();
-                                })
-                                .then((data) => {
-                                    console.log(data);
-                                })}}
-                        >
-                            Xác nhận
-                        </Button>
-                    )}
-                </div>
-            </div>
+                </>
+            )}
+            {!(localStorage.getItem('roll') == 1 || localStorage.getItem('roll') == 3) && <ErrorPage />}
         </>
     );
 }

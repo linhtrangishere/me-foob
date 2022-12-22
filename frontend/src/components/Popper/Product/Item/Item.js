@@ -41,12 +41,14 @@ function Item({ children, data = {}, order = false }) {
 
     useEffect(() => {
         if (order) {
-            var arr = JSON.parse(localStorage.getItem('Món ăn'));
-            if (arr.length === 0) arr = [product];
-            else {
-                arr.push(product);
+            if (product.sl !== 0) {
+                var arr = JSON.parse(localStorage.getItem('Món ăn'));
+                if (arr.length === 0) arr = [product];
+                else {
+                    arr.push(product);
+                }
+                localStorage.setItem('Món ăn', JSON.stringify(arr));
             }
-            localStorage.setItem('Món ăn', JSON.stringify(arr));
         }
     });
 
