@@ -6,7 +6,7 @@ class EarningTrackingController {
 	getThuNhap(req, res) {
 		const func = async () => {
 			try {
-				let products;
+				let result;
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
@@ -21,11 +21,11 @@ class EarningTrackingController {
 								where MaTaiXe ='${req.params.slug}'`
 						)
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);
-				return products;
+				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
 			}
@@ -38,7 +38,7 @@ class EarningTrackingController {
 	getThongKe(req, res) {
 		const func = async () => {
 			try {
-				let products;
+				let result;
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
@@ -50,11 +50,11 @@ class EarningTrackingController {
 							ORDER BY month(NgayGiaoHang) ASC`
 						)
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);
-				return products;
+				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
 			}

@@ -5,5 +5,6 @@ const RestaurantController = require('../controllers/RestaurantController');
 
 router.get('/getMenu/:slug',RestaurantController.getMenu);
 router.get('/getName/:slug',RestaurantController.getName);
-router.get('/getOption/:slug',RestaurantController.getOption);
+router.get('/getComment/:slug',RestaurantController.getComment);
+// router.get('/getMenu/:slug',RestaurantController.getMenu);
 module.exports = router;

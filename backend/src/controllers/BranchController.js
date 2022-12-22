@@ -6,7 +6,7 @@ class BranchController {
 	getBranch(req, res) {
 		const func = async () => {
 			try {
-				let products;
+				let result;
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
@@ -15,11 +15,11 @@ class BranchController {
 						datepart(HOUR,CN.ThoiGianMoCua) as GioMoCua, datepart(MINUTE,CN.ThoiGianMoCua)as PhutMoCua, DT.LoaiAmThuc, TD.Rating from CHINHANH CN, DOITAC DT, THUCDON TD where MaChiNhanh='${req.params.slug}' and DT.MaDoiTac=CN.MaDoiTac and DT.MaDoiTac=TD.MaDoiTac`
 						)
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);
-				return products;
+				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
 			}
@@ -32,7 +32,7 @@ class BranchController {
 	getMenu(req, res) {
 		const func = async () => {
 			try {
-				let products;
+				let result;
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
@@ -42,11 +42,11 @@ class BranchController {
 							where DT.MaDoiTac='${req.params.slug}' and DT.MaDoiTac=TD.MaDoiTac and TD.MaThucDon=MA.MaThucDon`
 						)
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);
-				return products;
+				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
 			}
@@ -59,7 +59,7 @@ class BranchController {
 	add(req, res) {
 		const func = async () => {
 			try {
-				let products;
+				let result;
 				var ma =
 					"MA" +
 					Math.floor(Math.random() * (9999999 - 1000000 + 1)) +
@@ -84,11 +84,11 @@ class BranchController {
 						)
 						.execute("dbo.Add_mon_an")
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);
-				return products;
+				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
 			}
@@ -101,7 +101,7 @@ class BranchController {
 	updateName(req, res) {
 		const func = async () => {
 			try {
-				let products;
+				let result;
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
@@ -110,11 +110,11 @@ class BranchController {
 						.input("TenMoi", sql.NVarChar(80),req.body.Ten)
 						.execute("dbo.SP_UPDATE_TEN")
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);
-				return products;
+				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
 			}
@@ -127,7 +127,7 @@ class BranchController {
 	updatePrice(req, res) {
 		const func = async () => {
 			try {
-				let products;
+				let result;
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
@@ -135,11 +135,11 @@ class BranchController {
 						.input("GiaMonAn", sql.Int,req.body.Gia)
 						.execute("dbo.USP_ThayDoiThongTinMonAn")
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);
-				return products;
+				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
 			}
@@ -152,7 +152,7 @@ class BranchController {
 	saleoff(req, res) {
 		const func = async () => {
 			try {
-				let products;
+				let result;
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
@@ -160,11 +160,11 @@ class BranchController {
 						.input("PhanTramKhuyenMai", sql.Int,req.body.PhanTram)
 						.execute("dbo.USP_ApDungKhuyenMai")
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);
-				return products;
+				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
 			}
@@ -177,7 +177,7 @@ class BranchController {
 	remove(req, res) {
 		const func = async () => {
 			try {
-				let products;
+				let result;
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
@@ -185,11 +185,11 @@ class BranchController {
 							`DELETE FROM dbo.MONAN where MaMonAn='${req.params.slug}'`
 						)
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);
-				return products;
+				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
 			}
@@ -202,7 +202,7 @@ class BranchController {
 	getName(req, res) {
 		const func = async () => {
 			try {
-				let products;
+				let result;
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
@@ -210,11 +210,11 @@ class BranchController {
 							`select TenChiNhanh from CHINHANH where MaChiNhanh='${req.params.slug}'`
 						)
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);
-				return products;
+				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
 			}

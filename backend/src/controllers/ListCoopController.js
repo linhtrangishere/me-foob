@@ -1,22 +1,26 @@
 const config = require("../DbConfig");
 const sql = require("mssql");
-class CartController {
-	async index(req, res) {}
-	// [GET] /home/getBranch1
-	getBranch1(req, res) {
+const sqll = require("mssql");
+class ListCoopController {
+	getNull(req, res) {
 		const func = async () => {
 			try {
-				let products;
+				let result;
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
-						.query(`select count(*) from dbo.MONAN`)
+						.query(
+							`select top 8 MaHopDong, MaDoiTac, NgayHetHan
+							from dbo.HOPDONG HD
+							where NhanVienXacNhan is null and MaDoiTac is not null`
+						)
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);
-				return products;
+
+				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
 			}
@@ -25,21 +29,25 @@ class CartController {
 			res.json(ress.recordset);
 		});
 	}
-	// [GET] /home/getBranch2
-	getBranch2(req, res) {
+	getNotNull(req, res) {
 		const func = async () => {
 			try {
-				let products;
+				let result;
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
-						.query(`select count(*) from dbo.MONAN`)
+						.query(
+							`select top 8 MaHopDong, MaDoiTac, NgayHetHan
+							from dbo.HOPDONG HD
+							where NhanVienXacNhan is not null and MaDoiTac is not null`
+						)
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);
-				return products;
+
+				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
 			}
@@ -50,4 +58,4 @@ class CartController {
 	}
 }
 
-module.exports = new CartController();
+module.exports = new ListCoopController();

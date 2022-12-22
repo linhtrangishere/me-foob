@@ -6,7 +6,7 @@ class HomeController {
 	getBranch1(req, res) {
 		const func = async () => {
 			try {
-				let products;
+				let result;
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
@@ -16,11 +16,11 @@ class HomeController {
 							where DT.MaDoiTac = TD.MaDoiTac`
 						)
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);
-				return products;
+				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
 			}
@@ -33,7 +33,7 @@ class HomeController {
 	getBranch2(req, res) {
 		const func = async () => {
 			try {
-				let products;
+				let result;
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
@@ -43,11 +43,11 @@ class HomeController {
 							where DT.MaDoiTac = TD.MaDoiTac`
 						)
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);
-				return products;
+				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
 			}

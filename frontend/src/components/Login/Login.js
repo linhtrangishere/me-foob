@@ -45,7 +45,17 @@ function Login({ children, login = false, name = '', ...props }) {
                         <ul className={cx('dropdown-menu')} tabIndex="-1" {...attrs}>
                             {
                                 // eslint-disable-next-line eqeqeq
-                                (localStorage.getItem('roll') == 1 || localStorage.getItem('roll') == 3) && (
+                                localStorage.getItem('roll') == 1 && (
+                                    <li className={cx('item')}>
+                                        <Button className={cx('item-link')} to={`/list-coop`}>
+                                            Xem danh sách hợp đồng
+                                        </Button>
+                                    </li>
+                                )
+                            }
+                            {
+                                // eslint-disable-next-line eqeqeq
+                                localStorage.getItem('roll') == 3 && (
                                     <li className={cx('item')}>
                                         <Button
                                             className={cx('item-link')}

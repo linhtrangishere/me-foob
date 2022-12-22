@@ -11,6 +11,7 @@ const routes = {
     followOrder: '/follow-order/:id',
     earningTracking: '/earning-tracking/:id',
     manageCoop: '/manage-coop',
+    listCoop: '/list-coop',
     login: '/login',
 };
 

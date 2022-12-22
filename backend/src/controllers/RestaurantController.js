@@ -6,7 +6,7 @@ class RestaurantController {
 	getName(req, res) {
 		const func = async () => {
 			try {
-				let products;
+				let result;
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
@@ -16,17 +16,17 @@ class RestaurantController {
 							where TD.MaDoiTac='${req.params.slug}' and DT.MaDoiTac=TD.MaDoiTac`
 						)
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);
-				return products;
+				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
 			}
 		};
 		func().then((ress) => {
-			res?.json(ress?.recordset);
+			res?.json(ress.recordset);
 		});
 	}
 
@@ -62,24 +62,52 @@ class RestaurantController {
 	getMenu(req, res) {
 		const func = async () => {
 			try {
-				let products;
+				let result;
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
 						.input("MaTD", sql.VarChar(10), req.params.slug)
 						.execute("dbo.Xem_Thuc_Don")
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);
-				return products;
+				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
 			}
 		};
 		func().then((ress) => {
-			res?.json(ress?.recordset);
+			res.json(ress.recordset);
+		});
+	}
+	getComment(req, res) {
+		const func = async () => {
+			try {
+				let result;
+				await sql.connect(config.config).then((conn) =>
+					conn
+						.request()
+						.query(
+							`select TenMonAn, TenKhachHang, PH.Rating, PH.BinhLuan
+							from THUCDON TD join MONAN MA on MA.MaThucDon=TD.MaThucDon
+										join PHANHOI PH on PH.MaMonAn=MA.MaMonAn
+										join KHACHHANG KH on KH.MaKhachHang=PH.MaKhachHang
+							where TD.MaThucDon='${req.params.slug}'`
+						)
+						.then((v) => {
+							result = v;
+						})
+						.then(() => conn.close())
+				);
+				return result;
+			} catch (error) {
+				console.log(`Error: ${error}`);
+			}
+		};
+		func().then((ress) => {
+			res.json(ress.recordset);
 		});
 	}
 }
