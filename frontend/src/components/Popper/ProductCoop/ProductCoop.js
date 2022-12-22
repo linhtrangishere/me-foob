@@ -11,6 +11,7 @@ import Item from './Item';
 const cx = classNames.bind(styles);
 
 function ProductCoop({ children, hint = false, title, addr, data = {} }) {
+    
     const [Name, setName] = useState();
     const [Price, setPrice] = useState();
     const [Desc, setDesc] = useState();

@@ -78,7 +78,7 @@ class RestaurantController {
 			}
 		};
 		func().then((ress) => {
-			res?.json(ress?.recordset);
+			res.json(ress.recordset);
 		});
 	}
 }
