@@ -23,15 +23,18 @@ function Item({ children, data = {} }) {
         })
     }
     const handleOnClickUpdatePrice = () => {
-        fetch(`http://localhost:5000/branch/updatePrice/${data.MaMonAn}`, {
+        console.log(data.MaMonAn);
+        fetch(`http://localhost:5000/branch/updatePrice`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
+                MaMonAn: data.MaMonAn,
                 Gia: Price
             })
         })
+        console.log(data.MaMonAn);
     }
     const handleOnClickSaleOff = () => {
         fetch(`http://localhost:5000/branch/saleoff/${data.MaMonAn}`, {
@@ -46,7 +49,7 @@ function Item({ children, data = {} }) {
     }
     const handleOnClickUpdateName = () => {
         fetch(`http://localhost:5000/branch/updateName/${data.MaMonAn}`, {
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },

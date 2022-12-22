@@ -14,9 +14,13 @@ function ProductCoop({ children, hint = false, title, addr, data = {} }) {
     const [Name, setName] = useState();
     const [Price, setPrice] = useState();
     const [Desc, setDesc] = useState();
-    const [Status, setStatus] = useState();
+    //const [Status, setStatus] = useState();
     const refInput = useRef();
+
+
     const handleOnClickAdd = () => {
+        var select = document.getElementById('State');
+        var value = select.options[select.selectedIndex].value;
         fetch(`http://localhost:5000/branch/add/${data[0].MaThucDon}`, {
             method: 'POST',
             headers: {
@@ -26,7 +30,7 @@ function ProductCoop({ children, hint = false, title, addr, data = {} }) {
                 TenMonAn: Name,
                 Gia: Price,
                 MieuTa: Desc,
-                TinhTrang: Status
+                TinhTrang: value
             })
         })
     }
@@ -91,11 +95,11 @@ function ProductCoop({ children, hint = false, title, addr, data = {} }) {
                                         </div>
                                         <div className={cx('text-input')}>
                                             <Text className={cx('text')}>Tình trạng món</Text>
-                                            <input type="text" placeholder="Nhập . . ." value={Status !== undefined && Status} onChange={
-                                                (e) => {
-                                                    setStatus(e.target.value)
-                                                }
-                                            } ref={refInput} />
+                                            <select id="State">
+                                                <option value="Bình thường">Bình thường</option>
+                                                <option value="Ngưng bán">Ngưng bán</option>
+                                                <option value="Tạm ngưng">Tạm ngưng</option>
+                                            </select>
                                         </div>
                                         <div className={cx('text-input')}>
                                             <Text className={cx('text')}>Hình ảnh</Text>

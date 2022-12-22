@@ -17,7 +17,7 @@ function Product({ data = {} }) {
         <>
             <div className={cx('menu')}>
                 <h1 className={cx('title', 'thuc-don')}>
-                    <Text>Thực đơn</Text>
+                    <Text>Thực đơn gồm {data[0].Tong} món ăn</Text>
                 </h1>
                 <div className={cx('list-item')}>
                     {data &&

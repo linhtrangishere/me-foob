@@ -30,6 +30,35 @@ class RestaurantController {
 		});
 	}
 
+	getOption(req, res) {
+		console.log("CCCCCC")
+		const func = async () => {
+			try {
+				let products;
+				await sql.connect(config.config).then((conn) =>
+					conn
+						.request()
+						.query(
+							`SELECT NoiDungTuyChon
+							FROM dbo.TUYCHON T
+							where T.MaMonAn='${req.params.slug}'`
+						)
+						.then((v) => {
+							products = v;
+						})
+						.then(() => conn.close())
+				);
+				return products;
+			} catch (error) {
+				console.log(`Error: ${error}`);
+			}
+		};
+		func().then((ress) => {
+			res?.json(ress?.recordset);
+			console.log(ress);
+		});
+	}
+
 	getMenu(req, res) {
 		const func = async () => {
 			try {
