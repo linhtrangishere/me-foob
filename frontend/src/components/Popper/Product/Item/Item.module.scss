@@ -33,6 +33,17 @@
     }
 }
 
+.status {
+    font-size: 12px;
+    line-height: 1.33333333;
+    font-weight: 400;
+    opacity: 0.9;
+    text-align: left;
+    & span {
+        display: block;
+    }
+}
+
 .link {
     display: flex;
     height: 100%;

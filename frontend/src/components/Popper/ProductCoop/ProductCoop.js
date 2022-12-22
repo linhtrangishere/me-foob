@@ -14,8 +14,10 @@ function ProductCoop({ children, hint = false, title, addr, data = {} }) {
     const [Name, setName] = useState();
     const [Price, setPrice] = useState();
     const [Desc, setDesc] = useState();
-    // const [Status, setStatus] = useState();
+    //const [Status, setStatus] = useState();
     const refInput = useRef();
+
+
     const handleOnClickAdd = () => {
         var select = document.getElementById('State');
         var value = select.options[select.selectedIndex].value;
@@ -28,10 +30,10 @@ function ProductCoop({ children, hint = false, title, addr, data = {} }) {
                 TenMonAn: Name,
                 Gia: Price,
                 MieuTa: Desc,
-                TinhTrang: value,
-            }),
-        });
-    };
+                TinhTrang: value
+            })
+        })
+    }
     return (
         <>
             <div className={cx('menu')}>

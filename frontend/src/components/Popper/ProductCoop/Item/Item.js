@@ -40,16 +40,19 @@ function Item({ children, data = {}, keyIndex = 0 }) {
         });
     };
     const handleOnClickUpdatePrice = () => {
-        fetch(`http://localhost:5000/branch/updatePrice/${data.MaMonAn}`, {
+        console.log(data.MaMonAn);
+        fetch(`http://localhost:5000/branch/updatePrice`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                Gia: parseInt(Price),
-            }),
-        });
-    };
+                MaMonAn: data.MaMonAn,
+                Gia: Price
+            })
+        })
+        console.log(data.MaMonAn);
+    }
     const handleOnClickSaleOff = () => {
         fetch(`http://localhost:5000/branch/saleoff/${data.MaMonAn}`, {
             method: 'POST',
@@ -63,7 +66,7 @@ function Item({ children, data = {}, keyIndex = 0 }) {
     };
     const handleOnClickUpdateName = () => {
         fetch(`http://localhost:5000/branch/updateName/${data.MaMonAn}`, {
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },

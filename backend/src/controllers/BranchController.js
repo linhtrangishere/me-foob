@@ -132,7 +132,7 @@ class BranchController {
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
-						.input("MaMonAn", sql.VarChar(10),req.params.slug)
+						.input("MaMonAn", sql.VarChar(10),req.body.MaMonAn)
 						.input("GiaMonAn", sql.Int,req.body.Gia)
 						.execute("dbo.USP_ThayDoiThongTinMonAn")
 						.then((v) => {
