@@ -7,6 +7,7 @@ const routes = {
     contact: '/contact/:id',
     branch: '/branch/:id',
     manageCart: '/manage-cart/:id',
+    manageData: '/manage-data/:id',
     manageDriver: '/manage-driver',
     followOrder: '/follow-order/:id',
     earningTracking: '/earning-tracking/:id',

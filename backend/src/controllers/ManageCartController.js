@@ -85,7 +85,7 @@ class ManageCartController {
 			res.json(ress.recordset);
 		});
 	}
-	// [GET] /manage-cart/submit
+	// [POST] /manage-cart/submit
 	submitOrder(req, res) {
 		const func = async () => {
 			try {
@@ -101,7 +101,35 @@ class ManageCartController {
 						})
 						.then(() => conn.close())
 				);
-				return products;
+				return result;
+			} catch (error) {
+				console.log(`Error: ${error}`);
+			}
+		};
+		func().then((ress) => {
+			res.json(ress);
+		});
+	}
+
+	// [POST] /manage-cart/deleteOrder
+	deleteOrder(req, res) {
+		const func = async () => {
+			try {
+				let result;
+				await sql.connect(config.config).then((conn) =>
+					conn
+						.request()
+						.query(
+							`delete dbo.CHITIETPHIEUDATHANG where MaPhieuDatHang='${req.body.pdh}';
+							delete dbo.PHIEUDATHANG where MaPhieuDatHang='${req.body.pdh}';
+							`
+						)
+						.then((v) => {
+							result = v;
+						})
+						.then(() => conn.close())
+				);
+				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
 			}

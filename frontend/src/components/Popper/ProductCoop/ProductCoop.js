@@ -11,13 +11,14 @@ import Item from './Item';
 const cx = classNames.bind(styles);
 
 function ProductCoop({ children, hint = false, title, addr, data = {} }) {
-    
     const [Name, setName] = useState();
     const [Price, setPrice] = useState();
     const [Desc, setDesc] = useState();
-    const [Status, setStatus] = useState();
+    // const [Status, setStatus] = useState();
     const refInput = useRef();
     const handleOnClickAdd = () => {
+        var select = document.getElementById('State');
+        var value = select.options[select.selectedIndex].value;
         fetch(`http://localhost:5000/branch/add/${data[0].MaThucDon}`, {
             method: 'POST',
             headers: {
@@ -27,10 +28,10 @@ function ProductCoop({ children, hint = false, title, addr, data = {} }) {
                 TenMonAn: Name,
                 Gia: Price,
                 MieuTa: Desc,
-                TinhTrang: Status
-            })
-        })
-    }
+                TinhTrang: value,
+            }),
+        });
+    };
     return (
         <>
             <div className={cx('menu')}>
@@ -41,9 +42,10 @@ function ProductCoop({ children, hint = false, title, addr, data = {} }) {
                     </Button>
                 </h1>
                 <div className={cx('list-item')}>
-                    {data && Object.keys(data).map(function (key) {
-                        return <Item key={key} data={data[key]} />;
-                    })}
+                    {data &&
+                        Object.keys(data).map(function (key) {
+                            return <Item key={key} data={data[key]} keyIndex={key}/>;
+                        })}
                 </div>
             </div>
             <div
@@ -68,35 +70,47 @@ function ProductCoop({ children, hint = false, title, addr, data = {} }) {
                                     <div className={cx('group')}>
                                         <div className={cx('text-input')}>
                                             <Text className={cx('text')}>Tên món ăn</Text>
-                                            <input type="text" placeholder="Nhập . . ." value={Name !== undefined && Name} onChange={
-                                                (e) => {
-                                                    setName(e.target.value)
-                                                }
-                                            } ref={refInput} />
+                                            <input
+                                                type="text"
+                                                placeholder="Nhập . . ."
+                                                value={Name !== undefined && Name}
+                                                onChange={(e) => {
+                                                    setName(e.target.value);
+                                                }}
+                                                ref={refInput}
+                                            />
                                         </div>
                                         <div className={cx('text-input')}>
                                             <Text className={cx('text')}>Giá</Text>
-                                            <input type="text" placeholder="Nhập . . ." value={Price !== undefined && Price} onChange={
-                                                (e) => {
-                                                    setPrice(e.target.value)
-                                                }
-                                            } ref={refInput} />
+                                            <input
+                                                type="text"
+                                                placeholder="Nhập . . ."
+                                                value={Price !== undefined && Price}
+                                                onChange={(e) => {
+                                                    setPrice(e.target.value);
+                                                }}
+                                                ref={refInput}
+                                            />
                                         </div>
                                         <div className={cx('text-input')}>
                                             <Text className={cx('text')}>Mô tả</Text>
-                                            <input type="text" placeholder="Nhập . . ." value={Desc !== undefined && Desc} onChange={
-                                                (e) => {
-                                                    setDesc(e.target.value)
-                                                }
-                                            } ref={refInput} />
+                                            <input
+                                                type="text"
+                                                placeholder="Nhập . . ."
+                                                value={Desc !== undefined && Desc}
+                                                onChange={(e) => {
+                                                    setDesc(e.target.value);
+                                                }}
+                                                ref={refInput}
+                                            />
                                         </div>
                                         <div className={cx('text-input')}>
                                             <Text className={cx('text')}>Tình trạng món</Text>
-                                            <input type="text" placeholder="Nhập . . ." value={Status !== undefined && Status} onChange={
-                                                (e) => {
-                                                    setStatus(e.target.value)
-                                                }
-                                            } ref={refInput} />
+                                            <select id="State">
+                                                <option value="Bình thường">Bình thường</option>
+                                                <option value="Ngưng bán">Ngưng bán</option>
+                                                <option value="Tạm ngưng">Tạm ngưng</option>
+                                            </select>
                                         </div>
                                         <div className={cx('text-input')}>
                                             <Text className={cx('text')}>Hình ảnh</Text>
@@ -108,7 +122,12 @@ function ProductCoop({ children, hint = false, title, addr, data = {} }) {
                             <div className={cx('footer')}>
                                 <div className={cx('btn-modal')} data-dismiss="modal" aria-label="Close">
                                     <div>
-                                        <Button className={cx('add')} data-toggle="modal" data-target="#add" onClick={handleOnClickAdd}>
+                                        <Button
+                                            className={cx('add')}
+                                            data-toggle="modal"
+                                            data-target="#add"
+                                            onClick={handleOnClickAdd}
+                                        >
                                             Hoàn thành
                                         </Button>
                                     </div>

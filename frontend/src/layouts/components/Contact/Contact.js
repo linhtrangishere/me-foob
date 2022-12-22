@@ -25,7 +25,9 @@ function Contact() {
     }
 
     useEffect(() => {
-        if (localStorage.getItem('roll') == 1 || localStorage.getItem('roll') == 3) {
+        if (
+            (localStorage.getItem('roll') == 1 || localStorage.getItem('roll') == 3)
+        ) {
             const abortController = new AbortController();
             fetch(`http://localhost:5000/contact/getBranch/${id}`, {
                 method: 'GET',
@@ -125,7 +127,8 @@ function Contact() {
 
     return (
         <>
-            {(localStorage.getItem('roll') == 1 || localStorage.getItem('roll') == 3) && (
+            {(localStorage.getItem('roll') == 1 ||
+                localStorage.getItem('roll') == 3) && (
                 <>
                     <div className={cx('container', 'grid')}>
                         <div className={cx('title')}>
@@ -274,7 +277,8 @@ function Contact() {
                     </div>
                 </>
             )}
-            {!(localStorage.getItem('roll') == 1 || localStorage.getItem('roll') == 3) && <ErrorPage />}
+            {(localStorage.getItem('roll') != 1 ||
+                localStorage.getItem('roll') != 3 ) && <ErrorPage />}
         </>
     );
 }

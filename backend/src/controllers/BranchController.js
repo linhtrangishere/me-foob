@@ -128,6 +128,7 @@ class BranchController {
 		const func = async () => {
 			try {
 				let result;
+				console.log(req.body.Gia)
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()

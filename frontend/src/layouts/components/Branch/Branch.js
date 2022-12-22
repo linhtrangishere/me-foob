@@ -16,7 +16,7 @@ function Branch() {
     //const [name, setName] = useState();
 
     useEffect(() => {
-        if (localStorage.getItem('roll') == 3) {
+        if (localStorage.getItem('roll') == 3 && localStorage.getItem('ma') == id) {
             const abortController = new AbortController();
             fetch(`http://localhost:5000/branch/getMenu/${id}`, {
                 method: 'GET',
@@ -27,7 +27,7 @@ function Branch() {
                 .then((res) => {
                     return res.json();
                 })
-                .then((data) => setData(data));
+                .then((data) => {setData(data); console.log(data)})
             return () => {
                 abortController.abort();
             };
@@ -35,7 +35,7 @@ function Branch() {
     }, [id]);
     return (
         <>
-            {localStorage.getItem('roll') == 3 && (
+            {(localStorage.getItem('roll') == 3 && localStorage.getItem('ma') == id) && (
                 <>
                     <div className={cx('container', 'grid')}>
                         <div className={cx('grid')}>
@@ -56,7 +56,7 @@ function Branch() {
                     </div>
                 </>
             )}
-            {!(localStorage.getItem('roll') == 3) && <ErrorPage />}
+            {(localStorage.getItem('roll') != 3 || localStorage.getItem('ma') != id) && <ErrorPage />}
         </>
     );
 }

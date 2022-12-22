@@ -4,6 +4,7 @@ import styles from './EarningTracking.module.scss';
 import classNames from 'classnames/bind';
 import { useParams } from 'react-router-dom';
 import ErrorPage from '../ErrorPage';
+import EmptyPage from '../EmptyPage';
 
 const cx = classNames.bind(styles);
 
@@ -86,60 +87,68 @@ function EarningTracking() {
                         <div className={cx('title')}>
                             <h1>Theo dõi thu nhập</h1>
                         </div>
-                        <div className={cx('content')}>
-                            <div className={cx('content-wrapper')}>
-                                <table>
-                                    <tr>
-                                        <th>STT</th>
-                                        <th>Mã đơn hàng</th>
-                                        <th>Địa chỉ nhận</th>
-                                        <th>Địa chỉ giao</th>
-                                        <th>Phí vận chuyển</th>
-                                    </tr>
-                                    {data &&
-                                        Object.keys(data).map(function (key) {
-                                            return (
-                                                <tr key={key}>
-                                                    <td>{parseInt(key) + 1}</td>
-                                                    <td>{data[key].MaPhieuDatHang}</td>
-                                                    <td>{data[key].dccn}</td>
-                                                    <td>{data[key].dcgh}</td>
-                                                    <td>{format(data[key].TongHoaDon)}</td>
-                                                </tr>
-                                            );
-                                        })}
-                                </table>
+                        {data !== undefined && data.length !== 0 && (
+                            <div className={cx('content')}>
+                                <div className={cx('content-wrapper')}>
+                                    <table>
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>Mã đơn hàng</th>
+                                            <th>Địa chỉ nhận</th>
+                                            <th>Địa chỉ giao</th>
+                                            <th>Phí vận chuyển</th>
+                                        </tr>
+                                        {data &&
+                                            Object.keys(data).map(function (key) {
+                                                return (
+                                                    <tr key={key}>
+                                                        <td>{parseInt(key) + 1}</td>
+                                                        <td>{data[key].MaPhieuDatHang}</td>
+                                                        <td>{data[key].dccn}</td>
+                                                        <td>{data[key].dcgh}</td>
+                                                        <td>{format(data[key].TongHoaDon)}</td>
+                                                    </tr>
+                                                );
+                                            })}
+                                    </table>
+                                </div>
                             </div>
-                        </div>
+                        )}
                     </div>
+
                     <div className={cx('container', 'grid')} style={{ display: 'none' }} ref={refStatistical}>
                         <div className={cx('title')}>
                             <h1>Thống kê thu nhập</h1>
                         </div>
-                        <div className={cx('content')}>
-                            <div className={cx('content-wrapper')}>
-                                <table>
-                                    <tr>
-                                        <th>STT</th>
-                                        <th>Tháng</th>
-                                        <th>Số lượng đơn hàng</th>
-                                        <th>Thu nhập</th>
-                                    </tr>
-                                    {data2 &&
-                                        Object.keys(data2).map(function (key) {
-                                            return (
-                                                <tr key={key}>
-                                                    <td>{parseInt(key) + 1}</td>
-                                                    <td>{data2[key].thang}</td>
-                                                    <td>{data2[key].sldh}</td>
-                                                    <td>{format(data2[key].phi)}</td>
-                                                </tr>
-                                            );
-                                        })}
-                                </table>
+                        {data !== undefined && data.length !== 0 && (
+                            <div className={cx('content')}>
+                                <div className={cx('content-wrapper')}>
+                                    <table>
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>Tháng</th>
+                                            <th>Số lượng đơn hàng</th>
+                                            <th>Thu nhập</th>
+                                        </tr>
+                                        {data2 &&
+                                            Object.keys(data2).map(function (key) {
+                                                return (
+                                                    <tr key={key}>
+                                                        <td>{parseInt(key) + 1}</td>
+                                                        <td>{data2[key].thang}</td>
+                                                        <td>{data2[key].sldh}</td>
+                                                        <td>{format(data2[key].phi)}</td>
+                                                    </tr>
+                                                );
+                                            })}
+                                    </table>
+                                </div>
                             </div>
-                        </div>
+                        )}
                     </div>
+                    {((data !== undefined && data.length === 0) || (data2 !== undefined && data2.length === 0)) && (
+                        <EmptyPage />
+                    )}
                 </>
             )}
             {!(localStorage.getItem('roll') == 2) && <ErrorPage />}
