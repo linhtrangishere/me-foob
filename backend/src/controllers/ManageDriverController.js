@@ -73,7 +73,7 @@ class ManageDriverController {
 	getDetail(req, res) {
 		const func = async () => {
 			try {
-				let products;
+				let result;
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
@@ -85,11 +85,11 @@ class ManageDriverController {
 						 	where CTDH.MaPhieuDatHang='${req.body.pdh}'`
 						)
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);
-				return products;
+				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
 			}
@@ -103,7 +103,7 @@ class ManageDriverController {
 	submitDriver(req, res) {
 		const func = async () => {
 			try {
-				let products;
+				let result;
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
@@ -111,11 +111,11 @@ class ManageDriverController {
 							`update dbo.PHIEUDATHANG set MaTaiXe='${req.body.ma}' where MaPhieuDatHang='${req.body.pdh}'`
 						)
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);
-				return products;
+				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
 			}

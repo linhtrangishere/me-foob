@@ -6,7 +6,7 @@ class ManageCoopController {
     get1(req, res) {
 		const func = async () => {
 			try {
-				let products;
+				let result;
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
@@ -17,11 +17,11 @@ class ManageCoopController {
 								join HOPDONG hd on hd.MaDoiTac=dt.MaDoiTac
 								group by dt.TenDoiTac, dt.MaDoiTac, hd.NgayHetHan`)
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);
-				return products;
+				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
 			}
@@ -34,7 +34,7 @@ class ManageCoopController {
     get2(req, res) {
 		const func = async () => {
 			try {
-				let products;
+				let result;
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
@@ -44,11 +44,11 @@ class ManageCoopController {
 								join DOITAC dt on cn.MaDoiTac=dt.MaDoiTac
 								group by dt.TenDoiTac, dt.MaDoiTac`)
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);
-				return products;
+				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
 			}
@@ -61,7 +61,7 @@ class ManageCoopController {
     get3(req, res) {
 		const func = async () => {
 			try {
-				let products;
+				let result;
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
@@ -71,11 +71,11 @@ class ManageCoopController {
 								join DOITAC dt on cn.MaDoiTac=dt.MaDoiTac
 								group by dt.TenDoiTac, dt.MaDoiTac`)
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);
-				return products;
+				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
 			}
@@ -88,7 +88,7 @@ class ManageCoopController {
     get4(req, res) {
 		const func = async () => {
 			try {
-				let products;
+				let result;
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
@@ -98,11 +98,11 @@ class ManageCoopController {
 								join DOITAC dt on cn.MaDoiTac=dt.MaDoiTac
 								group by dt.TenDoiTac, dt.MaDoiTac`)
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);
-				return products;
+				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
 			}
@@ -115,7 +115,7 @@ class ManageCoopController {
     get5(req, res) {
 		const func = async () => {
 			try {
-				let products;
+				let result;
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
@@ -125,11 +125,11 @@ class ManageCoopController {
 								join DOITAC dt on cn.MaDoiTac=dt.MaDoiTac
 								group by dt.TenDoiTac, dt.MaDoiTac`)
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);
-				return products;
+				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
 			}
@@ -142,7 +142,7 @@ class ManageCoopController {
     get6(req, res) {
 		const func = async () => {
 			try {
-				let products;
+				let result;
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
@@ -152,11 +152,11 @@ class ManageCoopController {
 								group by dt.MaDoiTac, dt.TenDoiTac, td.Rating
 								having td.Rating=1`)
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);
-				return products;
+				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
 			}

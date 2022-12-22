@@ -2,7 +2,6 @@ const homeRouter = require("./Home");
 const restaurantsRouter = require("./Restaurants");
 const restaurantRouter = require("./Restaurant");
 const registerRouter = require("./Register");
-const cartRouter = require("./Cart");
 const checkoutRouter = require("./Checkout");
 const contactRouter = require("./Contact");
 const branchRouter = require("./Branch");
@@ -17,7 +16,6 @@ const ListCoopRouter = require("./ListCoop");
 function route(app) {
 	app.use("/register", registerRouter);
 	app.use("/login", loginRouter);
-	app.use("/cart", cartRouter);
 	app.use("/checkout", checkoutRouter);
 	app.use("/contact", contactRouter);
 	app.use("/list-coop", ListCoopRouter);

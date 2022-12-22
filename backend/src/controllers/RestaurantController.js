@@ -6,7 +6,7 @@ class RestaurantController {
 	getName(req, res) {
 		const func = async () => {
 			try {
-				let products;
+				let result;
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
@@ -16,11 +16,11 @@ class RestaurantController {
 							where TD.MaDoiTac='${req.params.slug}' and DT.MaDoiTac=TD.MaDoiTac`
 						)
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);
-				return products;
+				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
 			}
@@ -33,18 +33,18 @@ class RestaurantController {
 	getMenu(req, res) {
 		const func = async () => {
 			try {
-				let products;
+				let result;
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
 						.input("MaTD", sql.VarChar(10), req.params.slug)
 						.execute("dbo.Xem_Thuc_Don")
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);
-				return products;
+				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
 			}
@@ -56,7 +56,7 @@ class RestaurantController {
 	getComment(req, res) {
 		const func = async () => {
 			try {
-				let products;
+				let result;
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
@@ -68,11 +68,11 @@ class RestaurantController {
 							where TD.MaThucDon='${req.params.slug}'`
 						)
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);
-				return products;
+				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
 			}

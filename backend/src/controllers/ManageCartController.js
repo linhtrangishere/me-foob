@@ -6,7 +6,7 @@ class ManageCartController {
 	getCarts(req, res) {
 		const func = async () => {
 			try {
-				let products;
+				let result;
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
@@ -17,11 +17,11 @@ class ManageCartController {
 							where DT.MaDoiTac='${req.params.slug}' AND CN.MaChiNhanh=PDH.MaChiNhanh AND CN.MaDoiTac=DT.MaDoiTac and DC.MaDiaChi = PDH.DiaChiGH`
 						)
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);
-				return products;
+				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
 			}
@@ -34,7 +34,7 @@ class ManageCartController {
 	getDetailCart(req, res) {
 		const func = async () => {
 			try {
-				let products;
+				let result;
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
@@ -47,11 +47,11 @@ class ManageCartController {
 							where PDH.MaPhieuDatHang='${req.params.slug}' AND CN.MaChiNhanh=PDH.MaChiNhanh and DC1.MaDiaChi = PDH.DiaChiGH and DC2.MaDiaChi = CN.MaDiaChi and KH.MaKhachHang=PDH.MaKhachHang`
 						)
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);
-				return products;
+				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
 			}
@@ -64,7 +64,7 @@ class ManageCartController {
 	getProducts(req, res) {
 		const func = async () => {
 			try {
-				let products;
+				let result;
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
@@ -72,11 +72,11 @@ class ManageCartController {
 							`select MA.TenMonAn, CTPDH.SoLuongMonAn, MA.Gia from dbo.CHITIETPHIEUDATHANG CTPDH, dbo.MONAN MA where CTPDH.MaPhieuDatHang='${req.params.slug}' and CTPDH.MaMonAn = MA.MaMonAn`
 						)
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);
-				return products;
+				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
 			}
@@ -89,7 +89,7 @@ class ManageCartController {
 	submitOrder(req, res) {
 		const func = async () => {
 			try {
-				let products;
+				let result;
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
@@ -97,7 +97,7 @@ class ManageCartController {
 							`update dbo.PHIEUDATHANG set TinhTrangDonHang=N'${req.body.tinhtrang}' where MaPhieuDatHang='${req.body.pdh}'`
 						)
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);

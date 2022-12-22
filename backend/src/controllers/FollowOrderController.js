@@ -69,7 +69,7 @@ class FollowOrderController {
 	getDetail(req, res) {
 		const func = async () => {
 			try {
-				let products;
+				let result;
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
@@ -81,11 +81,11 @@ class FollowOrderController {
 							where CTDH.MaPhieuDatHang='${req.body.pdh}'`
 						)
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);
-				return products;
+				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
 			}
@@ -98,7 +98,7 @@ class FollowOrderController {
 	submit(req, res) {
 		const func = async () => {
 			try {
-				let products;
+				let result;
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
@@ -107,11 +107,11 @@ class FollowOrderController {
 							'${req.body.binhluan}', '${req.body.danhgia}')`
 						)
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);
-				return products;
+				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
 			}
@@ -125,7 +125,7 @@ class FollowOrderController {
 	deleteOrder(req, res) {
 		const func = async () => {
 			try {
-				let products;
+				let result;
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
@@ -135,11 +135,11 @@ class FollowOrderController {
 							`
 						)
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);
-				return products;
+				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
 			}

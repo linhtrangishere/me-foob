@@ -6,7 +6,7 @@ class ContactController {
 	getBranch(req, res) {
 		const func = async () => {
 			try {
-				let products;
+				let result;
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
@@ -17,11 +17,11 @@ class ContactController {
 							where DT.MaDoiTac=HP.MaDoiTac and DT.MaDoiTac='${req.params.slug}'`
 						)
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);
-				return products;
+				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
 			}
@@ -42,7 +42,7 @@ class ContactController {
 						.input("NGAYHETHAN", sql.Date, req.body.date)
 						.execute("dbo.SP_UPDATE_HOPDONG")
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);
@@ -67,7 +67,7 @@ class ContactController {
 						.output("NGAYHETHAN", sql.Date)
 						.execute("dbo.SP_SELECT_HOPDONG")
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);
@@ -92,7 +92,7 @@ class ContactController {
 						.output("NGAYHETHAN", sql.Date)
 						.execute("dbo.SP_SELECT_HOPDONG_FIX")
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);

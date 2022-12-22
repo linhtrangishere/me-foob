@@ -7,12 +7,12 @@ class RestaurantsController {
 		const func = async () => {
 			try {
 				let pool = await sql.connect(config);
-				let products = pool
+				let result = pool
 					.request()
 					.query(
 						`SELECT DT.TenDoiTac, DT.LoaiAmThuc, DT.Email FROM dbo.DOITAC DT where DT.MaDoiTac='${req.params.slug}'`
 					);
-				return products;
+				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
 			}
@@ -25,17 +25,17 @@ class RestaurantsController {
     getBranch1(req, res) {
 		const func = async () => {
 			try {
-				let products;
+				let result;
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
 						.query(`select count(*) from dbo.MONAN`)
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);
-				return products;
+				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
 			}
@@ -48,17 +48,17 @@ class RestaurantsController {
 	getBranch2(req, res) {
 		const func = async () => {
 			try {
-				let products;
+				let result;
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
 						.query(`select count(*) from dbo.MONAN`)
 						.then((v) => {
-							products = v;
+							result = v;
 						})
 						.then(() => conn.close())
 				);
-				return products;
+				return result;
 			} catch (error) {
 				console.log(`Error: ${error}`);
 			}
