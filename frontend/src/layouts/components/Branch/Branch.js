@@ -1,5 +1,5 @@
 import styles from './Branch.module.scss';
-
+import Button from '~/components/Button';
 import classNames from 'classnames/bind';
 import ProductCoop from '~/components/Popper/ProductCoop';
 import Text from '~/components/Text';
@@ -10,11 +10,64 @@ import ErrorPage from '../ErrorPage';
 
 const cx = classNames.bind(styles);
 
-function Branch() {
+function Branch({ keyIndex = 0 }) {
     const { id } = useParams();
     const [data, setData] = useState();
+    const [Name, setName] = useState('');
+    const [OpenTime, setOpenTime] = useState('');
+    const [CloseTime, setCloseTime] = useState('');
+    const [Status, setStatus] = useState('');
     //const [name, setName] = useState();
-
+    const handleOnClickUpdateStoreName = () => {
+        fetch(`http://localhost:5000/branch/updateName/${data.TenChiNhanh}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                MaChiNhanh: data.MaChiNhanh,
+                Ten: Name,
+            }),
+        });
+    };
+    const handleOnClickUpdateStoreOpenTime = () => {
+        fetch(`http://localhost:5000/branch/updateStoreOpenTime`, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                MaDoiTac: data.MaDoiTac,
+                MaChiNhanh: data.MaChiNhanh,
+                ThoiGianMoCua: OpenTime,
+            }),
+        });
+    };
+    const handleOnClickUpdateStoreCloseTime = () => {
+        fetch(`http://localhost:5000/branch/updateName/${data.ThoiGianDongCua}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                MaChiNhanh: data.MaChiNhanh,
+                ThoiGianDongCua: CloseTime,
+            }),
+        });
+    };
+    const handleOnClickUpdateStoreStatus = () => {
+        fetch(`http://localhost:5000/branch/updateName/${data.TinhTrangChiNhanh}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                MaChiNhanh: data.MaChiNhanh,
+                TinhTrangChiNhanh: Status,
+            }),
+        });
+    };
     useEffect(() => {
         if (localStorage.getItem('roll') == 3 && localStorage.getItem('ma') == id) {
             const abortController = new AbortController();
@@ -27,7 +80,10 @@ function Branch() {
                 .then((res) => {
                     return res.json();
                 })
-                .then((data) => {setData(data); console.log(data)})
+                .then((data) => {
+                    setData(data);
+                    console.log(data);
+                });
             return () => {
                 abortController.abort();
             };
@@ -35,7 +91,7 @@ function Branch() {
     }, [id]);
     return (
         <>
-            {(localStorage.getItem('roll') == 3 && localStorage.getItem('ma') == id) && (
+            {localStorage.getItem('roll') == 3 && localStorage.getItem('ma') == id && (
                 <>
                     <div className={cx('container', 'grid')}>
                         <div className={cx('grid')}>
@@ -47,8 +103,26 @@ function Branch() {
                                     <Text>{data !== undefined && data[0].LoaiAmThuc}</Text>
                                 </h3>
                                 <Star amount={data !== undefined && data[0].Rating} />
-                                <Text className={cx('contact')}>Liên hệ: {data !== undefined && data[0].Email}</Text>
+                                <Text className={cx('contact')}>Email: {data !== undefined && data[0].Email}</Text>
+                                <Text className={cx('contact')}>
+                                    Điện thoại: {data !== undefined && data[0].DienThoaiDoiTac}
+                                </Text>
+                                <Text className={cx('contact')}>
+                                    Tên Chi Nhánh: {data !== undefined && data[0].TenChiNhanh}
+                                </Text>
+                                <Text className={cx('contact')}>
+                                    Thời gian mở cửa: {data !== undefined && data[0].ThoiGianMoCua}
+                                </Text>
+                                <Text className={cx('contact')}>
+                                    Thời gian đóng cửa: {data !== undefined && data[0].ThoiGianDongCua}
+                                </Text>
+                                <Text className={cx('contact')}>
+                                    Tình trạng chi nhánh: {data !== undefined && data[0].TinhTrangChiNhanh}
+                                </Text>
                             </div>
+                            <Button className={cx('btn')} data-toggle="modal" data-target={`#edit-1`}>
+                                Cập nhật
+                            </Button>
                         </div>
                     </div>
                     <div className={cx('container', 'grid')}>
@@ -56,6 +130,112 @@ function Branch() {
                     </div>
                 </>
             )}
+            {
+                <div
+                    className="modal fade"
+                    id={`edit-1`}
+                    tabIndex="-1"
+                    role="dialog"
+                    aria-labelledby="exampleModalLongTitle"
+                    aria-hidden="true"
+                >
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content" style={{ overflow: 'hidden' }}>
+                            <div className={cx('content-wrapper')}>
+                                <div className={cx('separate')}></div>
+                                <div className={cx('item-modal')}>
+                                    <div className={cx('link-modal')}>
+                                        <div className={cx('group')}>
+                                            <div className={cx('text-input')}>
+                                                <Text className={cx('text')}>Tên cửa hàng</Text>
+                                                <input
+                                                    type="text"
+                                                    value={Name}
+                                                    name="name"
+                                                    onChange={(e) => {
+                                                        setName(e.target.value);
+                                                    }}
+                                                />
+                                            </div>
+                                            <div
+                                                className={cx('btn-modal')}
+                                                data-dismiss="modal"
+                                                aria-label="Close"
+                                                onClick={() => handleOnClickUpdateStoreName}
+                                            >
+                                                <div>Cập nhật tên quán</div>
+                                            </div>
+                                            <div className={cx('text-input')}>
+                                                <Text className={cx('text')}>Thời gian mở cửa</Text>
+                                                <input
+                                                    type="text"
+                                                    value={OpenTime}
+                                                    name="opentime"
+                                                    onChange={(e) => {
+                                                        setOpenTime(e.target.value);
+                                                    }}
+                                                />
+                                            </div>
+                                            <div
+                                                className={cx('btn-modal')}
+                                                data-dismiss="modal"
+                                                aria-label="Close"
+                                                onClick={() => handleOnClickUpdateStoreOpenTime()}
+                                            >
+                                                <div>Cập nhật thời gian mở cửa</div>
+                                            </div>
+                                            <div className={cx('text-input')}>
+                                                <Text className={cx('text')}>Thời gian đóng cửa</Text>
+                                                <input
+                                                    type="text"
+                                                    value={CloseTime}
+                                                    name="closetime"
+                                                    onChange={(e) => {
+                                                        setCloseTime(e.target.value);
+                                                    }}
+                                                />
+                                            </div>
+                                            <div
+                                                className={cx('btn-modal')}
+                                                data-dismiss="modal"
+                                                aria-label="Close"
+                                                onClick={() => handleOnClickUpdateStoreCloseTime}
+                                            >
+                                                <div>Cập nhật thời gian đóng cửa</div>
+                                            </div>
+                                            <div className={cx('text-input')}>
+                                                <Text className={cx('text')}>Tình trạng cửa hàng</Text>
+                                                <input
+                                                    type="text"
+                                                    value={Status}
+                                                    name="name"
+                                                    onChange={(e) => {
+                                                        setStatus(e.target.value);
+                                                    }}
+                                                />
+                                            </div>
+                                            <div
+                                                className={cx('btn-modal')}
+                                                data-dismiss="modal"
+                                                aria-label="Close"
+                                                onClick={() => handleOnClickUpdateStoreStatus}
+                                            >
+                                                <div>Cập nhật tình trạng cửa hàng</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className={cx('separate-big')}></div>
+                                <div className={cx('footer')}>
+                                    <div className={cx('btn-modal')} data-dismiss="modal" aria-label="Close">
+                                        <div> Hoàn thành</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
             {(localStorage.getItem('roll') != 3 || localStorage.getItem('ma') != id) && <ErrorPage />}
         </>
     );
